@@ -3,9 +3,6 @@ from sunil.models import *
 from hotel.models import *
 # Create your views here.
 def index(request):
-    Sunil(
-        sum=13333
-    ).save()
     return render(request, 'home/index.html')
 
 def pricing(request):
