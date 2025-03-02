@@ -1,0 +1,191 @@
+103.150.136.82
+root
+cd tejorder
+git pull
+source venv/bin/activate
+python3 manage.py makemigrations
+python3 manage.py migrate
+systemctl daemon-reload
+systemctl restart tejorder.com.gunicorn
+exit
+
+root
+cd tejorder
+git pull
+systemctl daemon-reload
+systemctl restart tejorder.com.gunicorn
+exit
+
+git clone https://github.com/9730991252/tejorder.git
+
+cd tejorder
+
+********** Create Virtual env *****
+
+virtualenv venv
+
+
+********** Activate Virtual env ****
+
+source venv/bin/activate
+
+
+****************migrations******
+
+python3 manage.py makemigrations
+
+*********** migrate ********
+
+python3 manage.py migrate
+
+
+
+***** install django ******
+
+pip install django
+pip install pillow
+pip install django-embed-video
+pip install num2words
+
+
+******** Install Gunicorn ******
+ 
+pip install gunicorn
+
+*********** Deactivate Virtualenv *****
+
+deactivate
+
+
+************ Create System Socket File for Gunicorn *******
+
+Example:-  nano /etc/systemd/system/crenta.in.gunicorn.socket
+
+cd  /etc/systemd/system/
+
+ nano tejorder.com.gunicorn.socket
+
+
+
+[Unit]
+Description=tejorder.com.gunicorn socket
+
+[Socket]
+ListenStream=/run/tejorder.com.gunicorn.sock
+
+[Install]
+WantedBy=sockets.target
+
+
+************** Create System Service File for Gunicorn ******
+Syntax:-  nano /etc/systemd/system/your_domain.gunicorn.service
+Example:-  nano /etc/systemd/system/tejorder.com.gunicorn.service
+
+cd  /etc/systemd/system/
+
+ nano tejorder.com.gunicorn.service
+
+
+[Unit]
+Description=tejorder.com.gunicorn daemon
+Requires=tejorder.com.gunicorn.socket
+After=network.target
+
+[Service]
+User=root
+Group=root
+WorkingDirectory=/root/tejorder
+ExecStart=/root/tejorder/venv/bin/gunicorn \
+          --access-logfile - \
+          --workers 3 \
+          --bind unix:/run/tejorder.com.gunicorn.sock \
+          tejorder.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
+
+----------------------------------------------------------------
+systemctl start tejorder.com.gunicorn.socket
+
+systemctl start tejorder.com.gunicorn.service
+
+-----------------------------------------------------------------
+
+systemctl enable tejorder.com.gunicorn.socket
+
+systemctl enable tejorder.com.gunicorn.service
+
+-----------------------------------------------------------------------
+
+systemctl status tejorder.com.gunicorn.socket
+
+systemctl status tejorder.com.gunicorn.service
+
+-------------------------------------------
+
+systemctl daemon-reload
+systemctl restart tejorder.com.gunicorn
+
+--------------------------------
+
+
+
+****************** Create Virtual Host File ******
+Syntax:-  nano /etc/nginx/sites-available/your_domain
+Example:-  nano /etc/nginx/sites-available/crenta.in
+
+
+cd /etc/nginx/sites-available
+
+ nano tejorder.com
+
+
+
+server{
+    listen 80;
+    listen [::]:80;
+
+    server_name new.tejorder.com www.new.tejorder.com;
+    client_max_body_size 500M;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+
+    location / {
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_pass http://unix:/run/tejorder.com.gunicorn.sock;
+    }
+
+    
+    
+}
+
+-----------------------------------------------------
+
+
+########## Enable Virtual Host or Create Symbolic Link of Virtual Host File ########
+
+ ln -s /etc/nginx/sites-available/tejorder.com /etc/nginx/sites-enabled/tejorder.com
+
+
+%%%%%%%%%%%%%%%%%%%%% Check Configuration is Correct or Not %%%%%
+
+ nginx -t
+
+%%%%%%%%%%%% Restart Nginx %%%%%%%%%
+
+ service nginx restart
+-------------------------------------
+
+********** restart ******
+
+systemctl daemon-reload
+systemctl restart tejorder.com.gunicorn
+
+--------------------------------------- ssl ------------------
+  certbot --nginx
+
+
+ certbot --nginx -d shipiamti.com -d www.shipiamti.com

@@ -3,15 +3,9 @@ from sunil.models import *
 from hotel.models import *
 # Create your views here.
 def index(request):
-    if request.session.has_key('customer_status'):
-        pass
-    else:
-        request.session['customer_status'] = 1
-        
-        
-    # status = request.session['customer_status']
-    # print('status:', status)
-    # print('id:', request.session.session_key)
+    Sunil(
+        sum=13333
+    ).save()
     return render(request, 'home/index.html')
 
 def pricing(request):
