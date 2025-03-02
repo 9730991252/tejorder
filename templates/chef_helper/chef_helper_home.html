@@ -1,0 +1,92 @@
+{% extends 'home/base.html' %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+<div>welcome - {{c.name}}</div>
+{% include 'include/chef_menu.html' %}
+{% include 'include/alert.html' %}
+  
+  
+<div class="container border">
+  <h5 class="text-center">तुम्ही बनवत आहात</h5>
+  <table class="table">
+
+      <tbody>
+          {% for d in accepted_item %}
+        <tr>
+            <td>{{d.table.name}}
+            <td>{{d.item.marathi_name}}</td>
+            <td>{{d.qty}}</td>                                               
+            <td>
+                <form action="" method="POST">{% csrf_token %}
+                    <input type="hidden" name="item_id" value="{{d.item_id}}">
+                    <input type="hidden" name="table_id" value="{{d.table_id}}">
+                    <button class="btn btn-success" type="submit" name="Delivere">पाठवा</button>
+                </form>
+            </td>
+        </tr>
+          {% endfor %}
+
+      </tbody>
+    </table>
+</div>
+  
+  <div class="container border">
+    <h5 class="text-center">बनवणे बाकी आहेत - {{pending_item.count}} </h5>
+    <table class="table">
+  
+        <tbody>
+            {% for d in pending_item %}
+          <tr>
+            <td>
+                <form method="POST">{% csrf_token %}
+                    <input type="hidden" name="table_id" value="{{d.table_id}}">
+                    <button type="submit" class="btn btn-danger" name="Accept_item_table">{{d.table.name}} -Table</button>
+                  </form>
+                </td>
+                <td>
+                  <form method="POST">{% csrf_token %}
+                    <input type="hidden" name="item_id" value="{{d.item_id}}">
+                    <button type="submit" class="btn btn-primary" name="Accept_item">{{d.item.marathi_name}}</button>
+                </form>
+            </td>
+            <td>
+              <form method="POST">{% csrf_token %}
+                <input type="hidden" name="id" value="{{d.id}}">
+                <button type="submit" class="btn btn-info" name="Accept_item_one">qty {{d.qty}}</button>
+              </form>
+            </td>
+          </tr>
+            {% endfor %}
+  
+        </tbody>
+      </table>
+  </div>
+  
+  
+  
+  
+  <div class="container border">
+    <h3>बनवून झाले आहेत  </h3>
+    <table class="table">
+    
+        <tbody>
+            {% for d in delivered_item %}
+            <tr>
+              <td>{{d.table.name}} -Table</td>
+              <td>{{d.item.marathi_name}}</td>
+              <td>{{d.qty}}</td>
+              <td>{{d.cook_status}}</td>
+            </tr>
+            {% endfor %}
+    
+        </tbody>
+      </table>
+    </div>
+  <script>
+    window.onload = function(e){ 
+        // setTimeout("location.reload(true);", 60000);
+        setTimeout("location.reload(true);", 6000);
+    }
+  </script>
+{% endblock content %}

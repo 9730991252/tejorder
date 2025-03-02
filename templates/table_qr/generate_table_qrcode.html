@@ -1,0 +1,129 @@
+{% extends 'home/base.html' %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+{% load static %}
+<style>
+    #canvas {
+        position: relative;
+        width: 4in;
+        height: 6in;
+        overflow: hidden;
+        margin: 0 auto;
+        background: url('{% static "img/blue_background.jpg" %}' ) no-repeat center center;
+        background-size: 10in 6in;
+        padding: 0px;
+        border-image: linear-gradient(to right, #3a4ed5 0%,#3acfd5 30%, rgb(204, 0, 255) 60%,rgb(204, 0, 255) 70%, #3a4ed5 100%) 1;
+        border-width: 5px;
+        border-style: solid;
+
+    }
+    .name_box{
+        background-color: rgba(255, 255, 255, 0);
+        padding: 10px;
+        padding-bottom: 0;
+        width: 80%;
+        margin: 0 auto;
+        margin-top: 20px;
+        border-radius: 10px;
+        text-align: center;
+        font-weight: 700;
+        font-size: 22px;
+        color: rgb(255, 255, 255);
+        font-family: "Gill Sans", sans-serif;
+        box-shadow: -1px 0px 70px -2px rgba(255, 255, 255, 0.75);
+        p{
+            font-weight: 400;
+            font-size: 17px;
+        }
+
+    }
+    .Addverties{
+        padding: 10px;
+        border-radius: 10px;
+        text-align: center;
+        /* color:  black !important; */
+        font-weight: 700;
+        left: 35px;
+        font-size: 17px;
+        margin-bottom: -10px;
+        padding-bottom: 0px;
+        height: 50px;
+        text-shadow: 1px 1px 10px #ffffff;
+        font-family: "Gill Sans", sans-serif;
+    }
+    .qr_box{
+        margin: auto;
+        background-color: rgb(255, 255, 255);
+        width: 60%;
+        margin-top: auto;
+        padding: 10px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-top: 20px;
+        padding-top: 0;
+        img{
+            border: 2px solid rgb(139, 139, 139);
+            padding: 5px;
+            border-radius: 5px;
+        }
+    }
+    .footer{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: url('{% static "img/footer.jpeg" %}' ) no-repeat center top;
+        background-size: 4in 6in;
+        color:  black !important;
+        z-index: 100;
+    }
+    .thank_you_box{
+        background-color: rgba(255, 255, 255, 0.329);
+        width: fit-content;
+        margin: auto;
+        border-radius: 10px;
+        padding: 5px;
+        box-shadow: inset -2px 2px 10px #000;
+        padding-bottom: 0;
+    }
+    .table_box{
+        background-color: rgb(39, 0, 179);
+        margin:auto;
+        width: fit-content;
+        border-radius: 10px;
+        padding: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+        color: white;
+        font-size: 20px;
+        font-weight: 700;
+        font-family: "Gill Sans", sans-serif;
+        letter-spacing: 1px;
+    }
+</style>
+{{t_qr.url}}
+
+<div id="canvas">
+    <div class="name_box">
+        {{hotel.hotel_name}}
+        <p>{{hotel.address}}</p>
+    </div>
+    <div class="table_box">
+        {{table.name}}
+    </div>
+    <div class="qr_box">
+        <h5><b>Scan QR For Order/</b></h5>
+        <h5><b>MENU</b></h5>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://new.tejorder.com/table_qr/{{t_qr.url}}">
+    </div>
+    <div class="footer">
+        <div class="text-center text-dark mt-3 thank_you_box" style="display: flex;justify-content: center;align-items: center;" ><h4>🙏🏻</h4><h5><b>Thank You Visit Again</h6><h4>🙏🏻</h4></div>
+        <div class="Addverties">All type Mobile Software  9730 99 1252</div>
+    </div>
+</div>
+
+{% endblock content %}

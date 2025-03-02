@@ -1,0 +1,36 @@
+{% extends 'home/base.html' %}
+
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/styles.css">
+{% endblock head %}
+
+{% block content %}
+{% include 'include/alert.html' %}
+{% include 'include/hotel_navbar.html' %}
+<style>
+    .container_box {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, 200px);
+        gap: 10px;
+    }
+    .table_box{
+        padding: 10px;
+        border: 1px solid rgb(138, 136, 136);
+        cursor: pointer;
+        border-radius: 10px;
+        text-align: center;
+        
+}
+</style>
+<div class="container container_box">
+{% for t in table %}
+<div class="table_box">
+    <h6>{{t.name}}</h6>
+    <div>
+        <a href="/table_qr/generate_table_qrcode/{{t.id}}" class="btn btn-outline-success">Download QrCode <i class="fa fa-download" aria-hidden="true"></i></a>
+    </div>
+</div>
+{% endfor %}
+</div>
+{% endblock content %}

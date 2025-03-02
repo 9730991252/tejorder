@@ -1,0 +1,182 @@
+{% extends 'home/base.html' %}
+
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/styles.css">
+{% endblock head %}
+
+{% block content %}
+    {% include 'include/navbar.html' %}
+    {% include 'include/alert.html' %}
+    
+    <style>
+        /* Reset basic styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and Background */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+        }
+
+        /* Header Section */
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 15px 0;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        header .logo a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            background-color: #ffffff;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .pricing h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+
+        .pricing .plan {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .plan-box {
+            background-color: #f1f1f1;
+            border-radius: 8px;
+            padding: 30px;
+            flex-basis: 30%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .plan-box:hover {
+            transform: scale(1.05);
+        }
+
+        .plan-box h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .plan-box p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .plan-box .price {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .plan-box .cta-button {
+            padding: 12px 25px;
+            background-color: #28a745;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        .plan-box .cta-button:hover {
+            background-color: #218838;
+        }
+
+        /* Footer Section */
+        footer {
+            background-color: #343a40;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .plan-box {
+                flex-basis: 45%;
+            }
+
+            .pricing .plan {
+                flex-direction: column;
+            }
+
+            .plan-box .cta-button {
+                font-size: 16px;
+                padding: 10px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .plan-box {
+                flex-basis: 100%;
+                padding: 20px;
+            }
+
+            .pricing h2 {
+                font-size: 28px;
+            }
+
+            .plan-box .price {
+                font-size: 28px;
+            }
+
+            .plan-box .cta-button {
+                font-size: 14px;
+                padding: 8px 18px;
+            }
+        }
+    </style>
+
+    <!-- Pricing Section -->
+    <section class="pricing">
+        <h2>Choose Your Plan</h2>
+        <div class="plan">
+            <div class="plan-box">
+                <h3>Plan</h3>
+                <p>Perfect for small businesses and individuals.</p>
+                <div class="price">₹100, per 300</div>
+                <div style="display: flex;justify-content: center;gap: 10px; align-items: center;">
+                    <div>+91 9730-99-1252</div>
+                    <a href="tel:9730991252" class="cta-button">Book a Call</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br><br>
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Tej Order. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+{% endblock content %}

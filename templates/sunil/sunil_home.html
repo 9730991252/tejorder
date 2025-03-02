@@ -1,0 +1,131 @@
+{% extends 'home/base.html' %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+{% include 'include/alert.html' %}
+<div class="container">
+<br>
+
+<a href="/sunil/payment/" class="btn btn-primary">Payment</a>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    Add Hotel
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Hotel Details</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="POST">{% csrf_token %}
+            <div class="mb-3">
+                <label for="hotel_name">Hotel Name</label>
+                <input type="text" id="hotel_name" name="hotel_name" placeholder="Hotel Name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="owner_name">Owner Name</label>
+                <input type="text" id="owner_name" name="owner_name" placeholder="Owner Name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="mobile">Owner Mobile</label>
+                <input type="number" id="mobile" name="mobile" placeholder="Mobile" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="pin">Pin</label>
+                <input type="text" id="pin" name="pin" placeholder="Pin" class="form-control"  required>
+            </div>
+            <div class="mb-2 mt-1">
+                <button type="submit" name="Add_hotel" class="btn btn-primary">Add</button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<br><br><br>
+
+  <table class="table table-striped table-hover  table-bordered caption-top">
+    <caption>List of users</caption>
+    <thead class="table-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Hotel Name</th>
+        <th scope="col">Owner Name</th>
+        <th scope="col">Mobile</th>
+        <th scope="col">Pin</th>
+        <th scope="col">Status</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Login</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      {% for s in hotel %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{s.hotel_name}}</td>
+        <td>{{s.owner_name}}</td>
+        <td>{{s.mobile}}</td>
+        <td>{{s.pin}}</td>
+        <td><form class="" method="POST">{% csrf_token %}{% if s.status == 1 %}<button class="btn btn-success" type="submit" name="active">Active<input type="hidden" name="id" value="{{s.id}}"></button>{% else %}<button class="btn btn-danger" type="submit" name="deactive">Deactive<input type="hidden" name="id" value="{{s.id}}"></button>{% endif %}</form></td>
+        <td><a href="/sunil/sunil_shope_detail/{{s.id}}" class="btn btn-primary">view</a></td>
+        <td>
+          <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{s.id}}">
+            <button type="submit" class="btn btn-danger" name="login">Login</button>
+          </form>
+        </td>
+        <!-- <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Add_hotel{{s.id}}">Edit</button></td> -->
+      </tr>
+      <div class="modal fade" id="Add_hotel{{s.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit To - {{s.hotel_name}}</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form method="POST">{% csrf_token %}
+                <input type="hidden" value="{{s.id}}" name="id">
+                <div class="mb-3">
+                    <label for="hotel_name">Hotel Name</label>
+                    <input type="text" value="{{s.hotel_name}}" id="hotel_name" name="hotel_name" placeholder="Hotel Name" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="owner_name">Owner Name</label>
+                    <input type="text" id="owner_name" value="{{s.owner_name}}" name="owner_name" placeholder="Owner Name" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="mobile">Owner Mobile</label>
+                    <input type="number" id="mobile" name="mobile" value="{{s.mobile}}" placeholder="Mobile" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="pin">Pin</label>
+                    <input type="text" id="pin" name="pin" placeholder="Pin" value="{{s.pin}}" class="form-control"  required>
+                </div>
+                <div class="mb-2 mt-1">
+                    <button type="submit" name="Edit_hotel" class="btn btn-primary">Add</button>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+</div>
+{% endblock content %}

@@ -1,0 +1,13 @@
+<style>
+    .but{
+            display: flex;
+            gap: 10px;
+            overflow: scroll;
+            width: 100%;
+        }
+</style>
+
+<div class="but">
+    <a  href="/waiter/waiter_home/" class="my-1 {% if request.path == '/waiter/waiter_home/' %}btn btn-warning{% else %}btn btn-primary{% endif %}">Home</a>
+    <a href="/logout/" class="btn btn-danger my-1">Logout</a>
+</div>

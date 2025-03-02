@@ -1,0 +1,10 @@
+<div class="table_box" data-aos="fade-right" data-aos-duration="1000">
+        <div class="table_number" id="old_table_number{{t.id}}">{{t.name}} <button class="btn" onclick="edit_table_number('{{t.id}}')"><i class="fa fa-pencil" aria-hidden="true"></i></button></div>
+        <div class="table_number" style="display: none;" id="new_table_number{{t.id}}"><input style="width: 80%;" type="text" value="{{t.name}}" id="chang_teble_name"> <button class="btn" onclick="chang_teble_name()"><i class="fa fa-check" aria-hidden="true"></i></button></div>
+
+        <script>
+
+        </script>
+        <br>
+        <td>{% if t.status == 1 %}<button onclick="chang_teble_status('{{t.id}}')" class="btn btn-success" type="submit" name="active">Active</button>{% else %}<button onclick="chang_teble_status('{{t.id}}')" class="btn btn-danger" type="submit" name="deactive">Deactive</button>{% endif %}</td>
+    </div>

@@ -1,0 +1,183 @@
+{% extends 'home/base.html' %}
+
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/styles.css">
+{% endblock head %}
+<style>
+    footer {
+        background-color: #f2f2f2;
+        padding: 20px 0;
+        text-align: center;
+    }
+</style>
+{% block content %}
+    {% include 'include/hotel_navbar.html' %}
+    {% include 'include/alert.html' %}
+  {% load hotel_tag %}
+    <br><br>
+<div class="container">
+
+    <!-- Button trigger modal -->
+    <button data-aos="fade-left" data-aos-duration="2000" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Add New Category
+    </button>
+    
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 data-aos="fade-left" data-aos-duration="2000" class="modal-title fs-5" id="exampleModalLabel">Category</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="category_name">Name</label>
+              <input type="text" id="category_name" name="category_name" placeholder="Category Name" class="form-control" required>
+            </div>
+            <div class="mb-2 mt-1">
+              <button type="submit" name="add_category" class="btn btn-primary">Add</button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <style>
+    .category_box{
+      border: 1px solid black;
+      padding: 10px;
+      border-radius: 10px;
+      margin: 0 auto;
+      margin-bottom: 10px;
+      width: 350px;
+    }
+    .flex{
+      display: flex; 
+      gap: 10px;
+      justify-content: center;
+    }
+    .item_box{
+        padding: 10px;
+        border: 1px solid rgb(126, 126, 126);
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+  </style>
+  {% for c in category %}
+  <div id="category_box{{c.id}}">
+    <div class="category_box" data-aos="fade-right" data-aos-duration="2000" >
+      <div class="text-center" data-aos="fade-left" data-aos-duration="2000"><b>{{c.name}}</b></div>
+      <div class="flex" style="justify-content: space-evenly;">
+        <div data-aos="fade-left" data-aos-duration="2000">{% if c.status == 1 %}<button class="btn btn-success" type="submit" name="active" onclick="chang_status('{{c.id}}','{{c.name}}')" >Active</button>{% else %}<button onclick="chang_status('{{c.id}}')"  class="btn btn-danger" type="submit" name="deactive">Deactive</button>{% endif %}</div>
+        <div><button data-bs-toggle="modal" data-bs-target="#exampleModal{{c.id}}" data-aos="fade-left" data-aos-duration="2000" class="btn btn-info">Edit</button></div>
+        <div><button data-bs-toggle="modal" data-bs-target="#item_modal{{c.id}}" data-aos="fade-left" data-aos-duration="2000" class="btn btn-primary">Item</button></div>
+      </div>
+    </div>
+  </div>
+<div class="modal fade" id="item_modal{{c.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">{{c.name}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="select_item_box{{c.id}}">
+        {% customer_selected_item c.id as category_item %}
+        {% for i in category_item %}
+          <div id="item_box{{i.id}}" onclick="select_category_item('{{i.id}}','{{c.id}}')" class="item_box text-center" {% if i.selected_status == 1 %} style="background-color: rgb(191, 255, 200);"{% endif %} >{{i.name}}</div>
+        {% endfor %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="exampleModal{{c.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit {{c.name}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="id" value="{{c.id}}">
+          <div class="mb-3">
+            <label for="category_name">Name</label>
+            <input type="text" id="category_name" value="{{c.name}}" name="category_name" placeholder="Category Name" class="form-control" required>
+          </div>
+          <div class="mb-2 mt-1">
+            <button type="submit" name="edit_category" class="btn btn-primary">Add</button>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+  {% endfor %}
+</div>
+<script>
+ScrollReveal().reveal('.category_box', { delay: 375, reset: true });
+
+function select_category_item(item_id,c_id){
+    $.ajax({
+    url: "{% url 'select_category_item' %}",
+    method: "GET",
+    data:{
+        c_id:c_id,
+        item_id:item_id,
+        },
+        success: function(data){
+          document.getElementById('select_item_box'+c_id).innerHTML = data.t
+        }
+  })
+}
+
+function chang_status(id, name){
+  $.ajax({
+    url: "{% url 'chang_category_status' %}",
+    method: "GET",
+    data:{
+      id:id,
+        },
+        success: function(data){
+          if (data.status == 1){
+            t =`<div class="category_box" data-aos="fade-right" data-aos-duration="2000" >
+                <div class="text-center" data-aos="fade-right" data-aos-duration="2000"><b>${name}</b></div>
+                <div class="flex" style="justify-content: space-evenly;">
+                  <div data-aos="fade-left" data-aos-duration="2000"><button class="btn btn-success" type="submit" name="active" onclick="chang_status('${id}','${name}')" >Active</button></div>
+                  <div><button data-aos="fade-left" data-aos-duration="2000" class="btn btn-info">Edit</button></div>
+                </div>
+              </div>`
+          }
+          else{
+            t=`<div class="category_box" data-aos="fade-right" data-aos-duration="2000" >
+                <div class="text-center" data-aos="fade-right" data-aos-duration="2000"><b>${name}</b></div>
+                <div class="flex" style="justify-content: space-evenly;">
+                  <div data-aos="fade-left" data-aos-duration="2000"><button onclick="chang_status('${id}', '${name}')"  class="btn btn-danger" type="submit" name="deactive">Deactive</button></div>
+                  <div><button data-aos="fade-left" data-aos-duration="2000" class="btn btn-info">Edit</button></div>
+                </div>
+              </div>`
+          }
+          document.getElementById("category_box"+id).innerHTML = t
+        }
+  })
+}
+</script>
+  
+{% endblock content %}

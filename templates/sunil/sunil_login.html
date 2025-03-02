@@ -1,0 +1,83 @@
+{% extends 'home/base.html' %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+{% include 'include/navbar.html' %}
+{% include 'include/alert.html' %}
+<style>
+  *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+</style>
+<style>
+    .login_box{
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        padding: 10px;
+        padding-top: 1px;
+        margin-top: 20px;
+    }
+    .sunil{
+      border: 1px solid black;
+    }
+</style>
+
+
+<div class="container">
+    <div class="login_box">
+        <div class="text-center mt-2"><strong>Login</strong></div>
+        <form method="POST"> {% csrf_token %}
+            <br>
+            <div class="mb-3">
+            <input type="password" oninput="check_number()" name="number" placeholder="Enter Your Mobile Number" class="form-control" id="number" required>
+            </div>
+            <div class="mb-3">
+            <input oninput="check_pin()" name="pin" placeholder="Enter Your Secret pin" type="password" class="form-control" id="pin" required>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary" name="Login">Login</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+
+function check_number(){
+    mobile=document.getElementById('number').value;
+
+    if (mobile.length <= 9 ){
+    document.getElementById('number').style.borderColor ='green';return false;
+  }
+  if (mobile.length >= 11 ){
+    alert('only 10 digit number ')
+  }
+    if (mobile.length == 10 ){
+        document.getElementById('number').style.borderColor ='';return true;
+       
+  }
+}
+function check_pin(){
+    pin=document.getElementById('pin').value;
+
+    if (pin.length <= 3 ){
+    document.getElementById('pin').style.borderColor ='green';return false;
+  }
+    if (pin.length >= 5 ){
+    alert('only 4 digit number Secret Pin')
+  }
+    if (pin.length == 4 ){
+        document.getElementById('pin').style.borderColor ='';return true;
+       
+  }
+}
+
+
+
+</script>
+
+
+{% endblock content %}

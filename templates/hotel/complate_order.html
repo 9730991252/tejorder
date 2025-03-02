@@ -1,0 +1,89 @@
+{% extends 'home/base.html' %}
+
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/styles.css">
+{% endblock head %}
+
+{% block content %}
+    {% include 'include/alert.html' %}
+    {% include 'include/hotel_navbar.html' %}
+    <div class="container">
+        <div class="card-container">
+            {% for bill in order_master %}
+            <div class="card">
+                <h6>Bill Number: {{ bill.order_filter }}</h6>
+                <p>Total Amount: {{ bill.total_price }}</p>
+                <p> {{ bill.ordered_date }}</p>
+                {% if bill.status == 1 %}
+                    {% if bill.cancel_btn_show_status == 1 %}
+                        <div style="display: grid;grid-template-columns: 3fr 0.5fr 0.5fr; gap: 10px;">
+                            <a href="/hotel/complate_view_order/{{bill.order_filter}}" class="btn btn-success ">View</a>
+                            <a href="/hotel/edit_bill/{{bill.id}}" class="btn btn-primary">Edit</a>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal{{bill.id}}">
+                                Cancel
+                            </button>
+                        </div> 
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal{{bill.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Cancel Conformetion</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                            
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="order_filter" value="{{bill.order_filter}}">
+                                            <button name="cancel_bill" class="btn btn-danger "  style="width: fit-content;">Cancel</button>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                    {% else %}
+                        <a href="/hotel/complate_view_order/{{bill.order_filter}}" class="btn btn-success ">View</a>
+                    {% endif %}
+                {% else %}
+                    <div class="text-danger ">This Order Is Canceld</div>
+                    <a href="/hotel/complate_view_order/{{bill.order_filter}}" class="btn btn-success ">View</a>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        </div>
+        <style>
+            a{
+                text-decoration: none;
+            }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            text-align: center;
+            justify-content: center;
+        }
+        
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card h2 {
+            margin-top: 0;
+        }
+        
+        .card p {
+            margin: 8px 0;
+        }
+        </style>
+{% endblock content %}

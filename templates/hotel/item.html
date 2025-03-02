@@ -1,0 +1,119 @@
+{% extends 'home/base.html' %}
+
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/styles.css">
+{% endblock head %}
+<style>
+    footer {
+        background-color: #f2f2f2;
+        padding: 20px 0;
+        text-align: center;
+    }
+</style>
+{% block content %}
+    {% include 'include/hotel_navbar.html' %}
+    {% include 'include/alert.html' %}
+    <br><br>
+<div class="container">
+
+    <!-- Button trigger modal -->
+    <button data-aos="fade-left" data-aos-duration="2000" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Add New Item
+    </button>
+    
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 data-aos="fade-left" data-aos-duration="2000" class="modal-title fs-5" id="exampleModalLabel">item</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="english_name">English Name</label>
+              <input type="text" id="english_name" name="english_name" placeholder="item english Name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="marathi_name">Marathi Name</label>
+                <input type="text" id="marathi_name" name="marathi_name" placeholder="item Marathi Name" class="form-control" required>
+              </div>
+            <div class="mb-3">
+              <label for="price">Price</label>
+              <input type="text" id="price" name="price" placeholder="item Price" class="form-control" required>
+            </div>
+            <div class="mb-2 mt-1">
+              <button type="submit" name="add_item" class="btn btn-primary">Add</button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <style>
+    .item_box{
+      border: 1px solid black;
+      padding: 10px;
+      border-radius: 10px;
+      margin: 0 auto;
+      margin-bottom: 10px;
+      width: 350px;
+    }
+    .flex{
+      display: flex; 
+      gap: 10px;
+      justify-content: center;
+    }
+    a{
+      text-decoration: none;
+      color: black;
+    }
+  </style>
+  {% for c in item %}
+  <div id="item_box{{c.id}}">
+    <a href="/hotel/item_detail/{{c.id}}">
+        <div class="item_box" data-aos="fade-right" data-aos-duration="2000" >
+            <div class="text-center" data-aos="fade-left" data-aos-duration="2000"><b>{{c.marathi_name}}</b></div>
+            <div>
+              {% if hotel.gst_status == 1 %}
+
+                {% if c.gst_status == 1 %}
+                  <b>Gst Status ON</b>
+                {% else %}
+                  <b>Gst Status OFF</b>
+                {% endif %}
+
+              {% else %}
+
+                {% if hotel.discount_status == 1 %}
+
+                  {% if c.discount_status == 1 %}
+                    <b>Discount Status ON</b>
+                  {% else %}
+                    <b>Discount Status OFF</b>
+                  {% endif %}
+          
+                {% endif %}
+
+              {% endif %}
+              
+            </div>
+        </div>
+    </a>
+  </div>
+  {% endfor %}
+</div>
+<script>
+ScrollReveal().reveal('.item_box', { delay: 375, reset: true });
+</script>
+  
+{% endblock content %}

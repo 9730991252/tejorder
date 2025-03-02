@@ -1,0 +1,17 @@
+<!--  #views
+from django.contrib import messages 
+messages.warning(request,"text")
+-->
+
+
+{% if messages %}
+
+    {% for message in messages %}
+    <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %}" role="alert">
+
+        {{ message }}
+    
+</div>
+    {% endfor %}
+
+{% endif %}

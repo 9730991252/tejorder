@@ -1,0 +1,57 @@
+{% extends 'home/base.html' %}
+{% block head %}
+{% endblock head %}
+
+{% block content %}
+{% include 'include/alert.html' %}
+{%  load hotel_tag %}
+<div class="container">
+    <p>welcome {{w.name}}</p>
+</div>
+{% customer_qr_code_cart_orders w.hotel.id %}
+<div  class="container border my-2">
+
+    <h6 class="text-center bg"> <b>चालू टेबल </b></h6>
+      
+      <table class="table">
+        <thead>
+          <tr >
+            <th scope="col" class="text-center">Table Number</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for t in runing_table %}
+          <tr>
+            <td><h5 class="my-3 text-center">{{t.name}}</h5></td>
+            <td><a href="/waiter/order/{{t.id}}"  class="btn btn-success btn-lg my-3">View</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    
+    <br>
+
+    <div  class="container border">
+        <h6 class="text-center bg p-3"><b> नवीन टेबल सुरु साठी </b></h6>
+        <div class="row text-center">
+        {% for t in table %}
+        <a href="/waiter/order/{{t.id}}" style="color: #000;text-decoration: none;">
+          <div class="card mx-auto mb-3 " style="width: 200px;">
+            {% if t.status == 'yes' %}
+              <div class="bg-danger text-light">Running</div>
+            {% endif %}
+            <div class="card-body ">
+              <div><strong id="color{{t.id}}"></strong></div>
+              <h5 class="card-title " >{{t.name}}</h5>
+
+              <a href="/waiter/order/{{t.id}}" class="btn btn-primary" >Book Order </a>
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+        </div>
+        </div>
+</div>
+{% endblock content %}

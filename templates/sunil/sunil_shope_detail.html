@@ -1,0 +1,112 @@
+{% extends 'home/base.html' %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+{% include 'include/alert.html' %}
+<div class="container">
+    <div class="text-center">
+        <b id="main_hotel_name"><b style="font-weight: 400;"></b>  {{hotel.hotel_name}}</b>
+    </div>
+    <div class="text-center">
+        <b id="main_mobile"><b style="font-weight: 400;"></b>Mo.{{hotel.mobile}} <button class="btn" onclick="edit_mobile()"><i class="fa fa-pencil" aria-hidden="true"></i></button></b>
+        <form method="POST" id="edit_mobile" style="display: none;gap: 10px;justify-content: center;align-items: center;"><input type="text" value="{{hotel.mobile}}" name="mobile_i" ><button style="width: 20px;height: 20px;display: flex;justify-content: center;align-items: center;" type="submit" name="mobile" class="btn btn-success btn-sm" onclick="location.reload()"><i class="fa fa-check" aria-hidden="true"></i></button></form>
+        <script>
+            function edit_mobile(){
+            document.getElementById('edit_mobile').style.display = 'flex'
+            document.getElementById('main_mobile').style.display = 'none'
+            }
+        </script>
+    </div>
+    <style>
+        .s_box{
+            padding: 1px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background-color: rgb(0, 0, 0);
+            width: 360px;
+            margin: 0 auto;
+            div{
+                background-color: white;
+                text-align: center;
+                padding: 2px;
+            }
+            .d1{
+                font-weight: 700;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    </style>
+    <div class="s_box">
+
+        <div class="d1">Status</div>
+        <div class="d2">
+            <form style="display: flex;justify-content: center;align-items: center;" method="POST">
+                {% csrf_token %}
+                {% if hotel.status == 1 %}
+                <div class="form-check form-switch form-check-reverse lable ">
+                    <button class="btn" type="submit" name="active" id="active_btn">
+                        <input class="form-check-input" onclick="document.getElementById('active_btn').click()" type="checkbox" id="flexSwitchCheckReverse" name="life_weight"  checked >                        
+                    </button>
+                </div>
+                <div>ON</div>
+                {% else %}
+                <div class="form-check form-switch form-check-reverse lable ">
+                    <button class="btn" type="submit" name="deactive" id="deactive_btn">
+                        <input class="form-check-input" onclick="document.getElementById('deactive_btn').click()"  type="checkbox" id="flexSwitchCheckReverse" name="life_weight" >                        
+                    </button>
+                </div>
+                <div>OFF</div>
+                {% endif %}
+            </form>
+        </div>
+        
+        <div class="d1">GST Status</div>
+        <div class="d2" >
+            <form class="" style="display: flex;justify-content: center;align-items: center;" method="POST">
+                {% csrf_token %}
+                {% if hotel.gst_status == 1 %}
+                <div class="form-check form-switch form-check-reverse lable ">
+                    <button class="btn" type="submit" name="gst_active" id="gst_active_btn">
+                        <input class="form-check-input" onclick="document.getElementById('gst_active_btn').click()" type="checkbox" id="flexSwitchCheckReverse" name="life_weight"  checked >                        
+                    </button>
+                </div>
+                <div>ON</div>
+                {% else %}
+                <div class="form-check form-switch form-check-reverse lable ">
+                    <button class="btn" type="submit" name="gst_deactive" id="gst_deactive_btn">
+                        <input class="form-check-input" onclick="document.getElementById('gst_deactive_btn').click()"  type="checkbox" id="flexSwitchCheckReverse" name="life_weight" >                        
+                    </button>
+                </div>
+                <div>OFF</div>
+                {% endif %}
+            </form>
+        </div>
+
+        <div class="d1">Discount Status</div>
+        <div class="d2" >
+            <form class="" style="display: flex;justify-content: center;align-items: center;" method="POST">
+                {% csrf_token %}
+                {% if hotel.discount_status == 1 %}
+                <div class="form-check form-switch form-check-reverse lable ">
+                    <button class="btn" type="submit" name="discount_active" id="discount_active_btn">
+                        <input class="form-check-input" onclick="document.getElementById('discount_active_btn').click()" type="checkbox" id="flexSwitchCheckReverse" name="life_weight"  checked >                        
+                    </button>
+                </div>
+                <div>ON</div>
+                {% else %}
+                <div class="form-check form-switch form-check-reverse lable ">
+                    <button class="btn" type="submit" name="discount_deactive" id="discount_deactive_btn">
+                        <input class="form-check-input" onclick="document.getElementById('discount_deactive_btn').click()"  type="checkbox" id="flexSwitchCheckReverse" name="life_weight" >                        
+                    </button>
+                </div>
+                <div>OFF</div>
+                {% endif %}
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endblock content %}

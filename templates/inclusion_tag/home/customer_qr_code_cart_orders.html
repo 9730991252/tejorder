@@ -1,0 +1,39 @@
+{% if customer_cart %}
+    <style>
+      .customer_cart_box{
+        display: grid;
+        grid-template-columns: 1fr 1fr 0.5fr 1fr;
+        background-color: rgb(199, 199, 199);
+        row-gap: 1px;
+        div{
+          background-color: white;
+          display: flex;
+          justify-content: center;
+        }
+      }
+    </style>
+      <div class="customer_orders mb-5 text-danger">
+        <div  class="border">
+          <h6 class="text-center">कस्टमर Qr कोड ऑर्डर</h6>
+        </div>
+        <div class="border customer_cart_box">
+          {% for c in customer_cart %}
+          <div>{{c.table.name}} <i class="fa-solid fa-ban"></i></div>
+          <div><b>{{c.item.marathi_name}}</b></div>
+          <div>Qty {{c.qty}}</div>
+          <div style="justify-content: space-evenly;">
+            <form method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="cart_id" value="{{c.id}}">
+              <button type="submit" name="delete_cart" class="btn text-danger btn-sm">X</button>
+            </form>
+            <form method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="cart_id" value="{{c.id}}">
+              <button type="submit" name="accept_order" class="btn text-success btn-sm"><i class="fa fa-check" aria-hidden="true"></i></button>
+            </form>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}

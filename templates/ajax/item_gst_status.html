@@ -1,0 +1,39 @@
+{% if hotel.gst_status == 1 %}
+            <div class="d1">GST Status</div>
+            <div class="d2" >
+                <form class="" style="display: flex;justify-content: center;align-items: center;" method="POST">
+                    {% csrf_token %}
+                    {% if item.gst_status == 1 %}
+                    <div class="form-check form-switch form-check-reverse lable ">
+                          <input class="form-check-input" onclick="item_gst_status()" type="checkbox" id="flexSwitchCheckReverse" name="life_weight"  checked >                        
+                    </div>
+                    <div>ON</div>
+                    {% else %}
+                    <div class="form-check form-switch form-check-reverse lable ">
+                          <input class="form-check-input" onclick="item_gst_status()"  type="checkbox" id="flexSwitchCheckReverse" name="life_weight" >                        
+                    </div>
+                    <div>OFF</div>
+                    {% endif %}
+                </form>
+            </div>
+          {% endif %}
+
+          {% if hotel.discount_status == 1 %}
+            <div class="d1">Discount Status</div>
+            <div class="d2" >
+                <div class="" style="display: flex;justify-content: center;align-items: center;">
+                    {% csrf_token %}
+                    {% if item.discount_status == 1 %}
+                    <div class="form-check form-switch form-check-reverse lable ">
+                            <input class="form-check-input" onclick="item_discount_status()" type="checkbox" id="flexSwitchCheckReverse" name="life_weight"  checked >                        
+                    </div>
+                    <div>ON</div>
+                    {% else %}
+                    <div class="form-check form-switch form-check-reverse lable ">
+                            <input class="form-check-input" onclick="item_discount_status()"  type="checkbox" id="flexSwitchCheckReverse" name="life_weight" >                        
+                    </div>
+                    <div>OFF</div>
+                    {% endif %}
+                </div>
+            </div>
+          {% endif %}

@@ -1,0 +1,39 @@
+{% extends 'home/base.html' %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+{% include 'include/alert.html' %}
+<div class="container">
+<br>
+
+<a href="/sunil/sunil_home/" class="btn btn-primary">Home</a>
+
+<style>
+    .container_box{
+        display: grid;
+        grid-template-columns: repeat(auto-fit,360px);
+        gap: 20px;
+    }
+    .hotel_box{
+        padding: 10px;
+        border: 1px solid black;
+        border-radius: 10px;
+        text-align: center;
+    }
+</style>
+<br>
+<br>
+<br>
+<div class="container_box">
+    {% for h in hotel %}
+    <a href="/sunil/hotel_payment_detail/{{h.id}}" style="color: black; text-decoration: none;">
+        <div class="hotel_box">
+            <h6><b>{{ h.hotel_name }}</b></h6>
+            <p>{{ h.owner_name }}, Mo.{{h.mobile}}</p>
+            <p>{{h.address}}</p>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+</div>
+{% endblock content %}

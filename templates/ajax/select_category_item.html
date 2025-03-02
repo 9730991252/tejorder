@@ -1,0 +1,5 @@
+{% load hotel_tag %}
+{% customer_selected_item c.id as category_item %}
+{% for i in category_item %}
+  <div id="item_box{{i.id}}" onclick="select_category_item('{{i.id}}','{{c.id}}')" class="item_box text-center" {% if i.selected_status == 1 %} style="background-color: rgb(191, 255, 200);"{% endif %} >{{i.name}}</div>
+{% endfor %}

@@ -1,0 +1,10 @@
+{% for t in cart %}
+<tr id="cart">
+    <td>{{t.item.marathi_name}} {{t.note}}</td>
+    <td>{{t.qty}}</td>
+    <td>{{t.price}}</td>
+    <td>{{t.total_amount}}</td>
+    <td>{% if t.cook_status == 'Pendding' %}<h4 class="text-bg-danger text-center">Pending</h4>{% else %}<h4 class="text-bg-success text-center ">{{t.cook_status}}</h4>{% endif %}</td>
+    <td><form action="" method="POST">{% csrf_token %}<input type="hidden" name="cart_id" value="{{t.id}}"><button type="submit" class="btn btn-transparent text-danger btn-sm" name="Delete">X</button></form></td>
+  </tr>
+{% endfor %}

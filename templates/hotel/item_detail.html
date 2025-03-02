@@ -1,0 +1,359 @@
+{% extends 'home/base.html' %}
+
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/styles.css">
+{% endblock head %}
+<style>
+    footer {
+        background-color: #f2f2f2;
+        padding: 20px 0;
+        text-align: center;
+    }
+</style>
+{% block content %}
+{% load embed_video_tags %}
+
+    {% include 'include/hotel_navbar.html' %}
+    {% include 'include/alert.html' %}
+<div class="container">
+    <div class="text-center">
+        <b id="main_item_english_name"><b style="font-weight: 400;">English Name</b>  {{item.english_name}} <button class="btn" onclick="edit_item_english_name()"><i class="fa fa-pencil" aria-hidden="true"></i></button></b>
+        <form method="POST" id="edit_item_english_name" style="display: none;gap: 10px;justify-content: center;align-items: center;"><input type="text" value="{{item.english_name}}" name="english_name" ><button style="width: 20px;height: 20px;display: flex;justify-content: center;align-items: center;" type="submit" name="edit_item_english_name" class="btn btn-success btn-sm" onclick="location.reload()"><i class="fa fa-check" aria-hidden="true"></i></button></form>
+        <script>
+            function edit_item_english_name(){
+            document.getElementById('edit_item_english_name').style.display = 'flex'
+            document.getElementById('main_item_english_name').style.display = 'none'
+            }
+        </script>
+    </div>
+    <div class="container">
+        <div class="text-center">
+            <b id="main_item_marathi_name"><b style="font-weight: 400;">Marathi Name</b>  {{item.marathi_name}} <button class="btn" onclick="edit_item_marathi_name()"><i class="fa fa-pencil" aria-hidden="true"></i></button></b>
+            <form method="POST" id="edit_item_marathi_name" style="display: none;gap: 10px;justify-content: center;align-items: center;"><input type="text" value="{{item.marathi_name}}" name="marathi_name" ><button style="width: 20px;height: 20px;display: flex;justify-content: center;align-items: center;" type="submit" name="edit_item_marathi_name" class="btn btn-success btn-sm" onclick="location.reload()"><i class="fa fa-check" aria-hidden="true"></i></button></form>
+            <script>
+                function edit_item_marathi_name(){
+                document.getElementById('edit_item_marathi_name').style.display = 'flex'
+                document.getElementById('main_item_marathi_name').style.display = 'none'
+                }
+            </script>
+        </div>
+    </div>
+    <div class="text-center">
+        <b id="main_item_price"><b style="font-weight: 400;">Price</b> Rs.{{item.price}} <button class="btn" onclick="edit_item_price()"><i class="fa fa-pencil" aria-hidden="true"></i></button></b>
+        <form method="POST" id="edit_item_price" style="display: none;gap: 10px;justify-content: center;align-items: center;"><input type="text" value="{{item.price}}" name="price" ><button style="width: 20px;height: 20px;display: flex;justify-content: center;align-items: center;" type="submit" name="edit_item_price" class="btn btn-success btn-sm" onclick="location.reload()"><i class="fa fa-check" aria-hidden="true"></i></button></form>
+        <script>
+            function edit_item_price(){
+            document.getElementById('edit_item_price').style.display = 'flex'
+            document.getElementById('main_item_price').style.display = 'none'
+            }
+        </script>
+    </div>
+</div>
+<div style="display: flex;flex-wrap: wrap;justify-content: space-evenly;">
+        <!------------------------status sec-------------------------->
+        <style>
+          .status_box{
+            padding: 1px;
+            background-color: black;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-radius: 11px;
+            gap: 1px;
+            overflow: hidden;
+            height: fit-content;
+            div{
+              background-color: white;
+              border-radius: 10px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+            .d1{
+              border-top-right-radius: 0px;
+              border-bottom-right-radius: 0px;
+            }
+            .d2{
+              border-top-left-radius: 0px;
+              border-bottom-left-radius: 0px;
+            }
+          }
+        </style>
+        <div class="container status_box" style="width: 340px;" id="status_box">
+          {% if hotel.gst_status == 1 %}
+            <div class="d1">GST Status</div>
+            <div class="d2" >
+                <form class="" style="display: flex;justify-content: center;align-items: center;" method="POST">
+                    {% csrf_token %}
+                    {% if item.gst_status == 1 %}
+                    <div class="form-check form-switch form-check-reverse lable ">
+                          <input class="form-check-input" onclick="item_gst_status()" type="checkbox" id="flexSwitchCheckReverse" name="life_weight"  checked >                        
+                    </div>
+                    <div>ON</div>
+                    {% else %}
+                    <div class="form-check form-switch form-check-reverse lable ">
+                          <input class="form-check-input" onclick="item_gst_status()"  type="checkbox" id="flexSwitchCheckReverse" name="life_weight" >                        
+                    </div>
+                    <div>OFF</div>
+                    {% endif %}
+                </form>
+            </div>
+          {% endif %}
+
+          {% if hotel.discount_status == 1 %}
+            <div class="d1">Discount Status</div>
+            <div class="d2" >
+                <div class="" style="display: flex;justify-content: center;align-items: center;">
+                    {% csrf_token %}
+                    {% if item.discount_status == 1 %}
+                    <div class="form-check form-switch form-check-reverse lable ">
+                        <input class="form-check-input" onclick="item_discount_status()" type="checkbox" id="flexSwitchCheckReverse" name="life_weight"  checked >                        
+                    </div>
+                    <div>ON</div>
+                    {% else %}
+                    <div class="form-check form-switch form-check-reverse lable ">
+                          <input class="form-check-input" onclick="item_discount_status()"  type="checkbox" id="flexSwitchCheckReverse" name="life_weight" >                        
+                    </div>
+                    <div>OFF</div>
+                    {% endif %}
+                </div>
+            </div>
+          {% endif %}
+        </div>
+        <!------------------------end status sec-------------------------->
+    <!------------------------category sec-------------------------->
+    <style>
+        .category_box{
+            padding: 10px;
+            border: 1px solid rgb(126, 126, 126);
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+    <div class="container" style="width: 360px;">
+    <br>
+      
+      <ul class="list-group">
+      <li class="text-center list-group-item " aria-current="true">
+        <b>Select Category</b>
+        <button type="button" class="btn btn-success btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#Select_category"><i class="fa fa-plus" aria-hidden="true"></i></button>
+      </li>
+        <!-- Modal -->
+        <div class="modal fade" id="Select_category" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div id="category_main_box">
+                    {% for c in category %}
+                        <div id="category_box{{c.id}}" onclick="select_item_category('{{c.id}}')" class="category_box text-center" {% if c.selected_status == 1 %} style="background-color: rgb(191, 255, 200);"{% endif %} >{{c.name}}</div>
+                    {% endfor %}
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" id="close_modal_btn" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <div id="category_main_box_1">
+            {% for c in category %}
+            <li class="text-center list-group-item "  {% if c.selected_status == 0 %}  style="display: none;" {% else %} style="display: flex;gap: 10px;justify-content: space-between;" {% endif %} aria-current="true">{{c.name}}  <form method="POST"><input type="hidden" name="id" value="{{c.id}}"> <button type="submit" name="unselect_category" class="btn btn-sm btn-danger">Remove</button></form></li>
+            {% endfor %}
+        </div>
+        
+      </ul>
+    </div>
+      <!------------------------end category sec-------------------------->
+</div>
+<div>
+  <br>
+  <ul class="list-group" style="width: 350px;margin: 0 auto;">
+  <li class="text-center list-group-item " style="display: flex;justify-content: space-evenly;width: 350px;"  aria-current="true">
+    {% if item_image_and_youtube_url.image == none %}
+      <div>
+        <b>Image</b>
+        <button type="button" class="btn btn-success btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#add_image"><i class="fa fa-plus" aria-hidden="true"></i></button>
+      </div>
+      {% else %}
+      <div>
+        <b>Image</b>
+        <b class="text-success"><i class="fa fa-check" aria-hidden="true"></i></b>
+      </div>
+    {% endif %}
+    {% if item_image_and_youtube_url.youtube_url == none %}
+    <div>
+      <b>Video</b>
+      <button type="button" class="btn btn-success btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#add_video"><i class="fa fa-plus" aria-hidden="true"></i></button>
+    </div>
+    {% else %}
+    <div>
+      <b>Video</b>
+      <b class="text-success"><i class="fa fa-check" aria-hidden="true"></i></b>
+    </div>
+    {% endif %}
+  </li>
+    <!-- Modal -->
+    <div class="modal fade" id="add_image" tabindex="-1" aria-labelledby="add_image" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form method="POST" enctype="multipart/form-data">
+              <div class="mb-3">
+                <label for="image" class="form-label">Image File</label>
+                <input type="file" class="form-control" id="image" name="image">
+              </div>
+
+              <button class="btn btn-primary" type="submit" name="add_image" onclick="document.getElementById('image_spinners').style.display = 'flex';this.style.display = 'none'">Submit</button>
+              <div class="spinner-border" id="image_spinners" style="display: none;" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="close_modal_btn" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="add_video" tabindex="-1" aria-labelledby="add_video" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form method="POST" enctype="multipart/form-data">
+              <div class="mb-3">
+                <label for="url" class="form-label">Url</label>
+                <input type="text" name="url" id="url" class="form-control" required>
+              </div>
+
+              <button class="btn btn-primary" type="submit" name="add_url">Submit</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="close_modal_btn" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+    {% if item_image_and_youtube_url.image %}
+      <li class="text-center list-group-item " aria-current="true">
+        <img style="width: 100px;" src="{{item_image_and_youtube_url.image.url}}" alt="a">
+        <button type="button" class="btn btn-lg ms-3" data-bs-toggle="modal" data-bs-target="#edit_image"><i class="fas fa-edit    "></i></button>
+      </li>
+      <div class="modal fade" id="edit_image" tabindex="-1" aria-labelledby="add_image" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                  <img style="width: 150px;" src="{{item_image_and_youtube_url.image.url}}" alt="a">
+<br>
+                  <label for="image" class="form-label">Image File</label>
+                  <input type="file" class="form-control" id="image"  name="image">
+                </div>
+  
+                <button class="btn btn-primary" type="submit" name="edit_image" onclick="document.getElementById('image_spinners').style.display = 'flex';this.style.display = 'none'">Submit</button>
+                <div class="spinner-border" id="image_spinners" style="display: none;" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="close_modal_btn" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    {% if item_image_and_youtube_url.youtube_url %}
+      <li class="text-center list-group-item " aria-current="true" style="display: flex;justify-content: center;align-items: center;">
+        {% video item_image_and_youtube_url.youtube_url '100x60'  %}
+        <button type="button" class="btn btn-lg ms-3" data-bs-toggle="modal" data-bs-target="#edit_url"><i class="fas fa-edit    "></i></button>
+      </li>
+      <div class="modal fade" id="edit_url" tabindex="-1" aria-labelledby="edit_url" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              
+              
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form method="POST" enctype="multipart/form-data">
+                {% video item_image_and_youtube_url.youtube_url '280x215'  %}
+                <div class="mb-3">
+                    <label for="url" class="form-label">Url</label>
+                    <input type="text" name="url" value="{{item_image_and_youtube_url.youtube_url}}" id="url" class="form-control" required>
+                </div>
+  
+                <button class="btn btn-primary" type="submit" name="edit_url">Submit</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="close_modal_btn" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+  
+  </ul>
+  
+  </div>
+  <br><br>
+<script>
+function item_discount_status(){
+    $.ajax({
+    url: "{% url 'item_discount_status' %}",
+    method: "GET",
+    data:{
+      id:'{{item.id}}',
+        },
+        success: function(data){
+        document.getElementById('status_box').innerHTML = data.t
+        }
+  })
+}
+function item_gst_status(){
+    $.ajax({
+    url: "{% url 'item_gst_status' %}",
+    method: "GET",
+    data:{
+      id:'{{item.id}}',
+        },
+        success: function(data){
+        document.getElementById('status_box').innerHTML = data.t
+        }
+  })
+}
+function select_item_category(c_id){
+    $.ajax({
+    url: "{% url 'select_item_category' %}",
+    method: "GET",
+    data:{
+        c_id:c_id,
+      item_id:'{{item.id}}',
+        },
+        success: function(data){
+        document.getElementById('category_main_box').innerHTML = data.t
+        document.getElementById('category_main_box_1').innerHTML = data.t1
+        }
+  })
+}
+</script>
+{% endblock content %}

@@ -1,0 +1,25 @@
+from django.db import models
+
+# Create your models here.
+class Sunil(models.Model):
+    sum = models.IntegerField()
+
+class Hotel(models.Model):
+    hotel_name = models.CharField(max_length=100)
+    owner_name = models.CharField(max_length=100)
+    address = models.CharField(max_length=500, null=True)
+    upi_id = models.CharField(max_length=500, default='')
+    mobile = models.IntegerField()
+    pin = models.IntegerField()
+    status = models.IntegerField(default=1)
+    gst_status = models.IntegerField(default=0)
+    discount_status = models.IntegerField(default=0)
+    date = models.DateField(auto_now_add=True, null=True)
+
+class Hotel_Payment(models.Model):
+    hotel = models.ForeignKey(Hotel, on_delete=models.PROTECT, null=True)
+    amount = models.FloatField()
+    bills = models.IntegerField()
+    type = models.CharField(max_length=100)
+    date = models.DateField()
+    mobile = models.IntegerField(null=True)

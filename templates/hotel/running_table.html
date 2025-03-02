@@ -1,0 +1,155 @@
+{% extends 'home/base.html' %}
+
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/styles.css">
+{% endblock head %}
+
+{% block content %}
+{% load hotel_tag %}
+    {% include 'include/alert.html' %}
+    {% include 'include/hotel_navbar.html' %}
+    {% customer_qr_code_cart_orders hotel.id %}
+    <style>
+      .head_main_box{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      @media only screen and (max-width: 600px) {
+      .head_main_box{
+        grid-template-columns: 1fr;
+      }
+      }
+    </style>
+
+    <div class="head_main_box">
+    
+        <div class="" style="border-bottom: 0px;">
+          <div  class="border">
+            <h6 class="text-center">चालू टेबल</h6>
+          </div>
+          <table class="table">
+            <thead>
+              <tr >
+              </tr>
+            </thead>
+            <tbody id="chang_order_table_id">
+              {% for t in runing_table %}
+              <div>
+
+              <tr>
+                <td>
+                  <h6 class="text-center">
+                    {{t.name}}
+                    <button class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal{{t.id}}"><i class="fas fa-edit    "></i></button>
+                  </h6>
+                </td>
+                <td><a href="/hotel/view_order/{{t.id}}"  class="btn btn-success btn-sm">View</a></td>
+              </tr>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal{{t.id}}" tabindex="-1" aria-labelledby="exampleModalLabel{{t.id}}" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        {% csrf_token %}
+                        <select class="form-control" name="" id="new_table{{t.id}}">
+                          <option value="">{{t.name}}</option>
+                          {% for t in table %}
+                          <option value="{{t.id}}" {% if t.status == 'yes' %} style="display: none;" {% endif %}>{{t.name}}</option>
+                          {% endfor %}
+                        </select>
+                        <br>
+                        <button type="button" data-bs-dismiss="modal" onclick="chang_table_name('{{t.id}}')" class="btn btn-danger" name="chang_table">Select</button>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+      </div>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+
+        <div class="border">
+          <div  class="border" style="height: 35px;display: flex;justify-content: center;align-items: center;">
+            <h6 class="text-center lg">पेड/अनपेड शेवटची 10 बिले</h6>
+          </div>
+          {% for t in unpaid_bills %}
+          <div style="width: 100%;height: 40px; display: grid; grid-template-columns: 3fr 1fr 1fr 1fr;border-bottom: 1px solid rgb(170, 170, 160); justify-content: center;align-items: center;">
+            <div class="text-center"><b>{{t.table.name}}</b>, Bill No.<b>{{t.order_filter}}</b></div>
+            <div><b class="text-danger">Rs.{{t.total_price|add:t.s_gst|add:t.c_gst}}</b></div>
+            <div style="display: flex;justify-content: center;">
+              <form method="POST" >{% csrf_token %}
+                <input type="hidden" name="bill_id" value="{{t.id}}">
+                <button type="submit" name="chang_paid_status" class="btn btn-success btn-sm">Paid</button>
+              </form>
+            </div>
+            <div><a href="/hotel/complate_view_order/{{t.order_filter}}"  class="btn btn-primary btn-sm">View</a></div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+        <br>
+    
+        <div  class="container border">
+            <h5 class="text-center bg p-3"><b> नवीन टेबल सुरु साठी </b></h5>
+          </div>
+          <div class="container border">
+            <div class="row text-center">
+            {% for t in table %}
+              <div class="card mx-auto m-4 "{% if t.status == 'yes' %} style="width: 200px;position: relative;border-color: red;" {% else %} style="width: 200px;position: relative;" {% endif %}>
+                {% if t.status == 'yes' %}
+                  <div class="bg-danger text-light" style="width: 198px;position: absolute;left: 0;top: 0;right: 0;border-radius: 5px;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;">Running</div>
+                {% endif %}
+                <div class="card-body ">
+                  <div><strong id="color{{t.id}}"></strong></div>
+                  <br>
+                  <h6 class="card-title " >{{t.name}}</h6>
+    
+                  <a href="/hotel/view_order/{{t.id}}" class="btn btn-primary" >Book Order </a>
+                </div>
+              </div>
+            {% endfor %}
+            </div>
+            </div>
+          
+          
+            
+            
+        
+        
+        
+        
+        
+          
+        
+    
+    </div>
+
+  <script>
+    function chang_table_name(old_t){
+      new_t = document.getElementById('new_table'+old_t).value
+       $.ajax({
+         url: "{% url 'chang_order_table_id' %}",
+         method: "GET",
+         data: {
+           old_t: old_t,
+           new_t:new_t
+         },
+         success: function(res) {
+          location.reload();
+           document.getElementById('chang_order_table_id'+old_t).innerHTML = res.t;
+         }
+   });
+    }
+  </script>
+{% endblock content %}

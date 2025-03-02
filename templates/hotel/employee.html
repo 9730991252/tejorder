@@ -1,0 +1,130 @@
+{% extends 'home/base.html' %}
+
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/styles.css">
+{% endblock head %}
+<style>
+    footer {
+        background-color: #f2f2f2;
+        padding: 20px 0;
+        text-align: center;
+    }
+</style>
+{% block content %}
+{% include 'include/hotel_navbar.html' %}
+{% include 'include/alert.html' %}
+
+<br>
+<div class="container" data-aos="fade-up" data-aos-duration="1500">
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newemployeeModal">
+    Add new employee
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="newemployeeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Employee</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="POST">
+            <div class="mb-3">
+                <label for="name">Name</label>
+                <input type="text" name="name" class="form-control" id="name" placeholder="Enter Name" required>
+            </div>
+            <div class="mb-3">
+                <label for="mobile">Mobile</label>
+                <input type="number" name="mobile" class="form-control" id="mobile" placeholder="Enter Mobile" required>
+            </div>
+            <div class="mb-3">
+                <label for="pin">Pin</label>
+                <input type="number" name="pin" class="form-control" id="pin" placeholder="Enter pin" required>
+            </div>
+            <div class="mb-3">
+                <select class="form-select" name="type" aria-label="Default select example" required>
+                    <option selected value="">Please select Employee Type</option>
+                    <option value="waiter">Waiter</option>
+                    <option value="chef_helper">Chef Helper</option>
+                </select>
+            </div>
+            <button class="btn btn-primary form-control" type="submit" name="add_new_enmploee">Add</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <style>
+      .employee_box {
+          border: 1px solid #000000;
+          padding: 10px;
+          margin: 10px auto;
+          width: 360px;
+          border-radius: 10px;
+        }
+</style>
+
+{% for e in employee %}
+<div class="employee_box">
+    <div class="text-center" style="display: flex;justify-content: space-evenly;">{{e.name}} {% if e.type == 'chef_helper' %}<b style="color: green;">Chef Helper</b>{% else %} <b style="color: red;">Waiter</b> {% endif %}</div>
+    <div class="text-center" style="display: flex;justify-content: space-evenly;">
+        <div>Mo.{{e.mobile}}</div>
+        <div>Pin.{{e.pin}}</div>
+    </div>
+    <div class="text-center" style="display: flex;justify-content: space-evenly;margin-top: 10px;">
+        <div><form class="" method="POST">{% csrf_token %}{% if e.status == 1 %}<button class="btn btn-success btn-sm" type="submit" name="active">Active<input type="hidden" name="id" value="{{e.id}}"></button>{% else %}<button class="btn btn-danger" type="submit" name="deactive">Deactive<input type="hidden" name="id" value="{{e.id}}"></button>{% endif %}</form></div>
+        <div><button data-bs-toggle="modal" data-bs-target="#newemployeeeditModal{{e.id}}" type="button" class="btn btn-primary btn-sm">Edit</button></div>
+    </div>
+    
+</div>
+
+<div class="modal fade" id="newemployeeeditModal{{e.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Employee</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="POST">
+            <input type="hidden" name="id" value="{{e.id}}">    
+            <div class="mb-3">
+                <label for="name">Name</label>
+                <input type="text" name="name" value="{{e.name}}" class="form-control" id="name" placeholder="Enter Name" required>
+            </div>
+            <div class="mb-3">
+                <label for="mobile">Mobile</label>
+                <input type="number" name="mobile" value="{{e.mobile}}" class="form-control" id="mobile" placeholder="Enter Mobile" required>
+            </div>
+            <div class="mb-3">
+                <label for="pin">Pin</label>
+                <input type="number" name="pin" value="{{e.pin}}" class="form-control" id="pin" placeholder="Enter pin" required>
+            </div>
+            <div class="mb-3">
+                <select class="form-select" name="type" aria-label="Default select example" required>
+                    <option value="">Please select Employee Type</option>
+                    <option value="waiter" {% if e.type == 'waiter' %} selected {% endif %}>Waiter</option>
+                    <option value="chef_helper" {% if e.type == 'chef_helper' %} selected {% endif %}>Chef Helper</option>
+                </select>
+            </div>
+            <button class="btn btn-primary form-control" type="submit" name="edit_enmploee">Edit</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endfor %}
+
+</div>
+{% endblock content %}

@@ -1,0 +1,90 @@
+{% extends 'home/base.html' %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+{% include 'include/hotel_navbar.html' %}
+{% include 'include/alert.html' %}
+<div class="container" data-aos="fade-up" data-aos-duration="150" data-aos-delay="200">
+    <div class="border">
+        <form method="POST">
+            <input type="text" value="Table  {{next_table_count}}" style="width: 90%;margin: 10px auto;text-align: center;" class="form-control" name="name" required>
+            <div style="margin: 10px auto;width: fit-content;" >
+                <button class="btn btn-primary" name="add_table">Add Table</button>
+            </div>
+        </form>
+    </div>
+
+    <style>
+        .table_main_box{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .table_box{
+            padding: 10px;
+            border: 1px solid rgb(110, 110, 110);
+            border-radius: 10px;
+            width: 200px;
+            text-align: center;
+            .table_number{
+                font-weight: 700;
+            }
+    
+        }
+    </style>
+    
+    <div class="table_main_box">
+    {% for t in table %}
+    <div id="table_box{{t.id}}">
+        <div class="table_box">
+            <div class="table_number" id="old_table_number{{t.id}}">{{t.name}} <button class="btn btn-sm" onclick="edit_table_number('{{t.id}}')"><i class="fas fa-pen    "></i></button></div>
+            <div class="table_number" style="display: none;" id="new_table_number{{t.id}}"><input style="width: 80%;" type="text" value="{{t.name}}" id="chang_teble_name{{t.id}}"> <button class="btn" onclick="chang_teble_name('{{t.id}}')"><i class="fa fa-check" aria-hidden="true"></i></button></div>
+
+            <script>
+
+            </script>
+            <br>
+            <td>{% if t.status == 1 %}<button onclick="chang_teble_status('{{t.id}}')" class="btn btn-success" type="submit" name="active">Active</button>{% else %}<button onclick="chang_teble_status('{{t.id}}')" class="btn btn-danger" type="submit" name="deactive">Deactive</button>{% endif %}</td>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+</div>
+
+<script>
+    function edit_table_number(t_id){
+        document.getElementById('new_table_number'+t_id).style.display = 'flex'
+        document.getElementById('old_table_number'+t_id).style.display = 'none'
+        }
+    function chang_teble_name(id){
+        name = document.getElementById('chang_teble_name'+id).value
+        $.ajax({
+            url: "{% url 'chang_teble_name' %}",
+            method: "GET",
+            data:{
+                id:id,
+                name:name
+                },
+                success: function(data){
+                    document.getElementById('table_box'+id).innerHTML = data.t
+                }
+        })
+    }
+    function chang_teble_status(id){
+        $.ajax({
+            url: "{% url 'chang_teble_status' %}",
+            method: "GET",
+            data:{
+                id:id,
+                },
+                success: function(data){
+                    document.getElementById('table_box'+id).innerHTML = data.t
+                }
+        })
+    }
+</script>
+
+{% endblock content %}

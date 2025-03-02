@@ -1,0 +1,283 @@
+{% extends 'home/base.html' %}
+
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/styles.css">
+{% endblock head %}
+
+{% block content %}
+<div class="hide">
+    {% include 'include/alert.html' %}
+    {% include 'include/hotel_navbar.html' %}
+</div>
+
+{% load hotel_tag %}
+<style>
+    .flex{
+        display: flex;
+        gap: 10px;
+    }
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+}
+.bill_containt_box{
+display: grid;
+grid-template-columns: 2fr 1fr 1fr 1fr;
+border-top: 1px solid rgb(201, 201, 201);
+.header{
+    font-weight: 700;
+    border-bottom: 1px solid rgb(211, 211, 211);
+    padding: 2px;
+}
+.containt{
+    padding: 2px;
+    border-bottom: 1px solid rgb(233, 233, 233);
+}
+}
+.addvertise{
+display: none;
+text-align: center;
+font-weight: 500;
+font-size: 13px;
+justify-content: center;
+align-items: center;
+}
+.bill_number_box{
+display: grid;
+grid-template-columns: 0.7fr 2fr;
+}
+#head{
+display: none !important;
+}
+</style>
+<style media="print">
+@page{
+size: 3in 10in;
+margin: 0in;
+padding: 0in;
+} 
+.hide{
+display: none;
+}
+#head{
+display: unset !important;
+}
+.addvertise{
+display: unset;
+text-align: center;
+font-weight: 500;
+font-size: 13px;
+}
+#thank_you{
+font-weight: 500;
+font-size: 13px;
+text-align: center;
+margin-bottom: -0.05in;
+}
+</style>
+
+<style>
+    .body{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    @media only screen and (max-width: 600px) {
+        .body{
+            display: grid;
+            grid-template-columns: 1fr !important;
+        }
+    }   
+</style>
+
+<div class="body" id="body">
+    <div>
+
+        
+        
+<div class="container border bill_box" id="canvas" style="background-color: white;">
+    <div>
+        <div class="text-center" id="head">
+            <h3>{{hotel.hotel_name}}</h3>
+            <h6>{{hotel.address}}</h6>
+            <h6>{{hotel.contact_details}}</h6>
+        </div>
+        <div class="bill_number_box">
+            <div ><h6>Bill {{om.order_filter}}</h6></div>
+            <div style="text-align: end;"><h6>{{om.ordered_date}}</h6></div>
+        </div>
+    </div>
+    <div class="bill_containt_box">
+        <div class="header">Item</div>
+        <div class="header">Qty</div>
+        <div class="header">Price</div>
+        <div class="header">Amount</div>
+        {% for o in order_detail %}
+        <div class="containt">{{o.item.english_name}}</div>
+        <div class="containt">{{o.qty}}</div>
+        <div class="containt">{{o.price}}</div>
+        <div class="containt">{{o.total_price}}</div>
+        {% endfor %}
+    </div>
+    <h6>Sub Total Rs.{{om.total_price}}</h6>
+    {% if hotel.gst_status == 1 %}
+    <h6 {% if order_master.s_gst == 0 %} class="hide"{% endif %}>S Gst Rs.{{om.s_gst}}</h6>
+    <h6 {% if order_master.c_gst == 0 %} class="hide"{% endif %}>C Gst Rs.{{om.c_gst}}</h6>
+    <h6><b>Total Amount Rs.{{total_price}}</b></h6>
+    {% endif %}
+    {% if hotel.discount_status == 1 %}
+    <h6 {% if order_master.discount_amount == 0 %} class="hide"{% endif %}>Discount Amount Rs.{{om.discount_amount}}</h6>
+    <h6><b>Total Amount Rs.{{total_price}}</b></h6>
+    {% endif %}
+    <div class="text-center" id="qr_box" style="display: none;grid-template-columns: 1fr 3fr;">
+        <canvas  id="qrCode"></canvas>
+        <b >Scan QR And Pay Amount</b>
+    </div>
+    <div class="text-center"><h6><b>Thank You Visit Again</b></h6></div>
+    <div class="addvertise">All type Mobile Software  9730 99 1252 <br></div>
+    <div class="addvertise">.</div>
+</div>
+
+
+<br>
+<div id="chang_bill_paid_status"></div>
+<div class="hide container text-center flex" style="justify-content: space-evenly;">
+    <button class="btn btn-primary" onclick="print_div()">Print</button>
+
+    {% if om.paid_status == 0 %}
+        <button class="btn btn-danger" onclick="chang_bill_paid_status(),this.style.display = 'none'">Paid</button>
+    {% endif %}
+
+    
+    <button class="btn btn-success" onclick="download_img()">Download <i class="fa fa-download" aria-hidden="true"></i></button>
+</div>
+<div class="hide container text-center flex mt-3" style="justify-content: space-evenly;">
+    <button class="btn btn-info" onclick="Generate_upi_qr_code()">Generate Upi Qr Code <i class="fa fa-qrcode" aria-hidden="true"></i></button>
+</div>
+
+</div>
+
+<div class="hide">
+    <br>
+
+    {% if hotel.discount_status == 1 %}
+    <form method="POST" style="display: flex;gap: 10px;justify-content: center;">
+        <label >Select Discount Percent</label>
+        <select style="width: 25%;" class="form-control" name="percent" id="" onchange="document.getElementById('discount_btn').click()">
+            <option value="0" {% if om.discount_percent == 0 %} selected {% endif %}>0% Rs.0</option>
+            <option value="1" {% if om.discount_percent == 1 %} selected {% endif %}>1% Rs.{% get_percenteg_amount 1 without_gst_amount %}</option>
+            <option value="2" {% if om.discount_percent == 2 %} selected {% endif %}>2% Rs.{% get_percenteg_amount 2 without_gst_amount %}</option>
+            <option value="3" {% if om.discount_percent == 3 %} selected {% endif %}>3% Rs.{% get_percenteg_amount 3 without_gst_amount %}</option>
+            <option value="4" {% if om.discount_percent == 4 %} selected {% endif %}>4% Rs.{% get_percenteg_amount 4 without_gst_amount %}</option>
+            <option value="5" {% if om.discount_percent == 5 %} selected {% endif %}>5% Rs.{% get_percenteg_amount 5 without_gst_amount %}</option>
+            <option value="10" {% if om.discount_percent == 10 %} selected {% endif %}>10% Rs.{% get_percenteg_amount 10 without_gst_amount %}</option>
+            <option value="15" {% if om.discount_percent == 15 %} selected {% endif %}>15% Rs.{% get_percenteg_amount 15 without_gst_amount %}</option>
+            <option value="20" {% if om.discount_percent == 20 %} selected {% endif %}>20% Rs.{% get_percenteg_amount 20 without_gst_amount %}</option>
+        </select>
+        <button type="submit" onclick="location.reload()" name="select_discount" id="discount_btn" style="display: none;"></button>
+    </form>
+    {% endif %}
+    <br>
+    <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;" >
+        <div style="background-color: rgb(191, 255, 191);height: fit-content;width: 360px;text-align: center;font-weight: 700;border-radius: 10px;" class=>
+            <b>Cash Amount Rs.<b id="pending_amount">{{om.cash_amount}}</b></b>
+        </div>
+        <br>
+        <div style="background-color: rgb(208, 198, 255); width: 360px;text-align: center;font-weight: 700;border-radius: 10px;padding-bottom: 1px;">
+            <p>PhonePe Amount</p>
+            <form method="POST" class="flex mb-3 m-1">
+                <input type="number" step="any" oninput="check_input_value('{{om.phone_pe_amount}}', this.value, 'edit_phone_pe_amount_btn')" name="phonepe_amount" value="{{om.phone_pe_amount}}" placeholder="Enter Amount" class="form-control" required>            
+                {% if om.phone_pe_amount == 0.0 %}
+                    <button class="btn btn-danger" name="add_phone_pe_amount">Add</button>
+                {% else %}
+                    <button class="btn btn-danger mb-3" id="edit_phone_pe_amount_btn" style="display: none;" name="edit_phone_pe_amount">Edit</button>
+                {% endif %}
+            </form>
+        </div>
+        <br>
+        <div style="background-color: rgb(255, 221, 183); width: 360px;text-align: center;font-weight: 700;border-radius: 10px;padding-bottom: 1px">
+            <p>Pos Machine Amount</p>
+            <form method="POST" class="flex mb-3 m-1">
+                <input type="number" step="any" name="pos_machine_amount" oninput="check_input_value('{{om.pos_machine_amount}}', this.value, 'edit_pos_machine_amount_btn')" value="{{om.pos_machine_amount}}" placeholder="Enter Amount" class="form-control" required>                
+                {% if om.pos_machine_amount == 0.0 %}
+                    <button class="btn btn-danger" name="add_pos_machine_amount">Add</button>
+                {% else %}
+                    <button class="btn btn-danger" id="edit_pos_machine_amount_btn" style="display: none;"  name="edit_pos_machine_amount">Edit</button>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+
+<script>
+    function Generate_upi_qr_code(){
+        document.getElementById('qr_box').style.display='grid'
+        const qrCodeElement = document.getElementById('qrCode');
+        qrCodeElement.getContext('2d').clearRect(0, 0, qrCodeElement.width, qrCodeElement.height);
+
+        const qr = new QRious({
+          element: qrCodeElement,
+          value: `upi://pay?pa={{hotel.upi_id}}&pn={{hotel.hotel_name}}&am={{total_price}}&cu=INR`,
+          size: 80,
+        });
+    }
+function download_img(){
+    document.getElementById('head').style.display = 'unset';
+    d = document.getElementsByClassName('addvertise')[0].style;
+    d.display = 'flex'
+    c = document.getElementById('canvas').style
+    c.width = '400px'
+    c.padding = '10px'
+
+    var pdf = document.getElementById("canvas");
+    html2canvas(pdf).then((canvas) => {
+    const base64image = canvas.toDataURL("image/jpeg");
+    var anchor  = document.createElement("a");
+    anchor.setAttribute("href", base64image);
+    anchor.setAttribute("download",'Hotel Bill of'+ new Date().toLocaleString() +' .jpeg');
+    anchor.click();
+
+    location.reload();
+})
+}
+function chang_bill_paid_status(id=1){
+    data = {
+     'type':'chang_bill_paid_status',
+     'csrfmiddlewaretoken' : '{{csrf_token}}' 
+    };
+    $.post( "{% url 'complate_view_order' om.order_filter %}", data).done(function(response) {
+        if (response.code == 200) {
+            if (response.status == "active") {
+                 //uncheck the radio button
+             }
+             else {
+                 //check the radio button
+             }
+            }
+        });
+}
+function print_div(){
+    document.getElementById('body').style.display = 'unset';
+    window.print();
+    document.getElementById('body').style.display = 'grid';
+}
+
+function check_input_value(old_amount, new_amount, btn_id) {
+        if (new_amount!= old_amount) {
+            document.getElementById(btn_id).style.display = 'flex';
+        } else {
+            document.getElementById(btn_id).style.display = 'none';
+        }
+    }
+    
+    </script>
+
+
+{% endblock content %}
