@@ -172,11 +172,12 @@ def complate_view_order(request,order_filter):
                 om = order_Master.objects.filter(order_filter=order_filter).first()
                 om.save()
                 return redirect('complate_view_order', order_filter)
+            
         context={
             'hotel':hotel,
             'om':om,
             'bill_status':bill_status,
-            'order_detail':order_Detail.objects.filter(order_master=om),
+            'order_detail':order_Detail.objects.filter(order_master=om.id),
             'without_gst_amount':without_gst_amount,
             'scroll_status':scroll_status,
             'total_price':total_price,
