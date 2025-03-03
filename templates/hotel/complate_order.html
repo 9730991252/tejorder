@@ -8,6 +8,13 @@
 {% block content %}
     {% include 'include/alert.html' %}
     {% include 'include/hotel_navbar.html' %}
+
+    <div class="container py-2">
+        <div class="row">
+            <div class="col-12 text-center"><a href="/hotel/hotel_home/"   class="btn btn-success" >Home</a></div>
+        </div>
+      </div>
+
     <div class="container">
         <div class="card-container">
             {% for bill in order_master %}
