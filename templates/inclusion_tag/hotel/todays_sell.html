@@ -1,0 +1,45 @@
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .bill_containt_box{
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr ;
+        border-top: 1px solid rgb(201, 201, 201);
+        .header{
+            font-weight: 700;
+            border-bottom: 1px solid rgb(211, 211, 211);
+            padding: 2px;
+        }
+        .containt{
+            padding: 2px;
+            border-bottom: 1px solid rgb(233, 233, 233);
+        }
+    }
+
+</style>
+<br>
+<div class="container border bill_box">
+    <div class="text-center"><b>Todays Sell</b></div>
+    <div class="bill_containt_box">
+        <div class="header">Item</div>
+        <div class="header">Qty</div>
+        <div class="header">Amount</div>
+        {% for o in item %}
+            <div class="containt">{{o.name}}</div>
+            <div class="containt">{{o.qty}}</div>
+            <div class="containt">{{o.total_price}}</div>
+        {% endfor %}
+    </div>
+    <div style="display: flex;flex-direction: column;">
+        <div>cash Amount Rs.{{total_cash}}</div>
+        <div>PhonePe Amount Rs.{{total_phone_pe}}</div>
+        <div>Pos MachineRs.{{total_pos_machine}}</div>
+        {% if hotel.discount_status == 1 %}
+        <div>Discount Rs.{{discount}}</div>
+        {% endif %}
+    </div>
+    <h6><b>Total Amount Rs. {{total_amount}}</b></h6>
+</div>

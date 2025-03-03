@@ -131,23 +131,10 @@ def chang_order_table_id(request):
         old_t = request.GET['old_t']
         new_t = request.GET['new_t']
         
-        c = Hotel_cart.objects.filter(table_id=old_t).first()
-        c.table_id = new_t
-        c.save()
-        t = Table.objects.filter(id=new_t).first()
-        runing_table = [{'id':t.id,'name':t.name}]
-        
-        table = []
-        for t in Table.objects.filter(status=1):
-            status = 'no'        
-            c = Hotel_cart.objects.filter(table_id=t.id).exists()
-            if c:
-                runing_table.append({'id':t.id,'name':t.name})
-                status = 'yes'        
-            table.append({'id':t.id,'name':t.name,'status':status})
-        
-    t = render_to_string('ajax/chang_order_table_id.html', {'t':runing_table, 'table':table})
-    return JsonResponse({'t':t})
+        Hotel_cart.objects.filter(table_id=old_t).update(
+            table_id=new_t
+        )
+    return JsonResponse({'t':'t'})
 
 def add_item_to_hotel_cart(request):
     if request.method == 'GET':

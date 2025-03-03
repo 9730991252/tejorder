@@ -13,4 +13,5 @@ urlpatterns = [
     path('complate_view_order/<int:order_filter>', views.complate_view_order, name='complate_view_order'),
     path('complate_order/', views.complate_order, name='complate_order'),
     path('table_qr/', views.table_qr, name='table_qr'),
+    path('report/', views.report, name='report'),
 ]

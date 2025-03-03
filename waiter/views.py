@@ -61,7 +61,7 @@ def order(request,table_id):
         context={
             'w':w,
             'table':Table.objects.get(id=table_id),
-            'category':Category.objects.filter(status=1),
+            'category':Category.objects.filter(status=1, hotel_id=w.hotel.id).order_by('-order_by'),
             'cart':Hotel_cart.objects.filter(table_id=table_id),
             'table_id':table_id
 

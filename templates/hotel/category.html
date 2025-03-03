@@ -77,11 +77,19 @@
   <div id="category_box{{c.id}}">
     <div class="category_box" data-aos="fade-right" data-aos-duration="2000" >
       <div class="text-center" data-aos="fade-left" data-aos-duration="2000"><b>{{c.name}}</b></div>
+      <div>
+        <form method="POST" style="display: flex;justify-content: center;margin-bottom: 10px;line-height: 20px;margin-top: 10px;">
+          <input type="hidden" name="category_id" value="{{c.id}}">
+          <input type="number" name="order_by" value="{{c.order_by}}" style="text-align: center;">
+          <button type="submit" class="btn text-success" name="save_order_by"><i class="fa fa-check" aria-hidden="true"></i></button>
+        </form>
+      </div>
       <div class="flex" style="justify-content: space-evenly;">
         <div data-aos="fade-left" data-aos-duration="2000">{% if c.status == 1 %}<button class="btn btn-success" type="submit" name="active" onclick="chang_status('{{c.id}}','{{c.name}}')" >Active</button>{% else %}<button onclick="chang_status('{{c.id}}')"  class="btn btn-danger" type="submit" name="deactive">Deactive</button>{% endif %}</div>
         <div><button data-bs-toggle="modal" data-bs-target="#exampleModal{{c.id}}" data-aos="fade-left" data-aos-duration="2000" class="btn btn-info">Edit</button></div>
         <div><button data-bs-toggle="modal" data-bs-target="#item_modal{{c.id}}" data-aos="fade-left" data-aos-duration="2000" class="btn btn-primary">Item</button></div>
       </div>
+
     </div>
   </div>
 <div class="modal fade" id="item_modal{{c.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

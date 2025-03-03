@@ -84,7 +84,7 @@
     .dish_main_box{
         padding: 10px;
         display: grid;
-        grid-template-columns: repeat(auto-fit, 300px);
+        grid-template-columns: repeat(auto-fit, 250px);
         gap: 10px;
         width: 80%;
         margin: 20px auto;
@@ -115,7 +115,7 @@
 
 <div class="mt-4 mb-2">
   {% for c in category %}
-    <button class="btn btn-success category_btn mt-1" onclick="filterItems('{{ c.id }}')" >{{ c.name }}</button>
+    <button class="btn btn-success category_btn mt-1" id="category_btn{{c.id}}" onclick="filterItems('{{ c.id }}')" >{{ c.name }}</button>
   {% endfor %}
 </div>
 
@@ -128,14 +128,14 @@
 <div class="dish_box">
     <div class="name"><b>{{i.marathi_name}}</b></div>
     <div>
-        <div><input type="text" name="" style="width: 180px; border: none;" placeholder="Note" id="note{{i.id}}"></div>
+        <div><input type="text" name="" style="width: 180px; border: none; text-align: center;" placeholder="Note" id="note{{i.id}}"></div>
       <div class="row my-1 text-center">
         <div class="col-3"><button type="button" onclick="minus('{{i.id}}','{{i.price}}')" class="btn btn-success btn-sm px-3">-</button></div>
         <div class="col-5"><input type="text" name="qty" style="width: 50px; text-align: center;" id="qty{{i.id}}" value="1" ></div>
         <div class="col-3"><button type="button" onclick="plus('{{i.id}}','{{i.price}}')" class="btn btn-success btn-sm px-3">+</button></div>
     </div>
     <div class="flex">
-        <div class="mt-2"  >Rs.<input style="border: none; width: 70px;" type="text" name="total_amount"  id="price{{i.id}}" value="{{i.price}}" readonly></div>
+        <div class="mt-2"  >Rs.<input style="border: none; width: 70px;" type="text" name="total_amount"  id="price{{i.id}}" value="{{i.price}}"></div>
         <div style="width: 40%;"><button type="button" class="btn btn-danger btn-sm mx-auto" onclick="add_to_cart('{{i.id}}','{{i.price}}')">Confirm </button></div>
       </div>
     </div>
@@ -178,8 +178,13 @@
 
 
 <script>
+  last_category_id = ''
 function  filterItems(category_id){
-
+      if (last_category_id){
+        document.getElementById('category_btn'+last_category_id).className = "btn btn-success category_btn mt-1"
+      }
+      document.getElementById('category_btn'+category_id).className = "btn btn-warning category_btn mt-1"
+      last_category_id = category_id
   $.ajax({
     url: "{% url 'filter_items_by_category' %}",
     method: "GET",
@@ -193,9 +198,10 @@ function  filterItems(category_id){
 
 }
 
-function add_to_cart(id,price){
+function add_to_cart(id){
     var qty = document.getElementById('qty'+id).value
     var note = document.getElementById('note'+id).value
+    var price = document.getElementById('price'+id).value
     p=qty*price
 
     $.ajax({

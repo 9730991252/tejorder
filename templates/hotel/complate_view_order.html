@@ -54,7 +54,7 @@ display: grid;
 grid-template-columns: 0.7fr 2fr;
 }
 #head{
-display: none !important;
+display: none ;
 }
 </style>
 <style media="print">
@@ -67,7 +67,7 @@ padding: 0in;
 display: none;
 }
 #head{
-display: unset !important;
+display: unset ;
 }
 .addvertise{
 display: unset;
@@ -119,7 +119,7 @@ margin-bottom: -0.05in;
         <div class="header">Price</div>
         <div class="header">Amount</div>
         {% for o in order_detail %}
-        <div class="containt">{{o.item.marathi_name}}</div>
+        <div class="containt">{{o.item_name}}</div>
         <div class="containt">{{o.qty}}</div>
         <div class="containt">{{o.price}}</div>
         <div class="containt">{{o.total_price}}</div>
@@ -132,7 +132,7 @@ margin-bottom: -0.05in;
     <h6><b>Total Amount Rs.{{total_price}}</b></h6>
     {% endif %}
     {% if hotel.discount_status == 1 %}
-    <h6 {% if order_master.discount_amount == 0 %} class="hide"{% endif %}>Discount Amount Rs.{{om.discount_amount}}</h6>
+    <h6 {% if om.discount_amount == 0.0 %} style="display: none;" {% endif %}>Discount Amount Rs.{{om.discount_amount}}</h6>
     <h6><b>Total Amount Rs.{{total_price}}</b></h6>
     {% endif %}
     <div class="text-center" id="qr_box" style="display: none;grid-template-columns: 1fr 3fr;">
@@ -165,20 +165,19 @@ margin-bottom: -0.05in;
 
 <div class="hide">
     <br>
-
     {% if hotel.discount_status == 1 %}
     <form method="POST" style="display: flex;gap: 10px;justify-content: center;">
         <label >Select Discount Percent</label>
         <select style="width: 25%;" class="form-control" name="percent" id="" onchange="document.getElementById('discount_btn').click()">
             <option value="0" {% if om.discount_percent == 0 %} selected {% endif %}>0% Rs.0</option>
-            <option value="1" {% if om.discount_percent == 1 %} selected {% endif %}>1% Rs.{% get_percenteg_amount 1 without_gst_amount %}</option>
-            <option value="2" {% if om.discount_percent == 2 %} selected {% endif %}>2% Rs.{% get_percenteg_amount 2 without_gst_amount %}</option>
-            <option value="3" {% if om.discount_percent == 3 %} selected {% endif %}>3% Rs.{% get_percenteg_amount 3 without_gst_amount %}</option>
-            <option value="4" {% if om.discount_percent == 4 %} selected {% endif %}>4% Rs.{% get_percenteg_amount 4 without_gst_amount %}</option>
-            <option value="5" {% if om.discount_percent == 5 %} selected {% endif %}>5% Rs.{% get_percenteg_amount 5 without_gst_amount %}</option>
-            <option value="10" {% if om.discount_percent == 10 %} selected {% endif %}>10% Rs.{% get_percenteg_amount 10 without_gst_amount %}</option>
-            <option value="15" {% if om.discount_percent == 15 %} selected {% endif %}>15% Rs.{% get_percenteg_amount 15 without_gst_amount %}</option>
-            <option value="20" {% if om.discount_percent == 20 %} selected {% endif %}>20% Rs.{% get_percenteg_amount 20 without_gst_amount %}</option>
+            <option value="1" {% if om.discount_percent == 1 %} selected {% endif %}>1% Rs.{% get_percenteg_amount 1 discount_amount %}</option>
+            <option value="2" {% if om.discount_percent == 2 %} selected {% endif %}>2% Rs.{% get_percenteg_amount 2 discount_amount %}</option>
+            <option value="3" {% if om.discount_percent == 3 %} selected {% endif %}>3% Rs.{% get_percenteg_amount 3 discount_amount %}</option>
+            <option value="4" {% if om.discount_percent == 4 %} selected {% endif %}>4% Rs.{% get_percenteg_amount 4 discount_amount %}</option>
+            <option value="5" {% if om.discount_percent == 5 %} selected {% endif %}>5% Rs.{% get_percenteg_amount 5 discount_amount %}</option>
+            <option value="10" {% if om.discount_percent == 10 %} selected {% endif %}>10% Rs.{% get_percenteg_amount 10 discount_amount %}</option>
+            <option value="15" {% if om.discount_percent == 15 %} selected {% endif %}>15% Rs.{% get_percenteg_amount 15 discount_amount %}</option>
+            <option value="20" {% if om.discount_percent == 20 %} selected {% endif %}>20% Rs.{% get_percenteg_amount 20 discount_amount %}</option>
         </select>
         <button type="submit" onclick="location.reload()" name="select_discount" id="discount_btn" style="display: none;"></button>
     </form>

@@ -15,11 +15,44 @@ def hotel_home(request):
     if request.session.has_key('owner_mobile'):
         mobile = request.session['owner_mobile']
         hotel = Hotel.objects.filter(mobile=mobile).first()
-        
+
         context={
             'hotel':hotel
         }
         return render(request, 'hotel/hotel_home.html', context)
+    else:
+        return redirect('login')
+    
+@csrf_exempt
+def report(request):
+    if request.session.has_key('owner_mobile'):
+        mobile = request.session['owner_mobile']
+        hotel = Hotel.objects.filter(mobile=mobile).first()
+        item = []
+        from_date = ''
+        to_date = ''
+        total_amount = 0
+        if 'search_report' in request.POST:
+            from_date = request.POST['from_date']
+            to_date = request.POST['to_date']
+            total_amount = 0
+            for i in Item.objects.filter(hotel_id=hotel.id):
+                qty = order_Detail.objects.filter(item_id=i.id,date__range=[from_date, to_date] ).aggregate(Sum('qty'))['qty__sum']
+                total_price = order_Detail.objects.filter(item_id=i.id, date__range=[from_date, to_date]).aggregate(Sum('total_price'))['total_price__sum']
+                if total_price == None:
+                    total_price = 0
+                total_amount += total_price
+                if qty != None:
+                    item.append({'name':i.marathi_name, 'qty':qty, 'total_price':total_price})        
+        
+        context={
+            'hotel':hotel,
+            'item':item,
+            'from_date':from_date,
+            'to_date':to_date,
+            'total_amount':total_amount,
+        }
+        return render(request, 'hotel/report.html', context)
     else:
         return redirect('login')
     
@@ -114,13 +147,16 @@ def complate_view_order(request,order_filter):
                     om.paid_status = 1
                     om.save()
             without_gst_amount = order_Detail.objects.filter(order_filter=order_filter, item__gst_status=0).aggregate(Sum('total_price'))['total_price__sum']
+            discount_amount = order_Detail.objects.filter(order_filter=order_filter, item__discount_status=1).aggregate(Sum('total_price'))['total_price__sum']
+            print(discount_amount)
+            
             total_price = om.total_price
             total_price -= om.discount_amount
             total_price += om.s_gst
             total_price += om.s_gst
             if 'select_discount'in request.POST:
                 percent = request.POST.get('percent')
-                am = math.floor(int(math.floor(float(without_gst_amount))) / 100) * int(percent)
+                am = (int(math.floor(float(discount_amount))) / 100) * int(percent)
                 om.discount_percent = percent
                 om.discount_amount = am
                 om.cash_amount=om.total_price
@@ -180,7 +216,8 @@ def complate_view_order(request,order_filter):
             'order_detail':order_Detail.objects.filter(order_master=om.id),
             'without_gst_amount':without_gst_amount,
             'scroll_status':scroll_status,
-            'total_price':total_price,
+            'total_price':math.floor(total_price),
+            'discount_amount':discount_amount
             
         }
         return render(request, 'hotel/complate_view_order.html', context)
@@ -212,7 +249,7 @@ def view_order(request, table_id):
             'amount':amount,
             'item':Item.objects.filter(status=1,hotel_id=hotel.id),
             'table':Table.objects.get(id=table_id),
-            'category':Category.objects.filter(status=1,hotel_id=hotel.id)
+            'category':Category.objects.filter(status=1,hotel_id=hotel.id).order_by('-order_by')
         }
         return render(request, 'hotel/view_order.html', context)
     else:
@@ -254,9 +291,10 @@ def comolete_order(order_filter, table_id, hotel_id):
                 order_master_id=o.id,
                 item_id=i.id,
                 qty=Hotel_cart.objects.filter(table_id=table_id, item_id=i.id).aggregate(Sum('qty'))['qty__sum'],
-                price=i.price,
+                price=Hotel_cart.objects.filter(table_id=table_id, item_id=i.id).aggregate(Sum('price'))['price__sum'],
                 total_price=Hotel_cart.objects.filter(table_id=table_id, item_id=i.id).aggregate(Sum('total_amount'))['total_amount__sum'],
-                order_filter=order_filter
+                order_filter=order_filter,
+                item_name=i.marathi_name,
             ).save()
     Hotel_cart.objects.filter(table_id=table_id).delete()
     
@@ -525,6 +563,7 @@ def item(request):
     else:
         return redirect('login')
     
+@csrf_exempt
 def category(request):
     if request.session.has_key('owner_mobile'):
         mobile = request.session['owner_mobile']
@@ -535,6 +574,11 @@ def category(request):
                 hotel_id=hotel.id,
                 name=name
             ).save()
+            return redirect('category')
+        if 'save_order_by'in request.POST:
+            id = request.POST.get('category_id')
+            order_by = request.POST.get('order_by')
+            Category.objects.filter(id=id).update(order_by=order_by)
             return redirect('category')
         if 'edit_category'in request.POST:
             id = request.POST.get('id')
@@ -547,7 +591,7 @@ def category(request):
             return redirect('category')
         context={
             'hotel':hotel,
-            'category':Category.objects.filter(hotel_id=hotel.id),
+            'category':Category.objects.filter(hotel_id=hotel.id).order_by('-order_by'),
         }
         return render(request, 'hotel/category.html', context)
     else:

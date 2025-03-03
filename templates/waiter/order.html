@@ -38,7 +38,7 @@
 <div class="body" id="body">
     <div class="flex" style="justify-content: start;flex-direction: column;">
         {% for c in category %}
-          <button class="btn btn-primary" onclick="filterItems('{{ c.id }}')" >{{ c.name }}</button>
+          <button class="btn btn-primary" id="category_btn{{c.id}}" onclick="filterItems('{{ c.id }}')" >{{ c.name }}</button>
         {% endfor %}
     </div>
 
@@ -85,6 +85,8 @@
 
 </div>
 
+
+<br><br><br><br><br>
 <style>
     .footer{
         background-color: antiquewhite;
@@ -97,7 +99,7 @@
         .input{
             width: 95%;
         }
-  }
+  } 
   </style>
 
 <div class="footer">
@@ -128,8 +130,13 @@
             }
         })
     }
+    last_category_id = ''
     function  filterItems(category_id){
-        
+      if (last_category_id){
+        document.getElementById('category_btn'+last_category_id).className = "btn btn-primary"
+      }
+      document.getElementById('category_btn'+category_id).className = "btn btn-warning"
+      last_category_id = category_id
         $.ajax({
             url: "{% url 'filter_items_by_category' %}",
             method: "GET",

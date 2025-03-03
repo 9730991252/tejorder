@@ -6,6 +6,7 @@ class Category(models.Model):
     hotel = models.ForeignKey(Hotel, on_delete=models.PROTECT,null=True)
     name = models.CharField(max_length=100)
     status = models.IntegerField(default=1)
+    order_by = models.IntegerField(default=1)
     
 class Item(models.Model):
     hotel = models.ForeignKey(Hotel, on_delete=models.PROTECT,null=True)
@@ -79,4 +80,5 @@ class order_Detail(models.Model):
     total_price=models.FloatField(default=0,null=True)
     order_filter=models.IntegerField(default=True)
     date = models.DateField(auto_now_add=True,null=True)
+    item_name = models.CharField(max_length=100, null=True)
     
