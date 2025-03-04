@@ -8,6 +8,7 @@ import math
 from datetime import date
 from PIL import Image
 import io
+from datetime import datetime, date, time
 
 # Create your views here.
 @csrf_exempt
@@ -25,6 +26,7 @@ def hotel_home(request):
     
 @csrf_exempt
 def report(request):
+
     if request.session.has_key('owner_mobile'):
         mobile = request.session['owner_mobile']
         hotel = Hotel.objects.filter(mobile=mobile).first()
@@ -32,6 +34,10 @@ def report(request):
         from_date = ''
         to_date = ''
         total_amount = 0
+        total_cash = 0
+        total_phone_pe = 0
+        total_pos_machine = 0
+        discount = 0
         if 'search_report' in request.POST:
             from_date = request.POST['from_date']
             to_date = request.POST['to_date']
@@ -39,18 +45,28 @@ def report(request):
             for i in Item.objects.filter(hotel_id=hotel.id):
                 qty = order_Detail.objects.filter(item_id=i.id,date__range=[from_date, to_date] ).aggregate(Sum('qty'))['qty__sum']
                 total_price = order_Detail.objects.filter(item_id=i.id, date__range=[from_date, to_date]).aggregate(Sum('total_price'))['total_price__sum']
+                
                 if total_price == None:
                     total_price = 0
                 total_amount += total_price
                 if qty != None:
-                    item.append({'name':i.marathi_name, 'qty':qty, 'total_price':total_price})        
-        
+                    item.append({'name':i.marathi_name, 'qty':qty, 'total_price':total_price})  
+                          
+            total_cash = order_Master.objects.filter(date__range=[from_date, to_date], hotel_id=hotel.id).aggregate(Sum('cash_amount'))['cash_amount__sum']
+            total_phone_pe = order_Master.objects.filter(date__range=[from_date, to_date], hotel_id=hotel.id).aggregate(Sum('phone_pe_amount'))['phone_pe_amount__sum']
+            total_pos_machine = order_Master.objects.filter(date__range=[from_date, to_date], hotel_id=hotel.id).aggregate(Sum('pos_machine_amount'))['pos_machine_amount__sum']
+            discount = order_Master.objects.filter(date__range=[from_date, to_date], hotel_id=hotel.id).aggregate(Sum('discount_amount'))['discount_amount__sum']
+
         context={
             'hotel':hotel,
             'item':item,
             'from_date':from_date,
             'to_date':to_date,
             'total_amount':total_amount,
+            'total_cash':total_cash,                
+            'total_phone_pe':total_phone_pe,                
+            'total_pos_machine':total_pos_machine,
+            'discount':discount,
         }
         return render(request, 'hotel/report.html', context)
     else:

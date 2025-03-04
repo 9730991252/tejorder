@@ -96,6 +96,14 @@
         {% endfor %}
     </div>
     <h6><b>Total Amount Rs. {{total_amount}}</b></h6>
+    <div style="display: flex;flex-direction: column;">
+        <div>cash Amount Rs.{{total_cash}}</div>
+        <div>PhonePe Amount Rs.{{total_phone_pe}}</div>
+        <div>Pos MachineRs.{{total_pos_machine}}</div>
+        {% if hotel.discount_status == 1 %}
+        <div>Discount Rs.{{discount}}</div>
+        {% endif %}
+    </div>
     <div class="addvertise">All type Mobile Software  9730 99 1252</div>
 </div>
 

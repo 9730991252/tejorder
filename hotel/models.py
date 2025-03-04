@@ -61,6 +61,7 @@ class order_Master(models.Model):
     table=models.ForeignKey(Table,on_delete=models.PROTECT,default=True)
     total_price=models.FloatField(default=0,null=True)
     ordered_date = models.DateTimeField(auto_now_add=True,null=True)
+    date = models.DateField(auto_now=True,null=True)
     order_filter=models.IntegerField(default=True)
     s_gst = models.FloatField(default=0,null=True)
     c_gst = models.FloatField(default=0,null=True)
