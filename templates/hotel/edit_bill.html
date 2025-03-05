@@ -1,0 +1,293 @@
+{% extends 'home/base.html' %}
+
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock head %}
+
+{% block content %}
+    {% include 'include/alert.html' %}
+    {% include 'include/hotel_navbar.html' %}
+    {% load hotel_tag %}
+
+
+
+
+
+
+
+    <style>
+        .tmc{
+          font-weight: 700;
+          color: black;
+          font-size: 22px;
+          background-color: rgba(166, 255, 187, 0.2);
+        }
+      </style>
+    <div class="container border my-2">
+        <div>
+        <h5>Table-{{om.table.table_number}}</h5>
+        </div>
+    </div>
+        <div class="container border">
+          <div id="cart">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Item</th>
+              <th scope="col">Qty</th>
+              <th scope="col">Price</th>
+              <th scope="col">Total</th>
+            </tr>
+          </thead>
+          <tbody id="cart_item" >
+    
+            {% for t in ord %}
+            
+            <tr>
+             
+              <td>{{t.item_name}}</td>
+              <td>{{t.qty}}</td>
+              <td>{{t.price}}</td>
+              <td>{{t.total_price}}</td>
+              <td><form action="" method="POST">{% csrf_token %}<input type="hidden" name="cart_id" value="{{t.id}}"><button type="submit" class="btn btn-transparent text-danger btn-sm" name="Delete">X</button></form></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        </div>
+        Total Amount Rs.<input type="readonly" id="amount" value="{{amount}}" size=5 class="text-center tmc" disabled></input>
+        <h5>Thank You Visit Again</h5>
+        </div>
+        
+        
+        </div>
+    
+            <div class="container"><a href="/owner/complate_view_order/{{om.order_filter}}" class="btn btn-danger " >Complete Order</a></div>
+            
+      
+    
+    
+    
+    
+    
+    <!---------------------------------------------------------->
+    <div class="body_main_box container">
+    <style>
+        .body_main_box{
+          display: grid;
+          grid-template-columns: 0.9fr 3fr;
+          gap: 10px;
+          width: 100%;
+          margin: auto;
+          padding-right: 10px; 
+        }
+        .category_btn{
+          width: 50%;
+        }
+        .dish_main_box{
+            padding: 10px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, 300px);
+            gap: 10px;
+            width: 80%;
+            margin: 20px auto;
+            justify-content: center;
+        }
+        .dish_box{
+            border: 1px solid black;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            height: fit-content;
+        }
+        .name{
+            font-weight: 700px;
+        }
+        .flex{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        @media only screen and (max-width: 600px) {
+          .category_btn{
+            width: 100%;
+          }
+        }
+    </style>
+    
+    <div class="mt-4 mb-2">
+      {% for c in category %}
+        <button class="btn btn-success category_btn mt-1" onclick="filterItems('{{ c.id }}')" >{{ c.name }}</button>
+      {% endfor %}
+    </div>
+    
+    
+    <div class="dish_main_box" id="item_ruselt">
+      {% for i in item %}
+    
+      <input type="hidden" name="id" value="{{i.id}}">
+      <input type="hidden" name="price" value="{{i.price}}">
+      <div class="dish_box">
+          <div class="name"><b>{{i.marathi_name}}</b></div>
+          <div id="item_detail{{i.id}}" >
+            <div class="row my-4 text-center">
+              <div class="col-2 "><button type="button" onclick="minus('{{i.id}}','{{i.price}}')" class="btn btn-success px-3">-</button></div>
+              <div class="col-3"><input type="text" name="qty" style="width: 50px; text-align: center;" id="qty{{i.id}}" value="1" ></div>
+              <div class="col-2"><button type="button" onclick="plus('{{i.id}}','{{i.price}}')" class="btn btn-success px-3">+</button></div>
+              <div class="col-5"><button type="button" class="btn btn-danger mx-auto" onclick="add_to_cart('{{i.id}}','{{i.price}}')">Confirm </button></div>
+            </div>
+            <div class="flex">
+                <div class="mt-2"  >Rs.<input style="border: none; width: 100px;" type="text" name="total_amount"  id="price{{i.id}}" value="{{i.price}}" readonly></div>
+            </div>
+          </div>
+      </div>
+      
+      {% endfor %}
+    </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    
+    </div>
+    
+    <style>
+      .footer{
+        background-color: antiquewhite;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 10px;
+        display: flex;
+        .input{
+          width: 95%;
+        }
+      }
+    </style>
+    
+    
+    <div class="footer">
+      <div class="input">
+        <div><input type="text" oninput="search_hotel_item()" class="form-control" placeholder="Search Item" id="words"></div>
+      </div>
+    </div>
+    
+    
+    <script>
+    function  filterItems(category_id){
+    
+      $.ajax({
+        url: "{% url 'filter_items_by_category' %}",
+        method: "GET",
+        data: {
+          category_id: category_id,
+        },
+        success: function(res) {
+          document.getElementById('item_ruselt').innerHTML = res.t;
+        }
+      });
+    
+    }
+    
+    function add_to_cart(id,price){
+        var qty = document.getElementById('qty'+id).value
+        p=qty*price
+    
+        $.ajax({
+        url: "{% url 'add_item_to_cart_edit' %}",
+        method: "GET",
+        data:{
+            table_id:'{{table_id}}',
+            item_id:id,
+            price:price,
+            qty:qty,
+            total_amount:p,
+            order_filter:'{{om.order_filter}}',
+        },
+        success: function(res){
+          location.reload()
+    
+        }
+      })
+    }
+        
+    function search_hotel_item(){
+      $.ajax({
+        url: "{% url 'search_hotel_item' %}",
+        method: "GET",
+        data:{
+          words:document.getElementById('words').value,
+          table_id:'{{table_id}}'
+        },
+        success: function(res){
+          document.getElementById('item_ruselt').innerHTML = res.t
+        }
+      })
+    }
+    
+    last_id = ''
+    function item_detail(id){
+      document.getElementById('item_detail'+id).style.display = 'unset'
+        if(last_id){
+          if(document.getElementById('item_detail'+last_id)){
+            document.getElementById('item_detail'+last_id).style.display = 'none'
+          }
+        }
+        last_id = id
+    
+    }
+    
+    function plus(id,price){
+      var qty = document.getElementById('qty'+id).value
+      if(qty < 50){
+        qty++;
+      document.getElementById('qty'+id).value=qty;
+      p=qty*price
+      document.getElementById('price'+id).value=p;
+        //speak code
+        
+      const msg = new SpeechSynthesisUtterance;
+      msg.text=qty;
+      
+      msg.voice=speechSynthesis.getVoices()[1];
+      speechSynthesis.speak(msg);
+    
+    
+    //ajax
+     
+    
+    
+      }
+    }
+        
+      // minus btn code
+    
+        function minus(id,price){
+      var qty = document.getElementById('qty'+id).value
+      if(qty > 0){
+      qty--;
+      document.getElementById('qty'+id).value=qty;
+      p=qty*price
+      document.getElementById('price'+id).value=p;
+    
+            //speak code
+        
+            const msg = new SpeechSynthesisUtterance;
+      msg.text=qty;
+      
+      msg.voice=speechSynthesis.getVoices()[1];
+      speechSynthesis.speak(msg);
+      }
+      if(qty == 0){
+        document.getElementById('item_detail'+id).style.display = 'none'
+    
+      }
+        }
+        
+    
+    </script>
+{% endblock content %}

@@ -9,6 +9,7 @@ from datetime import date
 from PIL import Image
 import io
 from datetime import datetime, date, time
+from django.core.paginator import Paginator
 
 # Create your views here.
 @csrf_exempt
@@ -21,6 +22,36 @@ def hotel_home(request):
             'hotel':hotel
         }
         return render(request, 'hotel/hotel_home.html', context)
+    else:
+        return redirect('login')
+    
+@csrf_exempt
+def edit_bill(request, id):
+    if request.session.has_key('owner_mobile'):
+        mobile = request.session['owner_mobile']
+        hotel = Hotel.objects.filter(mobile=mobile).first()
+        om = order_Master.objects.filter(id=id).first()
+        ord = order_Detail.objects.filter(order_master=om)
+        amount = ord.aggregate(Sum('total_price'))['total_price__sum']
+        if 'Delete'in request.POST:
+            od_id = request.POST.get('cart_id')
+            od = order_Detail.objects.filter(id=od_id).first()
+            om.total_price -= od.total_price
+            om.cash_amount = 0
+            om.phone_pe_amount = 0
+            om.pos_machine_amount = 0
+            om.save()
+            od.delete()
+            return redirect(f'/hotel/edit_bill/{id}')
+        context={
+            'hotel':hotel,
+            'om':order_Master.objects.filter(id=id).first(),
+            'ord':ord,
+            'amount':amount,
+            'category':Category.objects.filter(status=1),
+            'item':Item.objects.filter(status=1),
+        }
+        return render(request, 'hotel/edit_bill.html', context)
     else:
         return redirect('login')
     
@@ -93,6 +124,7 @@ def complate_order(request):
         mobile = request.session['owner_mobile']
         hotel = Hotel.objects.filter(mobile=mobile).first()
         if hotel:
+            
             if 'cancel_bill'in request.POST:
                 order_filter = request.POST.get('order_filter')
                 om = order_Master.objects.filter(order_filter=order_filter).first()
@@ -114,9 +146,14 @@ def complate_order(request):
                     'status':b.status,
                     'cancel_btn_show_status':cancel_btn_show_status
                 })
+            
+            paginator = Paginator(order_master, per_page=100)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
+            
         context={
             'hotel':hotel,
-            'order_master':order_master
+            'order_master':page_obj
         }
         return render(request, 'hotel/complate_order.html', context)
     else:
@@ -133,11 +170,13 @@ def profile(request):
             hotel_address = request.POST.get('hotel_address')
             pin = request.POST.get('pin')
             upi_id = request.POST.get('upi_id')
+            gst_number = request.POST.get('gst_number')
             hotel.owner_name = owner_name
             hotel.hotel_name = hotel_name
             hotel.address = hotel_address
             hotel.pin = pin
             hotel.upi_id = upi_id
+            hotel.gst_number = gst_number
             hotel.save()
             return redirect('profile')
         context={
@@ -164,7 +203,6 @@ def complate_view_order(request,order_filter):
                     om.save()
             without_gst_amount = order_Detail.objects.filter(order_filter=order_filter, item__gst_status=0).aggregate(Sum('total_price'))['total_price__sum']
             discount_amount = order_Detail.objects.filter(order_filter=order_filter, item__discount_status=1).aggregate(Sum('total_price'))['total_price__sum']
-            print(discount_amount)
             
             total_price = om.total_price
             total_price -= om.discount_amount

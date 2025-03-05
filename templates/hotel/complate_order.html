@@ -93,4 +93,62 @@
             margin: 8px 0;
         }
         </style>
+
+
+<style>
+
+.pagination {
+            display: flex;
+            list-style: none;
+            padding: 10px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            justify-content: center;
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+        }
+        .pagination li {
+            margin: 0 5px;
+        }
+        .pagination a {
+            text-decoration: none;
+            color: #007bff;
+            padding: 8px 14px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: 0.3s ease;
+        }
+        .pagination a:hover {
+            background-color: #007bff;
+            color: white;
+        }
+        .pagination .active a {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+        .pagination .disabled a {
+            color: #ccc;
+            pointer-events: none;
+            border-color: #ddd;
+            background: #f1f1f1;
+        }
+
+</style>
+
+<ul class="pagination">
+    <li {% if order_master.has_previous %}{% else %}class="disabled" {% endif %}>
+        <a {% if order_master.has_previous %}href="?page={{ order_master.previous_page_number }}"{% endif %}>«</a>
+    </li>
+    <li><a href="#">Page</a></li>
+    <li class="active"><a href="#">{{ order_master.number }}</a></li>
+    <li><a href="#">OF</a></li>
+    <li><a href="#">{{ order_master.paginator.num_pages }}</a></li>
+    <li {% if order_master.has_next %}{% else %}class="disabled" {% endif %}>
+        <a {% if order_master.has_next %}href="?page={{ order_master.next_page_number }}"{% endif %}>»</a>
+    </li>
+</ul>
 {% endblock content %}

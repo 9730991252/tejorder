@@ -13,6 +13,7 @@ class Hotel(models.Model):
     pin = models.IntegerField()
     status = models.IntegerField(default=1)
     gst_status = models.IntegerField(default=0)
+    gst_number = models.CharField(max_length=200,null=True)
     discount_status = models.IntegerField(default=0)
     date = models.DateField(auto_now_add=True, null=True)
 

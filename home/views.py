@@ -5,6 +5,9 @@ from hotel.models import *
 def index(request):
     return render(request, 'home/index.html')
 
+def contact_us(request):
+    return render(request, 'home/contact_us.html')
+
 def pricing(request):
     return render(request, 'home/pricing.html')
 

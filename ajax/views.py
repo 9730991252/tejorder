@@ -100,6 +100,33 @@ def chang_teble_name(request):
     t = render_to_string('ajax/chang_teble_status.html', {'t':t})
     return JsonResponse({'t':t})
 
+def add_item_to_cart_edit(request):
+    if request.method == 'GET':
+        item_id = request.GET['item_id']
+        print(item_id)
+        price = request.GET['price']
+        qty = request.GET['qty']
+        total_amount = request.GET['total_amount']
+        order_filter = request.GET['order_filter']
+        i = Item.objects.filter(id=item_id).first()
+        om = order_Master.objects.filter(order_filter=order_filter).first()
+        order_Detail(
+            item_id=item_id,
+            qty=qty,
+            price=price,
+            total_price=total_amount,
+            order_filter=order_filter,
+            item_name = i.marathi_name,
+            order_master=om
+        ).save()
+        od = order_Detail.objects.filter(order_filter=order_filter, item_id=item_id).first()
+        om.total_price += od.total_price
+        om.cash_amount = 0
+        om.phone_pe_amount = 0
+        om.pos_machine_amount = 0
+        om.save()
+    return JsonResponse({'t':'t'})
+
 def item_discount_status(request):
     if request.method == 'GET':
         id = request.GET['id']

@@ -23,6 +23,7 @@
             font-family: Arial, sans-serif;
             line-height: 1.6;
             background-color: #f8f9fa;
+            overflow-x: hidden;
         }
 
         /* Header styles */
@@ -194,30 +195,8 @@
         }
 
     </style>
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100"><img data-aos="zoom-in" data-aos-duration="1500" data-aos-delay="200" style="width: 40px;height: 40px;border-radius: 50%;" src="{% static 'img/logo.jpg' %}" alt=""><b style="color: orangered;">Tej</b> Order</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active"  aria-current="page" href="/" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/pricing/" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="450">Pricing</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active login" aria-current="page" href="/login/" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="550">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active sunil" aria-current="new-page" href="/sunil/" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="650">Sunil Login</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+{% include 'include/navbar.html' %}
+
     <!-- Hero Section with Image -->
     <section class="hero" style="position: relative;overflow: hidden;">
         <video autoplay muted loop id="myVideo" style="position: absolute;top: 0;bottom: 0;height: 100%;">
@@ -260,6 +239,120 @@
             </div>
         </div>
     </section>
+
+    <!-- about Section ------------------------------------------------------------>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;1,500&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+     .section{
+        margin-bottom: 1rem;
+     }
+     .titel_tag {
+         font-size: 1rem;
+         font-weight: 700;
+         line-height: 2rem;
+         margin-bottom: .75rem;
+         text-transform: uppercase;
+         --tw-text-opacity: 1;
+         color: rgb(197 32 49 / var(--tw-text-opacity));
+         margin-left: auto;
+     }
+     .section_heading{
+        margin-top: 3rem;
+        margin-bottom: 4rem;   
+        text-align: center;
+     }
+     .Co-founder p{
+        font-size: 17px;
+     }
+     .Co-founder{
+        text-align: center;
+        font-family: "Montserrat", sans-serif;
+     }
+     .titel_name{
+        font-size:34px;
+        font-weight: 700;
+     }
+     img{
+        border-radius: 50%;
+        border: 1px solid rgba(0, 0, 0, 0.4);
+        height: 200px;
+        width: 200px;
+     }
+     .founder{
+        font-weight: 700;
+        font-size: 34px;
+        text-align: center;
+     }
+     @media only screen and (max-width: 450px) {
+        .section{
+        margin-bottom: 2rem;
+     }
+     .titel_tag {
+         font-size: 1rem;
+         font-weight: 700;
+         line-height: 2rem;
+         margin-bottom: .75rem;
+         text-transform: uppercase;
+         --tw-text-opacity: 1;
+         color: rgb(197 32 49 / var(--tw-text-opacity));
+         margin-left: auto;
+     }
+     .section_heading{
+        margin-top: 3rem;
+        margin-bottom: 4rem;   
+        text-align: center;
+     }
+     .Co-founder p{
+        font-size: 17px;
+     }
+     .Co-founder{
+        text-align: center;
+        font-family: "Montserrat", sans-serif;
+     }
+     .titel_name{
+        font-size:25px;
+        font-weight: 500;
+     }
+     img{
+        border-radius: 50%;
+        border: 1px solid rgba(0, 0, 0, 0.4);
+        height: 200px;
+        width: 200px;
+     }
+     .founder{
+        font-weight: 700;
+        font-size: 25px;
+        text-align: center;
+     }
+     }
+     </style>
+    <div class="about_box">
+        <h6 class="text-center" data-aos="fade-left" data-aos-duration="2000">Developed And Published By <b>PRASANNA DIGITAL</b></h6>
+
+        <div class="section">
+            <div class="container">
+               <div class="content-section">
+                 <div class="title">
+                  <div class="section_heading">
+                     <span class="titel_tag" data-aos="fade-right" data-aos-duration="2000">About us</span>
+                     <h1 class="titel_name" data-aos="fade-left" data-aos-duration="2000">Hey! We’re Tejorder.com and we help Restaurant</h1><br><br>
+                     <h3 data-aos="fade-right" data-aos-duration="2000">We provide Restaurant Billing software </h3><br>
+                 </div>
+                 <div class="founder" data-aos="fade-left" data-aos-duration="2000">
+                  <p>People behind Tejorder.com</p>
+                 </div>
+                 <div class="Co-founder">
+                  <img  data-aos="fade-up" data-aos-duration="2000" src="{% static 'img/photo.jpg' %}"><br>
+                  <h1 data-aos="fade-right" data-aos-duration="2000">Mr.sunil kale</h1>
+                  <p data-aos="fade-left" data-aos-duration="2000">founder & CEO</p>
+               </div>
+               </div>
+            </div>
+         </div>
+
+    </div>
+    <!-- end about Section -------------------------------------------------------->
 
     <!-- Footer Section -->
     <footer>
