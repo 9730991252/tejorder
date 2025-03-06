@@ -11,6 +11,10 @@ from table_qr.models import *
 register = template.Library()
 
 @register.simple_tag()
+def customer_selected_item_count(category_id):
+    return selected_item_category.objects.filter(category_id=category_id,status = 1).count()
+
+@register.simple_tag()
 def customer_selected_item(category_id):
     category = Category.objects.filter(id=category_id).first()
     item = []

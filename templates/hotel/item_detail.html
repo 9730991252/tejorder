@@ -54,28 +54,26 @@
         <!------------------------status sec-------------------------->
         <style>
           .status_box{
-            padding: 1px;
-            background-color: black;
             display: grid;
             grid-template-columns: 1fr 1fr;
             border-radius: 11px;
-            gap: 1px;
+            row-gap: 10px;
+
             overflow: hidden;
             height: fit-content;
-            div{
+
+            .d1,.d2{
               background-color: white;
-              border-radius: 10px;
               display: flex;
               justify-content: center;
               align-items: center;
+              border: 1px solid black;
             }
             .d1{
-              border-top-right-radius: 0px;
-              border-bottom-right-radius: 0px;
+              border-right: none;
             }
             .d2{
-              border-top-left-radius: 0px;
-              border-bottom-left-radius: 0px;
+              border-left: none;
             }
           }
         </style>
@@ -102,7 +100,7 @@
 
           {% if hotel.discount_status == 1 %}
             <div class="d1">Discount Status</div>
-            <div class="d2" >
+            <div class="d2">
                 <div class="" style="display: flex;justify-content: center;align-items: center;">
                     {% csrf_token %}
                     {% if item.discount_status == 1 %}
@@ -118,7 +116,31 @@
                     {% endif %}
                 </div>
             </div>
-          {% endif %}
+            {% endif %}
+            <div class="d1">Status</div>
+            <div class="d2">
+            <form style="display: flex;justify-content: center;align-items: center;" method="POST">
+
+              <div class="" style="display: flex;justify-content: center;align-items: center;">
+                {% csrf_token %}
+                {% if item.status == 1 %}
+                <div class="form-check form-switch form-check-reverse lable ">
+                  <button class="btn" type="submit" name="active" id="active_btn">
+                          <input class="form-check-input" onclick="document.getElementById('active_btn').click()" type="checkbox" id="flexSwitchCheckReverse" name="life_weight"  checked >                        
+                        </button>
+                  </div>
+                  <div>ON</div>
+                  {% else %}
+                    <div class="form-check form-switch form-check-reverse lable ">
+                      <button class="btn" type="submit" name="deactive" id="deactive_btn">
+                        <input class="form-check-input" onclick="document.getElementById('deactive_btn').click()" type="checkbox" id="flexSwitchCheckReverse" name="life_weight"  >                        
+                      </button>
+                    </div>
+                    <div>OFF</div>
+                    {% endif %}
+                  </div>
+                </form>
+                </div>
         </div>
         <!------------------------end status sec-------------------------->
     <!------------------------category sec-------------------------->
@@ -328,6 +350,7 @@ function item_discount_status(){
         document.getElementById('status_box').innerHTML = data.t
         }
   })
+  location.reload()
 }
 function item_gst_status(){
     $.ajax({
@@ -340,6 +363,7 @@ function item_gst_status(){
         document.getElementById('status_box').innerHTML = data.t
         }
   })
+  location.reload()
 }
 function select_item_category(c_id){
     $.ajax({

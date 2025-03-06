@@ -2,15 +2,12 @@
 
 {% block head %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/styles.css">
+    <style>
+        body{
+          overflow-x: hidden;
+        }
+    </style>
 {% endblock head %}
-<style>
-    footer {
-        background-color: #f2f2f2;
-        padding: 20px 0;
-        text-align: center;
-    }
-</style>
 {% block content %}
     {% include 'include/hotel_navbar.html' %}
     {% include 'include/alert.html' %}
@@ -60,6 +57,7 @@
       margin: 0 auto;
       margin-bottom: 10px;
       width: 350px;
+      overflow: hidden;
     }
     .flex{
       display: flex; 
@@ -75,7 +73,7 @@
   </style>
   {% for c in category %}
   <div id="category_box{{c.id}}">
-    <div class="category_box" data-aos="fade-right" data-aos-duration="2000" >
+    <div class="category_box">
       <div class="text-center" data-aos="fade-left" data-aos-duration="2000"><b>{{c.name}}</b></div>
       <div>
         <form method="POST" style="display: flex;justify-content: center;margin-bottom: 10px;line-height: 20px;margin-top: 10px;">
@@ -87,7 +85,7 @@
       <div class="flex" style="justify-content: space-evenly;">
         <div data-aos="fade-left" data-aos-duration="2000">{% if c.status == 1 %}<button class="btn btn-success" type="submit" name="active" onclick="chang_status('{{c.id}}','{{c.name}}')" >Active</button>{% else %}<button onclick="chang_status('{{c.id}}')"  class="btn btn-danger" type="submit" name="deactive">Deactive</button>{% endif %}</div>
         <div><button data-bs-toggle="modal" data-bs-target="#exampleModal{{c.id}}" data-aos="fade-left" data-aos-duration="2000" class="btn btn-info">Edit</button></div>
-        <div><button data-bs-toggle="modal" data-bs-target="#item_modal{{c.id}}" data-aos="fade-left" data-aos-duration="2000" class="btn btn-primary">Item</button></div>
+        <div><button data-bs-toggle="modal" data-bs-target="#item_modal{{c.id}}" data-aos="fade-left" data-aos-duration="2000" class="btn btn-primary">Item {% customer_selected_item_count c.id %}</button></div>
       </div>
 
     </div>
@@ -140,7 +138,6 @@
   {% endfor %}
 </div>
 <script>
-ScrollReveal().reveal('.category_box', { delay: 375, reset: true });
 
 function select_category_item(item_id,c_id){
     $.ajax({

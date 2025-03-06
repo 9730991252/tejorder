@@ -61,12 +61,12 @@
   <br>
   <style>
     .item_box{
-      border: 1px solid black;
+      box-shadow: 2px 1px 10px 1px rgba(0,0,0,0.75);
       padding: 10px;
       border-radius: 10px;
       margin: 0 auto;
-      margin-bottom: 10px;
-      width: 350px;
+      margin-bottom: 15px;
+      width: 330px;
     }
     .flex{
       display: flex; 
@@ -82,14 +82,24 @@
   <div id="item_box{{c.id}}">
     <a href="/hotel/item_detail/{{c.id}}">
         <div class="item_box" data-aos="fade-right" data-aos-duration="2000" >
-            <div class="text-center" data-aos="fade-left" data-aos-duration="2000"><b>{{c.marathi_name}}</b></div>
+            <div class="text-center" data-aos="fade-left" data-aos-duration="2000"><b>{{c.marathi_name}}</b> <h>Rs.{{c.price}}</h></div>
+            <div class="text-center" data-aos="fade-left" data-aos-duration="2000"><p>{{c.english_name}}</p></div>
+            <div style="display: grid;grid-template-columns: 1fr 1fr;">
+            <div>
+              {% if c.status == 1 %}
+              <p class="text-success">Status ON</p>
+              {% else %}
+                <p class="text-danger">Status OFF</p>
+              {% endif %}
+
+            </div>
             <div>
               {% if hotel.gst_status == 1 %}
 
                 {% if c.gst_status == 1 %}
-                  <b>Gst Status ON</b>
+                  <p class="text-success">Gst Status ON</p>
                 {% else %}
-                  <b>Gst Status OFF</b>
+                  <p class="text-danger">Gst Status OFF</p>
                 {% endif %}
 
               {% else %}
@@ -97,9 +107,9 @@
                 {% if hotel.discount_status == 1 %}
 
                   {% if c.discount_status == 1 %}
-                    <b>Discount Status ON</b>
+                    <p class="text-success">Discount Status ON</p>
                   {% else %}
-                    <b>Discount Status OFF</b>
+                    <p class="text-danger">Discount Status OFF</p>
                   {% endif %}
           
                 {% endif %}
@@ -107,6 +117,7 @@
               {% endif %}
               
             </div>
+          </div>
         </div>
     </a>
   </div>

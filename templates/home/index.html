@@ -27,9 +27,6 @@
         }
 
         /* Header styles */
-        nav{
-            background-color: rgba(0, 0, 0, 0.7);
-        }
 
 
         /* Hero Section with Image */
@@ -120,6 +117,59 @@
             padding: 20px;
         }
 
+        #about_visiters{
+            display: flex;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+            z-index: +11;
+            gap: 10px;
+            margin-top: 10px;
+
+            div{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                padding: 1em 0;
+                position: relative;
+                font-size: 16px;
+                border-radius: 0.5em;
+                border-bottom: 10px solid #18f98f;
+                background-color: #21242b;
+                width: 200px;
+            }
+            i{
+                color: #18f98f;
+                font-size: 2.5em;
+                text-align: center;
+            }
+            span.num{
+                color: #ffffff;
+                display: grid;
+                place-items: center;
+                font-weight: 600;
+                font-size: 2em;
+            }
+            span.bill{
+                color: #ffffff;
+                display: grid;
+                place-items: center;
+                font-weight: 600;
+                font-size: 2em;
+            }
+            span.text{
+                color: #e0e0e0;
+                font-size: 1em;
+                text-align: center;
+                pad: 0.7em 0;
+                font-weight: 400;
+                line-height: 0;
+            }
+
+        }
+        nav{
+            position: absolute;
+            top: 0;
+        }
         /* Mobile responsiveness */
         @media (max-width: 768px) {
             /* Navbar: show hamburger button */
@@ -220,7 +270,9 @@
             <h1>Welcome to Tej Order</h1>
             <p>"Your trusted solution for Hotel billing management."</p>
             <a href="/login/" data-aos="fade-up" data-aos-duration="2000" class="btn btn-primary">Login</a>        
+
         </div>
+
     </section>
 
     <!-- Features Section -->
@@ -228,6 +280,10 @@
         <div class="container">
             <h2>Our Features</h2>
             <div class="feature-box">
+                <div class="feature" data-aos="fade-left" data-aos-duration="2000">
+                    <h3>Easy To Use</h3>
+                    <p>Any one can use.</p>
+                </div>
                 <div class="feature" data-aos="fade-right" data-aos-duration="2000">
                     <h3>Fast Billing</h3>
                     <p>Experience quick and efficient bill processing.</p>
@@ -236,10 +292,40 @@
                     <h3>Customer Support</h3>
                     <p>Our support team is here to assist you anytime.</p>
                 </div>
+                <div class="feature" data-aos="fade-right" data-aos-duration="2000">
+                    <h3>Get real-time restaurant Reports</h3>
+                    <p>Automate your restaurant reports.</p>
+                </div>
+                <div class="feature" data-aos="fade-left" data-aos-duration="2000">
+                    <h3>Low Cost</h3>
+                    <p>Cost Arrount ₹100 Per 300 Bills</p>
+                </div>
             </div>
         </div>
     </section>
-
+    <div id="about_visiters">
+        <div data-aos="zoom-in" data-aos-duration="2000">
+            <i class="fa-solid fa-eye"></i>
+            <span class="num" data-val="{{visitors.count}}">000</span>
+            <span class="text">Visitors</span>
+        </div>
+        <div data-aos="zoom-out" data-aos-duration="2000">
+            <i class="fa-solid fa-users"></i>
+            <span class="num" data-val="{{users}}">000</span>
+            <span class="text">Happy Users</span>
+        </div>
+        <div data-aos="zoom-in" data-aos-duration="2000">
+            <i class="fa-solid fa-toilet-paper"></i>
+            <span class="bill" data-val="">{{bills}}</span>
+            <span class="text">Bills</span>
+        </div>
+        <div data-aos="zoom-out" data-aos-duration="2000">
+            <i class="fa-regular fa-calendar-days"></i>
+            <span class="num" data-val="6">000</span>
+            <span class="text">Years in Business</span>
+        </div>
+    </div>
+    <br>
     <!-- about Section ------------------------------------------------------------>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
@@ -328,7 +414,7 @@
      }
      </style>
     <div class="about_box">
-        <h6 class="text-center" data-aos="fade-left" data-aos-duration="2000">Developed And Published By <b>PRASANNA DIGITAL</b></h6>
+        <h6 class="text-center" data-aos="fade-left" data-aos-duration="2000">Developed And Published By <br> <b>PRASANNA DIGITAL</b></h6>
 
         <div class="section">
             <div class="container">
@@ -365,5 +451,24 @@
 <script>
 ScrollReveal().reveal('.hero-content', { delay: 375, reset: true });
 ScrollReveal().reveal('.feature', { delay: 375, reset: true });
+ScrollReveal().reveal('.num', { delay: 375, reset: true });
+
+let valueDisplays = document.querySelectorAll(".num");
+let interval = 5000;
+
+valueDisplays.forEach((valueDisplays) => {
+    let startvalue = 0;
+    let endvalue = parseInt(valueDisplays.getAttribute("data-val"));
+    let duration = Math.floor(interval / endvalue);
+    let counter = setInterval(function() {
+        startvalue += 1;
+        valueDisplays.textContent = `${startvalue}+`;
+        if (startvalue == endvalue) {
+            clearInterval(counter);
+        }
+    }, duration)
+});
+
+
 </script>
 {% endblock content %}

@@ -1,9 +1,27 @@
 from django.shortcuts import redirect, render
+from .models import *
 from sunil.models import *
 from hotel.models import *
 # Create your views here.
 def index(request):
-    return render(request, 'home/index.html')
+    visitors = Visitors.objects.all().first()
+    if Visitors.objects.all().exists():
+        visitors.count += 1
+        visitors.save()
+    else:
+        Visitors().save()
+    visitors = Visitors.objects.all().first()
+    users = (int(Employee.objects.all().count()) + int(Hotel.objects.all().count()) + 150)
+    
+    bills = (int(order_Master.objects.all().count()) + int(290815))
+    
+    context = {
+        'visitors': visitors,
+        'users':users,
+        'bills':bills,
+    }
+    
+    return render(request, 'home/index.html',context)
 
 def contact_us(request):
     return render(request, 'home/contact_us.html')

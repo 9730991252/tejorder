@@ -79,18 +79,26 @@
             }
         </style>
     <div class="container">
-        <form method="POST">{% csrf_token %}
+        <form method="POST" enctype="multipart/form-data">{% csrf_token %}
             <div  class="bg_img"></div>
             <div style="padding: 10px;">
 
                 <div class="text-center mt-2" style="position: relative; display: flex;justify-content: center;align-items: center;">
-                    <img src="{% static 'img/profile.jpg' %}" class="profile_image" alt="">
+                    {% if hotel.logo %}
+                        <img src="{{hotel.logo.url}}" class="profile_image" alt="">
+                    {% else %}
+                        <img src="{% static 'img/profile.jpg' %}" class="profile_image" alt="">
+                    {% endif %}
                     <h2><b>Profile</b></h2>
                 </div>
                 <br>
                 <div class="mb-3">
                     <lable>Owner Name</lable>
                     <input type="text" placeholder="Owner Name" name="owner_name" value="{{hotel.owner_name}}"  required>
+                </div>
+                <div class="mb-3">
+                    <label>Logo</label>
+                    <input style="color: #000;" type="file" name="logo_img">
                 </div>
                 <div class="mb-3">
                     <lable>Hotel Name</lable>

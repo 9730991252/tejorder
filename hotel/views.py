@@ -171,6 +171,7 @@ def profile(request):
             pin = request.POST.get('pin')
             upi_id = request.POST.get('upi_id')
             gst_number = request.POST.get('gst_number')
+            logo_img = request.FILES.get('logo_img')
             hotel.owner_name = owner_name
             hotel.hotel_name = hotel_name
             hotel.address = hotel_address
@@ -178,6 +179,9 @@ def profile(request):
             hotel.upi_id = upi_id
             hotel.gst_number = gst_number
             hotel.save()
+            if logo_img is not None:
+                compressed_image = compress_image(logo_img)
+                hotel.logo.save(logo_img.name[:-5]+'.webp', compressed_image, save=True)
             return redirect('profile')
         context={
             'hotel':hotel
@@ -498,6 +502,14 @@ def item_detail(request, id):
         hotel = Hotel.objects.filter(mobile=mobile).first()
         i = Item.objects.filter(id=id).first()
         item_image_and_youtube_url = Item_image_and_youtube_url.objects.filter(item_id=id).first()
+        if 'active'in request.POST:
+            i.status = 0
+            i.save()
+            return redirect('item_detail', id)
+        if 'deactive'in request.POST:
+            i.status = 1
+            i.save()
+            return redirect('item_detail', id)
         if 'gst_active'in request.POST:
             i.gst_status = 0
             i.save()
