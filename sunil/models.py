@@ -9,7 +9,7 @@ class Hotel(models.Model):
     owner_name = models.CharField(max_length=100)
     address = models.CharField(max_length=500, null=True)
     upi_id = models.CharField(max_length=500, default='')
-    logo = models.ImageField(null=True)
+    logo = models.ImageField(upload_to='hotel_logo_images/', blank=True, null=True)
     mobile = models.IntegerField()
     pin = models.IntegerField()
     status = models.IntegerField(default=1)
