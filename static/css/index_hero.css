@@ -1,0 +1,273 @@
+/* Reset basic styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body and Background */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f8f9fa;
+    overflow-x: hidden;
+}
+
+/* Header styles */
+
+
+/* Hero Section with Image */
+.hero {
+    /* background: url('https://assets.simpleviewinc.com/simpleview/image/upload/c_limit,h_1200,q_75,w_1200/v1/clients/sanmarcostx/Restaurants_Type_Indian_d0959326-e9bb-4145-988c-f9e2b5d0ce62.jpg') no-repeat center center; */
+    background-size: cover;
+    height: 90vh;
+    text-align: center;
+    color: #ffffff;
+    position: relative !important;
+}
+
+#myVideo{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    left: 0;
+}
+.hero-content1 {
+    padding: 40px;
+    border-radius: 8px;
+    position: absolute;
+    left: 50px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.hero-content2{
+    position: absolute;
+    right: 50px;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    .img{
+        background-color: #a00a0a;
+        border-radius: 31% 69% 66% 34% / 63% 46% 54% 37% ;
+        padding: 30px;
+
+    }
+    img{
+        width: 450px;
+        height: 450px;
+        
+    }
+}
+.hero h1 {
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 22px;
+    margin-bottom: 30px;
+}
+
+.hero button {
+    padding: 12px 30px;
+    font-size: 18px;
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.hero button:hover {
+    background-color: #218838;
+}
+
+/* Features Section */
+.features {
+    padding: 50px 20px;
+    background-color: #ffffff;
+}
+
+.features h2 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 40px;
+}
+
+.feature-box {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.feature {
+    background-color: #f1f1f1;
+    padding: 20px;
+    border-radius: 8px;
+    flex-basis: 30%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.feature h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.feature p {
+    font-size: 18px;
+}
+
+/* Footer Section */
+footer {
+    background-color: #343a40;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+}
+
+#about_visiters{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    z-index: +11;
+    gap: 10px;
+    margin-top: 10px;
+
+    div{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        padding: 1em 0;
+        position: relative;
+        font-size: 16px;
+        border-radius: 0.5em;
+        border-bottom: 10px solid #18f98f;
+        background-color: #21242b;
+        width: 200px;
+    }
+    i{
+        color: #18f98f;
+        font-size: 2.5em;
+        text-align: center;
+    }
+    span.num{
+        color: #ffffff;
+        display: grid;
+        place-items: center;
+        font-weight: 600;
+        font-size: 2em;
+    }
+    span.bill{
+        color: #ffffff;
+        display: grid;
+        place-items: center;
+        font-weight: 600;
+        font-size: 2em;
+    }
+    span.text{
+        color: #e0e0e0;
+        font-size: 1em;
+        text-align: center;
+        pad: 0.7em 0;
+        font-weight: 400;
+        line-height: 0;
+    }
+
+}
+nav{
+    position: absolute;
+    top: 0;
+}
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    body{
+        width: 400px;
+        overflow: hidden;
+    }
+    /* Navbar: show hamburger button */
+    header .navbar-toggler {
+        display: block;
+    }
+
+    header nav ul {
+        display: none;
+        width: 100%;
+        text-align: center;
+        padding-top: 10px;
+    }
+
+    header nav ul li {
+        margin: 15px 0;
+    }
+
+    header nav ul li a {
+        font-size: 20px;
+    }
+
+    /* Hero Section */
+    .hero h1 {
+        font-size: 30px;
+        margin-bottom: 15px;
+    }
+
+    .hero p {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .hero button {
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+
+    /* Features Section */
+    .features h2 {
+        font-size: 28px;
+        margin-bottom: 30px;
+    }
+
+    .feature-box {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .feature {
+        flex-basis: 100%;
+    }
+    .hero-content1 {
+        z-index: +2;
+        top: 10px;
+        width: fit-content;
+        height: fit-content;
+        left: 10px;
+        right: 0;
+    }
+    .hero-content2 {
+        width: 100%;
+        height: 350px;
+        overflow: hidden;
+        position:absolute;
+        top: 250px;
+        right: 0;
+        justify-content: end;
+        
+        .img{
+            background-color: #ffffff00;
+            border-radius: 31% 69% 66% 34% / 63% 46% 54% 37% ;
+            padding-right: 50px;
+    
+        }
+        img{
+            width: 300px;
+            height: 300px;
+            
+        }
+    }
+}
+

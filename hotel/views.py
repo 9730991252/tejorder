@@ -623,7 +623,7 @@ def item(request):
             return redirect('item')
         context={
             'hotel':hotel,
-            'item':Item.objects.filter(hotel_id=hotel.id),
+            'item':Item.objects.filter(hotel_id=hotel.id).order_by('marathi_name'),
         }
         return render(request, 'hotel/item.html', context)
     else:

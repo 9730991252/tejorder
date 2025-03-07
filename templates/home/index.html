@@ -1,255 +1,20 @@
 {% extends 'home/base.html' %}
 
 {% block head %}
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 {% endblock head %}
 
 {% block content %}
 {% include 'include/alert.html' %}
-    
+
 {% load static %}
+<link rel="stylesheet" href="{% static 'css/index_hero.css' %}">
+<link rel="stylesheet" href="{% static 'css/index_about.css' %}">
 
-
-    <style>
-        /* Reset basic styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Body and Background */
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            background-color: #f8f9fa;
-            overflow-x: hidden;
-        }
-
-        /* Header styles */
-
-
-        /* Hero Section with Image */
-        .hero {
-            /* background: url('https://assets.simpleviewinc.com/simpleview/image/upload/c_limit,h_1200,q_75,w_1200/v1/clients/sanmarcostx/Restaurants_Type_Indian_d0959326-e9bb-4145-988c-f9e2b5d0ce62.jpg') no-repeat center center; */
-            background: url('https://qul.imgix.net/150ee868-a39f-434d-b2d9-ccb750f515b6/438489_sld.jpg') no-repeat center center;
-            background-size: cover;
-            height: 90vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: #ffffff;
-        }
-
-        .hero-content {
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 40px;
-            border-radius: 8px;
-        }
-
-        .hero h1 {
-            font-size: 50px;
-            margin-bottom: 20px;
-        }
-
-        .hero p {
-            font-size: 22px;
-            margin-bottom: 30px;
-        }
-
-        .hero button {
-            padding: 12px 30px;
-            font-size: 18px;
-            background-color: #28a745;
-            color: #ffffff;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        .hero button:hover {
-            background-color: #218838;
-        }
-
-        /* Features Section */
-        .features {
-            padding: 50px 20px;
-            background-color: #ffffff;
-        }
-
-        .features h2 {
-            text-align: center;
-            font-size: 36px;
-            margin-bottom: 40px;
-        }
-
-        .feature-box {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .feature {
-            background-color: #f1f1f1;
-            padding: 20px;
-            border-radius: 8px;
-            flex-basis: 30%;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .feature h3 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-
-        .feature p {
-            font-size: 18px;
-        }
-
-        /* Footer Section */
-        footer {
-            background-color: #343a40;
-            color: #ffffff;
-            text-align: center;
-            padding: 20px;
-        }
-
-        #about_visiters{
-            display: flex;
-            justify-content: space-evenly;
-            flex-wrap: wrap;
-            z-index: +11;
-            gap: 10px;
-            margin-top: 10px;
-
-            div{
-                display: flex;
-                flex-direction: column;
-                justify-content: space-around;
-                padding: 1em 0;
-                position: relative;
-                font-size: 16px;
-                border-radius: 0.5em;
-                border-bottom: 10px solid #18f98f;
-                background-color: #21242b;
-                width: 200px;
-            }
-            i{
-                color: #18f98f;
-                font-size: 2.5em;
-                text-align: center;
-            }
-            span.num{
-                color: #ffffff;
-                display: grid;
-                place-items: center;
-                font-weight: 600;
-                font-size: 2em;
-            }
-            span.bill{
-                color: #ffffff;
-                display: grid;
-                place-items: center;
-                font-weight: 600;
-                font-size: 2em;
-            }
-            span.text{
-                color: #e0e0e0;
-                font-size: 1em;
-                text-align: center;
-                pad: 0.7em 0;
-                font-weight: 400;
-                line-height: 0;
-            }
-
-        }
-        nav{
-            position: absolute;
-            top: 0;
-        }
-        /* Mobile responsiveness */
-        @media (max-width: 768px) {
-            /* Navbar: show hamburger button */
-            header .navbar-toggler {
-                display: block;
-            }
-
-            header nav ul {
-                display: none;
-                width: 100%;
-                text-align: center;
-                padding-top: 10px;
-            }
-
-            header nav ul li {
-                margin: 15px 0;
-            }
-
-            header nav ul li a {
-                font-size: 20px;
-            }
-
-            /* Hero Section */
-            .hero h1 {
-                font-size: 30px;
-                margin-bottom: 15px;
-            }
-
-            .hero p {
-                font-size: 18px;
-                margin-bottom: 20px;
-            }
-
-            .hero button {
-                padding: 10px 20px;
-                font-size: 16px;
-            }
-
-            /* Features Section */
-            .features h2 {
-                font-size: 28px;
-                margin-bottom: 30px;
-            }
-
-            .feature-box {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .feature {
-                flex-basis: 100%;
-            }
-        }
-
-        /* Extra small screen */
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 24px;
-            }
-
-            .hero p {
-                font-size: 16px;
-            }
-
-            .hero button {
-                padding: 8px 16px;
-                font-size: 14px;
-            }
-
-            .features h2 {
-                font-size: 22px;
-            }
-        }
-
-    </style>
 {% include 'include/navbar.html' %}
 
     <!-- Hero Section with Image -->
-    <section class="hero" style="position: relative;overflow: hidden;">
-        <video autoplay muted loop id="myVideo" style="position: absolute;top: 0;bottom: 0;height: 100%;">
+    <section class="hero">
+        <video autoplay muted loop id="myVideo" >
             <source src="{% static 'video/food.mp4' %}" type="video/mp4">
           </video>
           <script>
@@ -266,11 +31,18 @@
               }
             }
             </script>
-        <div class="hero-content" data-aos="zoom-in" data-aos-duration="1500">
-            <h1>Welcome to Tej Order</h1>
-            <p>"Your trusted solution for Hotel billing management."</p>
-            <a href="/login/" data-aos="fade-up" data-aos-duration="2000" class="btn btn-primary">Login</a>        
+        <div class="hero-content1" data-aos="zoom-in" data-aos-duration="1500">
+            <div>
+                <h1>Welcome to Tej Order</h1>
+                <p>"Your trusted solution for Hotel billing management."</p>
+                <a href="/login/" data-aos="fade-up" data-aos-duration="2000" class="btn btn-primary">Login</a>        
+            </div>
 
+        </div>
+        <div class="hero-content2" data-aos="zoom-in" data-aos-duration="1500">
+            <div class="img">
+                <img src="{% static 'img/home_page_imoji.jpg' %}" alt="">
+            </div>
         </div>
 
     </section>
@@ -327,92 +99,6 @@
     </div>
     <br>
     <!-- about Section ------------------------------------------------------------>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;1,500&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-     .section{
-        margin-bottom: 1rem;
-     }
-     .titel_tag {
-         font-size: 1rem;
-         font-weight: 700;
-         line-height: 2rem;
-         margin-bottom: .75rem;
-         text-transform: uppercase;
-         --tw-text-opacity: 1;
-         color: rgb(197 32 49 / var(--tw-text-opacity));
-         margin-left: auto;
-     }
-     .section_heading{
-        margin-top: 3rem;
-        margin-bottom: 4rem;   
-        text-align: center;
-     }
-     .Co-founder p{
-        font-size: 17px;
-     }
-     .Co-founder{
-        text-align: center;
-        font-family: "Montserrat", sans-serif;
-     }
-     .titel_name{
-        font-size:34px;
-        font-weight: 700;
-     }
-     img{
-        border-radius: 50%;
-        border: 1px solid rgba(0, 0, 0, 0.4);
-        height: 200px;
-        width: 200px;
-     }
-     .founder{
-        font-weight: 700;
-        font-size: 34px;
-        text-align: center;
-     }
-     @media only screen and (max-width: 450px) {
-        .section{
-        margin-bottom: 2rem;
-     }
-     .titel_tag {
-         font-size: 1rem;
-         font-weight: 700;
-         line-height: 2rem;
-         margin-bottom: .75rem;
-         text-transform: uppercase;
-         --tw-text-opacity: 1;
-         color: rgb(197 32 49 / var(--tw-text-opacity));
-         margin-left: auto;
-     }
-     .section_heading{
-        margin-top: 3rem;
-        margin-bottom: 4rem;   
-        text-align: center;
-     }
-     .Co-founder p{
-        font-size: 17px;
-     }
-     .Co-founder{
-        text-align: center;
-        font-family: "Montserrat", sans-serif;
-     }
-     .titel_name{
-        font-size:25px;
-        font-weight: 500;
-     }
-     img{
-        border-radius: 50%;
-        border: 1px solid rgba(0, 0, 0, 0.4);
-        height: 200px;
-        width: 200px;
-     }
-     .founder{
-        font-weight: 700;
-        font-size: 25px;
-        text-align: center;
-     }
-     }
-     </style>
     <div class="about_box">
         <h6 class="text-center" data-aos="fade-left" data-aos-duration="2000">Developed And Published By <br> <b>PRASANNA DIGITAL</b></h6>
 

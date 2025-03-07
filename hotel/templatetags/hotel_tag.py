@@ -18,7 +18,7 @@ def customer_selected_item_count(category_id):
 def customer_selected_item(category_id):
     category = Category.objects.filter(id=category_id).first()
     item = []
-    for i in Item.objects.filter(hotel_id=category.hotel_id):
+    for i in Item.objects.filter(hotel_id=category.hotel_id).order_by('marathi_name'):
         selected_status = 0
         if selected_item_category.objects.filter(item_id=i.id,category_id=category.id,status = 1):
             selected_status = 1 
