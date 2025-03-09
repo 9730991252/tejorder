@@ -116,7 +116,9 @@
 </style>
 <div id="canvas">
     <div class="name_box">
-        <div style="z-index: +1;"><img src="{{hotel.logo.url}}" height="65"  alt=""></div>
+        {% if hotel.logo %}
+            <div style="z-index: +1;"><img src="{{hotel.logo.url}}" height="65"  alt=""></div>
+        {% endif %}
         <div style="z-index: +1;">
             {{hotel.hotel_name}}
             <p>{{hotel.address}}</p>
@@ -147,7 +149,7 @@ const qrCodeElement = document.getElementById('qrCode');
 qrCodeElement.getContext('2d').clearRect(0, 0, qrCodeElement.width, qrCodeElement.height);
 const qr = new QRious({
   element: qrCodeElement,
-  value: `https://new.tejorder.com/table_qr/{{t_qr.url}}`,
+  value: `https://tejorder.com/table_qr/{{t_qr.url}}`,
   size: 200,
 });
 
