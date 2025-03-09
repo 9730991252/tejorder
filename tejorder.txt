@@ -145,7 +145,7 @@ server{
     listen 80;
     listen [::]:80;
 
-    server_name new.tejorder.com www.new.tejorder.com;
+    server_name tejorder.com www.tejorder.com;
     client_max_body_size 500M;
 
     location = /favicon.ico { access_log off; log_not_found off; }
@@ -188,4 +188,4 @@ systemctl restart tejorder.com.gunicorn
   certbot --nginx
 
 
- certbot --nginx -d shipiamti.com -d www.shipiamti.com
+ certbot --nginx -d tejorder.com -d www.tejorder.com
