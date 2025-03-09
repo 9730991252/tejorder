@@ -29,7 +29,7 @@
         border-radius: 10px;
         text-align: center;
         font-size: 25px ;
-        color: rgb(255, 255, 255);
+        color: rgb(251, 255, 0);
         font-family: "Tiro Devanagari Marathi", serif;
         font-weight: 600;
         display: flex;
@@ -121,7 +121,7 @@
         {% endif %}
         <div style="z-index: +1;">
             {{hotel.hotel_name | slice:'20'}}...
-            <p style="margin-bottom: 0px;">{{hotel.address | slice:'40'}}... <br> Mo.{{hotel.mobile}}</p>
+            <p class="text-light" style="margin-bottom: 0px;">{{hotel.address | slice:'40'}}... <br> Mo.{{hotel.mobile}}</p>
         </div>
     </div>
     <div class="table_box">
@@ -161,7 +161,7 @@ var pdf = document.getElementById("canvas");
     anchor.setAttribute("download",'Hotel Bill of'+ new Date().toLocaleString() +' .jpeg');
     anchor.click();
 
-    // location.href = "/hotel/table_qr/"
+    location.href = "/hotel/table_qr/"
 })
 
 
