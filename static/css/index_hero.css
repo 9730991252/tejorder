@@ -22,8 +22,36 @@ body {
     background-size: cover;
     height: 90vh;
     text-align: center;
-    color: #000000;
     position: relative !important;
+    animation: colour 10s infinite;
+}
+@keyframes colour {
+    0% {
+    color: #000000;
+    }
+    10%{
+    color: #ff0000;
+    }
+    40%{
+    color: #ffae00;
+
+    }
+    60%{
+    color: #00b400;
+
+    }
+    80%{
+    color: #0026ce;
+
+    }
+    90%{
+    color: #5e0059;
+
+    }
+    100% {
+    color: #000000;
+
+    } 
 }
 
 #myVideo{
@@ -57,14 +85,37 @@ body {
         border-radius: 31% 69% 66% 34% / 63% 46% 54% 37% ;
         padding: 30px;
         margin: 0 auto;
-
-    }
+        animation: pulse 10s infinite;    }
     img{
         width: 450px;
         height: 450px;
         
     }
 }
+@keyframes pulse {
+    0% {
+        border-radius: 31% 69% 66% 34% / 63% 46% 54% 37% ;
+    }
+    20%{
+        border-radius: 68% 32% 72% 28% / 39% 68% 32% 61% ;
+    }
+    40%{
+        border-radius: 74% 26% 82% 18% / 27% 72% 28% 73% ;
+    }
+    60%{
+        border-radius: 34% 66% 54% 46% / 54% 40% 60% 46% ;
+    }
+    80%{
+        border-radius: 64% 36% 17% 83% / 83% 33% 67% 17% ;
+    }
+    90%{
+        border-radius: 44% 56% 66% 34% / 36% 61% 39% 64% ;
+    }
+    100% {
+        border-radius: 31% 69% 66% 34% / 63% 46% 54% 37% ;
+    } 
+  }
+
 .hero h1 {
     font-size: 50px;
     margin-bottom: 20px;
