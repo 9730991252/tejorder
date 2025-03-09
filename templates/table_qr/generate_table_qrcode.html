@@ -13,10 +13,7 @@
         height: 6in;
         overflow: hidden;
         margin: 0 auto;
-        background: url('{% static "img/blue_background.jpg" %}' ) no-repeat center center;
-        background-size: 10in 6in;
         padding: 0px;
-        border: 5px solid rgb(0, 38, 163);
     }
     .name_box{
         position: relative;
@@ -36,7 +33,7 @@
         justify-content: space-evenly;
         z-index: 1231321;
 
-        background: url('{% static "img/blue_background.jpg" %}' ) ;
+        background: url('{% static "img/blue.jpg" %}' ) ;
         p{
             font-weight: 400;
             font-size: 17px;
@@ -114,6 +111,34 @@
         margin-bottom: -5px;
     }
 </style>
+{% if bg == 'blue' %}
+<style>
+    #canvas {
+        background: url('{% static "img/blue.jpg" %}' ) no-repeat center center;
+        background-size: 4in 6in !important;
+        border: 5px solid rgb(0, 38, 163);
+
+    }
+</style>
+{% elif bg == 'red' %}
+<style>
+    #canvas {
+        background: url('{% static "img/red.jpg" %}' )  center center;
+        background-size: 4in 6in !important;
+        border: 5px solid rgb(255, 0, 0);
+
+    }
+</style>
+{% else %}
+<style>
+    #canvas {
+        background: url('{% static "img/yellow.jpg" %}' )  center center;
+        background-size: 4in 6in !important;
+        border: 5px solid rgb(255, 145, 0);
+
+    }
+</style>
+{% endif %}
 <div id="canvas">
     <div class="name_box">
         {% if hotel.logo %}
@@ -128,8 +153,8 @@
         {{table.name}}
     </div>
     <div class="qr_box">
-        <h5><b>Scan QR For Menu/</b></h5>
-        <h5><b>ORDER</b></h5>
+        <h6><b>Scan QR For Menu/</b></h6>
+        <h6><b>ORDER</b></h6>
         <canvas class="img" id="qrCode"></canvas>
 
     </div>
@@ -161,7 +186,7 @@ var pdf = document.getElementById("canvas");
     anchor.setAttribute("download",'Hotel Bill of'+ new Date().toLocaleString() +' .jpeg');
     anchor.click();
 
-    location.href = "/hotel/table_qr/"
+    // location.href = "/hotel/table_qr/"
 })
 
 

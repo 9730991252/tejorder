@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 def get_session_id(request):
     return request.session.session_key
-def generate_table_qrcode(request, id):
+def generate_table_qrcode(request, id, bg):
     table = Table.objects.filter(id=id).first()
     if table:
         t_qr = Table_QrCode.objects.filter(table_id=table.id).first()
@@ -22,7 +22,8 @@ def generate_table_qrcode(request, id):
         context = {
             'table':table,
             't_qr':t_qr,
-            'hotel':table.hotel
+            'hotel':table.hotel,
+            'bg':bg
         }
         return render(request, 'table_qr/generate_table_qrcode.html', context)
     else:

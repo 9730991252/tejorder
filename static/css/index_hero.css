@@ -22,7 +22,7 @@ body {
     background-size: cover;
     height: 90vh;
     text-align: center;
-    color: #ffffff;
+    color: #000000;
     position: relative !important;
 }
 
@@ -51,10 +51,12 @@ body {
     bottom: 0;
     display: flex;
     align-items: center;
+    justify-content: center;
     .img{
         background-color: #a00a0a;
         border-radius: 31% 69% 66% 34% / 63% 46% 54% 37% ;
         padding: 30px;
+        margin: 0 auto;
 
     }
     img{
@@ -66,6 +68,7 @@ body {
 .hero h1 {
     font-size: 50px;
     margin-bottom: 20px;
+    font-weight: 700;
 }
 
 .hero p {
@@ -73,14 +76,14 @@ body {
     margin-bottom: 30px;
 }
 
-.hero button {
-    padding: 12px 30px;
-    font-size: 18px;
-    background-color: #28a745;
-    color: #ffffff;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
+.hero .login_button {
+    width: 176px;
+    height: 48px;
+    background-color: #C52031;
+    padding: 12px 24px;
+    margin-bottom: 5px;
+    color: #FFFFFF;
+    font-size: 16px;
 }
 
 .hero button:hover {
@@ -188,8 +191,7 @@ nav{
 /* Mobile responsiveness */
 @media (max-width: 600px) {
     body{
-        width: 400px;
-        overflow: hidden;
+        overflow-x: hidden;
     }
     /* Navbar: show hamburger button */
     header .navbar-toggler {
@@ -257,18 +259,11 @@ nav{
         top: 250px;
         right: 0;
         justify-content: end;
-        
-        .img{
-            background-color: #ffffff00;
-            border-radius: 31% 69% 66% 34% / 63% 46% 54% 37% ;
-            padding-right: 50px;
     
-        }
         img{
-            width: 300px;
-            height: 300px;
+            width: 250px;
+            height: 250px;
             
         }
     }
 }
-

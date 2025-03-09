@@ -8,11 +8,13 @@
 {% block content %}
 {% include 'include/alert.html' %}
 {% include 'include/hotel_navbar.html' %}
+{% load static %}
 <style>
     .container_box {
         display: grid;
         grid-template-columns: repeat(auto-fit, 200px);
         gap: 10px;
+        justify-content: center;
     }
     .table_box{
         padding: 10px;
@@ -23,14 +25,74 @@
         
 }
 </style>
-<div class="container container_box">
+<div class="text-center">
+    <style>
+        /* HIDE RADIO */
+[type=radio] { 
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* IMAGE STYLES */
+[type=radio] + img {
+  cursor: pointer;
+}
+
+/* CHECKED STYLES */
+[type=radio]:checked + img {
+    border-radius: 50%;
+  outline: 2px solid rgb(0, 0, 0);
+  padding: 5px;
+  width: 60px;
+height: 60px;
+
+}
+label{
+    margin-left: 12px;
+}
+label>img{
+    width: 50px;
+    height: 50px;
+}
+    </style>
+    <form id="colorForm">
+
+        <label>
+            <input type="radio" name="background" value="blue">
+            <img src="{% static 'img/blue.jpg' %}" alt="Option 1">
+      </label>
+      
+      <label>
+        <input type="radio" checked name="background" value="red">
+        <img  src="{% static 'img/red.jpg' %}" alt="Option 2">
+    </label>
+    
+    <label>
+        <input type="radio" name="background" value="yellow">
+        <img  src="{% static 'img/yellow.jpg' %}" alt="Option 2">
+    </label>
+</form>
+</div>
+<br>
+<div class="container container_box text-center">
 {% for t in table %}
 <div class="table_box">
     <h6>{{t.name}}</h6>
     <div>
-        <a href="/table_qr/generate_table_qrcode/{{t.id}}" class="btn btn-outline-success">Download QrCode <i class="fa fa-download" aria-hidden="true"></i></a>
+        <a onclick="download_table_image('{{t.id}}')" class="btn btn-outline-success">Download QrCode <i class="fa fa-download" aria-hidden="true"></i></a>
     </div>
 </div>
 {% endfor %}
 </div>
+
+<script>
+    function download_table_image(id){
+        const form = document.getElementById('colorForm');
+        const formData = new FormData(form);
+        const selectedColor = formData.get('background');
+        location.href = `/table_qr/generate_table_qrcode/${id}/${selectedColor}`
+    }
+</script>
 {% endblock content %}
