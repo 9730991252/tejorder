@@ -15,6 +15,10 @@ def customer_selected_item_count(category_id):
     return selected_item_category.objects.filter(category_id=category_id,status = 1).count()
 
 @register.simple_tag()
+def get_item_image_and_youtube_url(i_id):
+    return Item_image_and_youtube_url.objects.filter(item_id=i_id).first()
+
+@register.simple_tag()
 def customer_selected_item(category_id):
     category = Category.objects.filter(id=category_id).first()
     item = []

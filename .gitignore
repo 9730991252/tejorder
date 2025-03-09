@@ -55,7 +55,8 @@ cover/
 # Translations
 *.mo
 *.pot
-
+item_images/
+hotel_logo_images/
 # Django stuff:
 *.log
 local_settings.py

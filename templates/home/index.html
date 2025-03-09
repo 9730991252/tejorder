@@ -141,12 +141,12 @@ ScrollReveal().reveal('.feature', { delay: 375, reset: true });
 ScrollReveal().reveal('.num', { delay: 375, reset: true });
 
 let valueDisplays = document.querySelectorAll(".num");
-let interval = 5000;
+let interval = 1000;
 
 valueDisplays.forEach((valueDisplays) => {
     let startvalue = 0;
     let endvalue = parseInt(valueDisplays.getAttribute("data-val"));
-    let duration = Math.floor(interval / endvalue);
+    let duration = Math.floor(interval / endvalue );
     let counter = setInterval(function() {
         startvalue += 1;
         valueDisplays.textContent = `${startvalue}+`;

@@ -122,6 +122,7 @@
         <div style="z-index: +1;">
             {{hotel.hotel_name}}
             <p>{{hotel.address}}</p>
+            <p>Mo.{{hotel.mobile}}</p>
         </div>
     </div>
     <div class="table_box">
@@ -149,7 +150,7 @@ const qrCodeElement = document.getElementById('qrCode');
 qrCodeElement.getContext('2d').clearRect(0, 0, qrCodeElement.width, qrCodeElement.height);
 const qr = new QRious({
   element: qrCodeElement,
-  value: `https://tejorder.com/table_qr/{{t_qr.url}}`,
+  value: `https://tejorder.com/table_qr/{{t_qr.url}}/`,
   size: 200,
 });
 
@@ -161,7 +162,7 @@ var pdf = document.getElementById("canvas");
     anchor.setAttribute("download",'Hotel Bill of'+ new Date().toLocaleString() +' .jpeg');
     anchor.click();
 
-    // location.href = "/hotel/table_qr/"
+    location.href = "/hotel/table_qr/"
 })
 
 
