@@ -16,7 +16,6 @@ def add_item_to_customer_cart(request):
         note = request.GET['note']
         session_id = get_session_id(request)
         
-        Table_QrCode.objects.filter(table_id=table_id).update(status=1, session_id=session_id)
         c = Customer_cart.objects.filter(table_id=table_id,item_id=item_id).first()
         if c:
             c.qty = qty
@@ -209,7 +208,7 @@ def filter_items_by_category(request):
         for i in selected_item_category.objects.filter(category_id=category_id, status = 1):
             item_id.append(i.item_id)
         
-        items = Item.objects.filter(id__in=item_id, status=1)
+        items = Item.objects.filter(id__in=item_id, status=1).order_by('marathi_name')
         
         context = {
             'item': items,
@@ -226,7 +225,7 @@ def filter_items_by_category_customer(request):
         for i in selected_item_category.objects.filter(category_id=category_id, status = 1):
             item_id.append(i.item_id)
         
-        items = Item.objects.filter(id__in=item_id, status=1)
+        items = Item.objects.filter(id__in=item_id, status=1).order_by('marathi_name')
         
         context = {
             'item': items,

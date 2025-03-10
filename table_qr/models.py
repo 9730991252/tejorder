@@ -4,9 +4,7 @@ from hotel.models import *
 class Table_QrCode(models.Model):
     table = models.ForeignKey(Table, on_delete=models.PROTECT,null=True)
     url = models.CharField(max_length=100)
-    status = models.IntegerField(default=0)
-    session_id = models.CharField(max_length=500, null=True)
-    
+    active_status = models.IntegerField(default=1)
     
 class Customer_cart(models.Model):
     table = models.ForeignKey(Table, on_delete=models.PROTECT,null=True)
@@ -18,4 +16,4 @@ class Customer_cart(models.Model):
     accepted_status = models.CharField(default='Pendding', max_length=100)
     date = models.DateTimeField(auto_now_add=True, null=True)
     customer_session_id = models.CharField(max_length=500, null=True)
-    
+     

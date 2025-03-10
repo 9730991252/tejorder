@@ -19,7 +19,6 @@
     .table_box{
         padding: 10px;
         border: 1px solid rgb(138, 136, 136);
-        cursor: pointer;
         border-radius: 10px;
         text-align: center;
         
@@ -79,7 +78,12 @@ label>img{
 <div class="container container_box text-center">
 {% for t in table %}
 <div class="table_box">
-    <h6>{{t.name}}</h6>
+    <h6 >{{t.name}}</h6>
+    <div style="display: flex;justify-content: space-evenly;">
+        <div class="text-center">
+            <form method="POST"><input type="hidden" name="id" value="{{t.id}}"><button type="submit" name="reset_table" class="btn">Reset <i class="fa-solid fa-arrows-rotate"></i></button></form> 
+        </div>
+    </div>
     <div>
         <a onclick="download_table_image('{{t.id}}')" class="btn btn-outline-success">Download QrCode <i class="fa fa-download" aria-hidden="true"></i></a>
     </div>

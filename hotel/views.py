@@ -10,6 +10,7 @@ from PIL import Image
 import io
 from datetime import datetime, date, time
 from django.core.paginator import Paginator
+from django.contrib import messages 
 
 # Create your views here.
 @csrf_exempt
@@ -109,7 +110,12 @@ def table_qr(request):
         mobile = request.session['owner_mobile']
         hotel = Hotel.objects.filter(mobile=mobile).first()
         t = Table.objects.filter(hotel_id=hotel.id)
-        
+        if 'reset_table'in request.POST:
+            id = request.POST.get('id')
+            t = Table.objects.filter(id=id).first()
+            Customer_cart.objects.filter(table_id=id).delete()
+            messages.success(request,f"{t.name} Reseted SuccessFully.")
+            return redirect('/hotel/table_qr/')
         context={
             'hotel':hotel,
             'table':t
@@ -305,7 +311,7 @@ def view_order(request, table_id):
             'hotel':hotel,
             'cart':Hotel_cart.objects.filter(table_id=table_id),
             'amount':amount,
-            'item':Item.objects.filter(status=1,hotel_id=hotel.id),
+            'item':Item.objects.filter(status=1,hotel_id=hotel.id).order_by('marathi_name'),
             'table':Table.objects.get(id=table_id),
             'category':Category.objects.filter(status=1,hotel_id=hotel.id).order_by('-order_by')
         }
@@ -314,7 +320,6 @@ def view_order(request, table_id):
         return redirect('login')
     
 def comolete_order(order_filter, table_id, hotel_id):
-    table_qr = Table_QrCode.objects.filter(table_id=table_id).update(status=0,session_id='')
     hotel = Hotel.objects.filter(id=hotel_id).first()
     t =Hotel_cart.objects.filter(table_id=table_id).aggregate(Sum('total_amount'))['total_amount__sum']
     if t != None:

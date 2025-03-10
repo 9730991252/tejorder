@@ -35,12 +35,20 @@ def customer_order(request, url):
         t = Table_QrCode.objects.filter(url=url).first()
         if t:
             customer_session = get_session_id(request)
-            if t.session_id == customer_session:
-                running_status = 0
-            elif int(t.status) == 0:
-                running_status = 0
+            hc = Hotel_cart.objects.filter(table_id=t.table.id).first()
+            cc = Customer_cart.objects.filter(table_id=t.table.id).first()
+            if cc:
+                if cc.customer_session_id == customer_session:
+                    running_status = 0
+                else:
+                    running_status = 1
+            elif hc:
+                if hc.session_id == customer_session:
+                    running_status = 0
+                else:
+                    running_status = 1
             else:
-                running_status = 1
+                running_status = 0
             
             table = t.table
             hotel = table.hotel
@@ -66,6 +74,6 @@ def customer_order(request, url):
             }
             return render(request, 'table_qr/customer_order.html', context)
         else:
-            return redirect('/')
+            return redirect('https://www.google.com/')
     else:
         return redirect('/')
