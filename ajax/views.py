@@ -216,6 +216,23 @@ def filter_items_by_category(request):
         }
         t = render_to_string('ajax/filter_items_by_category.html', context)
     return JsonResponse({'t': t})
+
+def filter_items_by_category_customer(request):
+    if request.method == 'GET':
+        category_id = request.GET['category_id']
+        
+        item_id = []
+        
+        for i in selected_item_category.objects.filter(category_id=category_id, status = 1):
+            item_id.append(i.item_id)
+        
+        items = Item.objects.filter(id__in=item_id, status=1)
+        
+        context = {
+            'item': items,
+        }
+        t = render_to_string('ajax/filter_items_by_category_customer.html', context)
+    return JsonResponse({'t': t})
     
 def search_hotel_item(request):
     if request.method == 'GET':

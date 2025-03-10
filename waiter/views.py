@@ -63,8 +63,8 @@ def order(request,table_id):
             'table':Table.objects.get(id=table_id),
             'category':Category.objects.filter(status=1, hotel_id=w.hotel.id).order_by('-order_by'),
             'cart':Hotel_cart.objects.filter(table_id=table_id),
-            'table_id':table_id
-
+            'table_id':table_id,
+            'item':Item.objects.filter(hotel_id=w.hotel.id, status=1)
         }
         return render(request, 'waiter/order.html', context)
     else:

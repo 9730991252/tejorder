@@ -15,4 +15,5 @@ urlpatterns = [
     path('item_discount_status/', views.item_discount_status, name='item_discount_status'),
     path('add_item_to_customer_cart/', views.add_item_to_customer_cart, name='add_item_to_customer_cart'),
     path('add_item_to_cart_edit/', views.add_item_to_cart_edit, name='add_item_to_cart_edit'),
+    path('filter_items_by_category_customer/', views.filter_items_by_category_customer, name='filter_items_by_category_customer'),
 ]

@@ -30,3 +30,5 @@ urlpatterns = [
     path('download/', include('download.urls')),
     path('table_qr/', include('table_qr.urls')),
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
+handler404 = 'home.views.handling_404'

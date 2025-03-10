@@ -3,6 +3,9 @@ from .models import *
 from sunil.models import *
 from hotel.models import *
 # Create your views here.
+def handling_404(request, exception):
+    return render(request, '404.html')
+
 def index(request):
     visitors = Visitors.objects.all().first()
     if Visitors.objects.all().exists():

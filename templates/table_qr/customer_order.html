@@ -143,6 +143,13 @@
                     object-fit: cover;
                 }
             }
+            .note{
+                text-align: center;
+                width: 180px;
+            }
+            .no_image{
+                width: 100px !important;
+            }
             @media only screen and (max-width: 600px) {
                 .dish_main_box{
                     display: flex;
@@ -165,13 +172,13 @@
                 </div>
                 {% else %}
                 <div class="item_image_box">
-                    <img src=""  alt="Image Not Available">
+                    <img src="{% static 'img/dish.jpg' %}" class="no_image" alt="Image Not Available">
                 </div>
                 {% endif %}
 
                 <div class="name"><b>{{i.marathi_name}}</b></div>
                 <div>
-                    <div><input type="text" name="" style="width: 180px;" placeholder="Note" id="note{{i.id}}"></div>
+                    <div><input class="note" type="text" name="" style="width: 180px;" placeholder="Note" id="note{{i.id}}"></div>
                   <div class="row my-1 text-center">
                     <div class="col-3"><button type="button" onclick="minus('{{i.id}}','{{i.price}}')" class="btn btn-success btn-sm px-3">-</button></div>
                     <div class="col-5"><input type="text" name="qty" style="width: 50px; text-align: center;" id="qty{{i.id}}" value="1" ></div>
@@ -214,7 +221,7 @@
     function  filterItems(category_id){
         
         $.ajax({
-            url: "{% url 'filter_items_by_category' %}",
+            url: "{% url 'filter_items_by_category_customer' %}",
             method: "GET",
             data: {
                 category_id: category_id,

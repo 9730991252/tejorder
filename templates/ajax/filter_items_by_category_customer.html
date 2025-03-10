@@ -1,0 +1,35 @@
+{% load hotel_tag %}
+{% load static %}
+
+{% for i in item %}
+
+<input type="hidden" name="id" value="{{i.id}}">
+<input type="hidden" name="price" value="{{i.price}}">
+<div class="dish_box">
+    {% get_item_image_and_youtube_url i.id as item_image_and_youtube_url %}
+    {% if item_image_and_youtube_url.image %}
+    <div class="item_image_box">
+        <img src="{{item_image_and_youtube_url.image.url}}" loading="eager" alt="">
+    </div>
+    {% else %}
+    <div class="item_image_box">
+        <img src="{% static 'img/dish.jpg' %}" class="no_image" alt="Image Not Available">
+    </div>
+    {% endif %}
+
+    <div class="name"><b>{{i.marathi_name}}</b></div>
+    <div>
+        <div><input class="note" type="text" name="" placeholder="Note" id="note{{i.id}}"></div>
+      <div class="row my-1 text-center">
+        <div class="col-3"><button type="button" onclick="minus('{{i.id}}','{{i.price}}')" class="btn btn-success btn-sm px-3">-</button></div>
+        <div class="col-5"><input type="text" name="qty" style="width: 50px; text-align: center;" id="qty{{i.id}}" value="1" ></div>
+        <div class="col-3"><button type="button" onclick="plus('{{i.id}}','{{i.price}}')" class="btn btn-success btn-sm px-3">+</button></div>
+    </div>
+    <div class="flex">
+        <div class="mt-2"  >Rs.<input style="border: none; width: 70px;" type="text" name="total_amount"  id="price{{i.id}}" value="{{i.price}}" readonly></div>
+        <div style="width: 40%;"><button type="button" class="btn btn-danger btn-sm mx-auto" onclick="add_to_cart('{{i.id}}','{{i.price}}')">Confirm </button></div>
+      </div>
+    </div>
+</div>
+
+{% endfor %}
