@@ -6,9 +6,10 @@
 {% endblock head %}
 
 {% block content %}
-{% include 'include/alert.html' %}
 {% include 'include/hotel_navbar.html' %}
 {% load static %}
+{% load hotel_tag %}
+{% include 'include/alert.html' %}
 <style>
     .container_box {
         display: grid;
@@ -78,12 +79,38 @@ label>img{
 <div class="container container_box text-center">
 {% for t in table %}
 <div class="table_box">
-    <h6 >{{t.name}}</h6>
-    <div style="display: flex;justify-content: space-evenly;">
-        <div class="text-center">
-            <form method="POST"><input type="hidden" name="id" value="{{t.id}}"><button type="submit" name="reset_table" class="btn">Reset <i class="fa-solid fa-arrows-rotate"></i></button></form> 
+    {% check_table_running_status_qr_status t.id as n %}
+    <h6 >{{t.name}} {{t.id}}</h6>
+    {% if n.qr_status == 1 %}
+        <div style="text-align: center;">
+            {% if n.running_status == 1 %} 
+            <div class="text-center">
+                <form method="POST"><input type="hidden" name="id" value="{{t.id}}"><button type="submit" name="reset_table" class="btn">Reset <i class="fa-solid fa-arrows-rotate"></i></button></form> 
+            </div>
+            {% endif %}
+            <div class="text-center">
+                <form method="POST" style="display: flex;justify-content: center;align-items: center;">
+                    <input type="hidden" name="id" value="{{t.id}}">
+                    <div>Status</div>
+                    {% if n.active_status == 1 %}
+                    <div class="form-check form-switch form-check-reverse lable ">
+                        <button class="btn" type="submit" name="active" id="active_btn{{t.id}}">
+                            <input class="form-check-input" onclick="document.getElementById('active_btn{{t.id}}').click()" type="checkbox" id="flexSwitchCheckReverse" name="life_weight"  checked >                        
+                        </button>
+                    </div>
+                    <div>ON</div>
+                    {% else %}
+                    <div class="form-check form-switch form-check-reverse lable ">
+                        <button class="btn" type="submit" name="deactive" id="deactive_btn{{t.id}}">
+                            <input class="form-check-input" onclick="document.getElementById('deactive_btn{{t.id}}').click()"  type="checkbox" id="flexSwitchCheckReverse" name="life_weight" >                        
+                        </button>
+                    </div>
+                    <div>OFF</div>
+                    {% endif %}
+                </form> 
+            </div>
         </div>
-    </div>
+    {% endif %}
     <div>
         <a onclick="download_table_image('{{t.id}}')" class="btn btn-outline-success">Download QrCode <i class="fa fa-download" aria-hidden="true"></i></a>
     </div>

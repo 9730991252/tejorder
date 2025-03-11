@@ -15,6 +15,20 @@ def customer_selected_item_count(category_id):
     return selected_item_category.objects.filter(category_id=category_id,status = 1).count()
 
 @register.simple_tag()
+def check_table_running_status_qr_status(table_id):
+    qr_status = 0
+    if Table_QrCode.objects.filter(table_id=table_id).exists():
+        qr_status = 1
+    running_status = 0
+    if Customer_cart.objects.filter(table_id=table_id).exists():
+        running_status = 1
+    active_status = 0
+    # print(table_id, Table_QrCode.objects.filter(table_id=table_id, active_status=1).first())
+    if Table_QrCode.objects.filter(table_id=table_id, active_status=1).exists():
+        active_status = 1
+    
+    return {'qr_status': qr_status, 'running_status': running_status, 'active_status':active_status}
+@register.simple_tag()
 def get_item_image_and_youtube_url(i_id):
     return Item_image_and_youtube_url.objects.filter(item_id=i_id).first()
 

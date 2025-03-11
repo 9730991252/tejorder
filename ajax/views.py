@@ -102,13 +102,14 @@ def chang_teble_name(request):
 def add_item_to_cart_edit(request):
     if request.method == 'GET':
         item_id = request.GET['item_id']
-        print(item_id)
         price = request.GET['price']
         qty = request.GET['qty']
         total_amount = request.GET['total_amount']
         order_filter = request.GET['order_filter']
+        om_id = request.GET['om_id']
         i = Item.objects.filter(id=item_id).first()
-        om = order_Master.objects.filter(order_filter=order_filter).first()
+        om = order_Master.objects.filter(id=om_id).first()
+        print(om)
         order_Detail(
             item_id=item_id,
             qty=qty,
@@ -116,7 +117,7 @@ def add_item_to_cart_edit(request):
             total_price=total_amount,
             order_filter=order_filter,
             item_name = i.marathi_name,
-            order_master=om
+            order_master_id=om.id
         ).save()
         od = order_Detail.objects.filter(order_filter=order_filter, item_id=item_id).first()
         om.total_price += od.total_price

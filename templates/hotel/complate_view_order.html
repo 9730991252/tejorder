@@ -55,6 +55,9 @@ grid-template-columns: 0.7fr 2fr;
 }
 #head{
 display: none ;
+h3{
+    margin-bottom: -4px;
+}
 }
 </style>
 <style media="print">
@@ -84,7 +87,7 @@ font-size: 13px;
 font-weight: 500;
 font-size: 13px;
 text-align: center;
-margin-bottom: -0.05in;
+margin-bottom: -10px;
 }
 </style>
 
@@ -110,12 +113,12 @@ margin-bottom: -0.05in;
     <div>
         <div class="text-center" id="head">
             <h3>{{hotel.hotel_name}}</h3>
-            <h6>{{hotel.address}}</h6>
-            <h6>{{hotel.contact_details}}</h6>
+            <p>{{hotel.address}}</p>
+            <p style="margin-bottom: -5px;margin-top: -20px;">{{hotel.mobile}}</p>
         </div>
         <div class="bill_number_box">
-            <div ><h6>Bill {{om.order_filter}}</h6></div>
-            <div style="text-align: end;"><h6>{{om.ordered_date}}</h6></div>
+            <div ><h>Bill {{om.order_filter}}</h></div>
+            <div style="text-align: end;"><h>{{om.ordered_date}}</h></div>
         </div>
     </div>
     <div class="bill_containt_box">
@@ -144,8 +147,8 @@ margin-bottom: -0.05in;
         <canvas  id="qrCode"></canvas>
         <b >Scan QR And Pay Amount</b>
     </div>
-    <div class="text-center"><h6><b>Thank You Visit Again</b></h6></div>
-    <div class="addvertise">All type Mobile Software  9730 99 1252 <br></div>
+    <div class="text-center" id="thank_you" ><h6><b>Thank You Visit Again</b></h6></div>
+    <div class="addvertise">All type Mobile Software Mo.9730991252 <br></div>
     <div class="addvertise">.</div>
 </div>
 

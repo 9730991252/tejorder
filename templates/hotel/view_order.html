@@ -153,7 +153,7 @@
     </div>
     <div class="flex">
         <div class="mt-2"  >Rs.<input style="border: none; width: 70px;" type="text" name="total_amount"  id="price{{i.id}}" value="{{i.price}}"></div>
-        <div style="width: 40%;"><button type="button" class="mt-2 btn btn-danger btn-sm mx-auto conform_btn" id="add_tp_cart_btn{{i.id}}"  onclick="add_to_cart('{{i.id}}','{{i.price}}')">Confirm </button></div>
+        <div style="width: 40%;"><button type="button" class="mt-2 btn btn-danger btn-sm mx-auto conform_btn" id="add_tp_cart_btn{{i.id}}"  onclick="add_to_cart('{{i.id}}','{{i.price}}', '{{i.english_name}}')">Confirm </button></div>
       </div>
     </div>
 </div>
@@ -215,10 +215,9 @@ function  filterItems(category_id){
 
 }
 
-function add_to_cart(id){
+function add_to_cart(id,price, name){
     var qty = document.getElementById('qty'+id).value
     var note = document.getElementById('note'+id).value
-    var price = document.getElementById('price'+id).value
     p=qty*price
 
     $.ajax({
@@ -237,6 +236,11 @@ function add_to_cart(id){
         document.getElementById('amount').value = res.amount
         document.getElementById('complete_order_btn').style.display = 'unset'
         document.getElementById('cart_item').innerHTML = res.t
+        const msg = new SpeechSynthesisUtterance;
+        msg.text=`${name} ${qty} Qty`;
+        
+        msg.voice=speechSynthesis.getVoices()[1];
+        speechSynthesis.speak(msg);
     }
   })
 }

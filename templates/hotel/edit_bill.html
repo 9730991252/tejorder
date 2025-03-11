@@ -25,7 +25,8 @@
       </style>
     <div class="container border my-2">
         <div>
-        <h5>Table-{{om.table.table_number}}</h5>
+        <h5>Bill No. {{om.order_filter}}</h5>
+        <h5>{{om.table.name}}</h5>
         </div>
     </div>
         <div class="container border">
@@ -62,7 +63,7 @@
         
         </div>
     
-            <div class="container"><a href="/owner/complate_view_order/{{om.order_filter}}" class="btn btn-danger " >Complete Order</a></div>
+            <div class="container"><a href="/hotel/complate_view_order/{{om.order_filter}}" class="btn btn-danger " >Complete Order</a></div>
             
       
     
@@ -201,12 +202,13 @@
         url: "{% url 'add_item_to_cart_edit' %}",
         method: "GET",
         data:{
-            table_id:'{{table_id}}',
             item_id:id,
             price:price,
             qty:qty,
             total_amount:p,
             order_filter:'{{om.order_filter}}',
+            om_id : '{{om.id}}',
+
         },
         success: function(res){
           location.reload()

@@ -34,45 +34,48 @@ def customer_order(request, url):
     if url:
         t = Table_QrCode.objects.filter(url=url).first()
         if t:
-            customer_session = get_session_id(request)
-            hc = Hotel_cart.objects.filter(table_id=t.table.id).first()
-            cc = Customer_cart.objects.filter(table_id=t.table.id).first()
-            if cc:
-                if cc.customer_session_id == customer_session:
-                    running_status = 0
+            if t.active_status == 1:
+                customer_session = get_session_id(request)
+                hc = Hotel_cart.objects.filter(table_id=t.table.id).first()
+                cc = Customer_cart.objects.filter(table_id=t.table.id).first()
+                if cc:
+                    if cc.customer_session_id == customer_session:
+                        running_status = 0
+                    else:
+                        running_status = 1
+                elif hc:
+                    if hc.session_id == customer_session:
+                        running_status = 0
+                    else:
+                        running_status = 1
                 else:
-                    running_status = 1
-            elif hc:
-                if hc.session_id == customer_session:
                     running_status = 0
+                
+                table = t.table
+                hotel = table.hotel
+                if request.session.has_key('customer_status'):
+                    pass
                 else:
-                    running_status = 1
+                    request.session['customer_status'] = 1
+                session_id = get_session_id(request)
+                if 'delete_order'in request.POST:
+                    cart_id = request.POST.get('cart_id')
+                    Customer_cart.objects.filter(id=cart_id).delete()
+                    return redirect(f'/table_qr/{url}/')
+                context = {
+                    'url':url,
+                    'table':table,
+                    'hotel':hotel,
+                    'table_qr':t,
+                    'category':Category.objects.filter(hotel=hotel),
+                    'item':Item.objects.filter(hotel=hotel),
+                    'customer_cart':Customer_cart.objects.filter(table=table, customer_session_id = session_id),
+                    'running_status':running_status,
+                    'hotel_cart':Hotel_cart.objects.filter(table=table)
+                }
+                return render(request, 'table_qr/customer_order.html', context)
             else:
-                running_status = 0
-            
-            table = t.table
-            hotel = table.hotel
-            if request.session.has_key('customer_status'):
-                pass
-            else:
-                request.session['customer_status'] = 1
-            session_id = get_session_id(request)
-            if 'delete_order'in request.POST:
-                cart_id = request.POST.get('cart_id')
-                Customer_cart.objects.filter(id=cart_id).delete()
-                return redirect(f'/table_qr/{url}/')
-            context = {
-                'url':url,
-                'table':table,
-                'hotel':hotel,
-                'table_qr':t,
-                'category':Category.objects.filter(hotel=hotel),
-                'item':Item.objects.filter(hotel=hotel),
-                'customer_cart':Customer_cart.objects.filter(table=table, customer_session_id = session_id),
-                'running_status':running_status,
-                'hotel_cart':Hotel_cart.objects.filter(table=table)
-            }
-            return render(request, 'table_qr/customer_order.html', context)
+                return redirect('/')
         else:
             return redirect('https://www.google.com/')
     else:

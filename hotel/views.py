@@ -116,6 +116,19 @@ def table_qr(request):
             Customer_cart.objects.filter(table_id=id).delete()
             messages.success(request,f"{t.name} Reseted SuccessFully.")
             return redirect('/hotel/table_qr/')
+        if 'active'in request.POST:
+            id = request.POST.get('id')
+            tq = Table_QrCode.objects.filter(table_id=id).first()
+            tq.active_status = 0
+            tq.save()
+            Customer_cart.objects.filter(table_id=id).delete()
+            return redirect('/hotel/table_qr/')
+        if 'deactive'in request.POST:
+            id = request.POST.get('id')
+            tq = Table_QrCode.objects.filter(table_id=id).first()
+            tq.active_status = 1
+            tq.save()
+            return redirect('/hotel/table_qr/')
         context={
             'hotel':hotel,
             'table':t
@@ -133,17 +146,15 @@ def complate_order(request):
             
             if 'cancel_bill'in request.POST:
                 order_filter = request.POST.get('order_filter')
-                om = order_Master.objects.filter(order_filter=order_filter).first()
+                om = order_Master.objects.filter(order_filter=order_filter, hotel_id=hotel.id).first()
                 om.status = 0
                 om.save()
                 return redirect('complate_order')
             order_master = []
             for b in order_Master.objects.filter(hotel_id=hotel.id).order_by('-id'):
                 cancel_btn_show_status = 0
-                order_details = order_Detail.objects.filter(order_filter=b.order_filter).first()
-                if order_details:
-                    if order_details.date == date.today():
-                        cancel_btn_show_status = 1
+                if b.date == date.today():
+                    cancel_btn_show_status = 1
                 order_master.append({
                     'id': b.id,
                     'order_filter': b.order_filter,
