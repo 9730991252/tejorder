@@ -7,6 +7,9 @@
 
 {% block content %}
 {% include 'include/hotel_navbar.html' %}
+<div class="container" style="margin-top: -10px;">
+    <h>Scaned <i class="fa-solid fa-eye"></i>  {{count}}</h>
+</div>
 {% load static %}
 {% load hotel_tag %}
 {% include 'include/alert.html' %}
@@ -80,7 +83,7 @@ label>img{
 {% for t in table %}
 <div class="table_box">
     {% check_table_running_status_qr_status t.id as n %}
-    <h6 >{{t.name}} {{t.id}}</h6>
+    <h6 >{{t.name}}</h6>
     {% if n.qr_status == 1 %}
         <div style="text-align: center;">
             {% if n.running_status == 1 %} 

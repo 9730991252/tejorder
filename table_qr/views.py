@@ -35,6 +35,17 @@ def customer_order(request, url):
         t = Table_QrCode.objects.filter(url=url).first()
         if t:
             if t.active_status == 1:
+                c = Table_qr_count.objects.filter(hotel_id=t.table.hotel_id).first()
+                if c:
+                    c.count += 1
+                    c.save()
+                else:
+                    Table_qr_count(
+                        hotel_id = t.table.hotel_id,
+                        count=1,
+                    ).save()
+                c = Table_qr_count.objects.filter(hotel_id=t.table.hotel_id).first()
+                
                 customer_session = get_session_id(request)
                 hc = Hotel_cart.objects.filter(table_id=t.table.id).first()
                 cc = Customer_cart.objects.filter(table_id=t.table.id).first()
@@ -71,7 +82,8 @@ def customer_order(request, url):
                     'item':Item.objects.filter(hotel=hotel),
                     'customer_cart':Customer_cart.objects.filter(table=table, customer_session_id = session_id),
                     'running_status':running_status,
-                    'hotel_cart':Hotel_cart.objects.filter(table=table)
+                    'hotel_cart':Hotel_cart.objects.filter(table=table),
+                    'count':c.count
                 }
                 return render(request, 'table_qr/customer_order.html', context)
             else:

@@ -118,6 +118,7 @@
                 width: 200px;
                 overflow: hidden;
                 height: 250px;
+                position: relative;
 
 
             }
@@ -133,10 +134,14 @@
                 display: none;
             }
             .item_image_box{
+                top: 0;
+                left: 0;
+                right: 0;
                 width: 100%;
                 overflow: hidden;
                 height: 100px;
                 text-align: center;
+                position: absolute;
                 img{
                     width: 100%;
                     height: 100px;
@@ -176,6 +181,7 @@
                 </div>
                 {% endif %}
 
+                <br><br><br><br>
                 <div class="name"><b>{{i.marathi_name}}</b></div>
                 <div>
                     <div><input class="note" type="text" name="" style="width: 180px;" placeholder="Note" id="note{{i.id}}"></div>
@@ -297,7 +303,7 @@ function plus(id,price){
 <br><br>
 <footer style="margin-top: auto;margin-bottom: 0px;" >
     <div class="container">
-        <p>&copy; 2025 Tej Order. All Rights Reserved.</p>
+        <p>&copy; 2025 Tej Order. All Rights Reserved.  <b>Total Scanned {{count}}</b></p>
     </div>
 </footer>
 <script src="https://unpkg.com/scrollreveal"></script>

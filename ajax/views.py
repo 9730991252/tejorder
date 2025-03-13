@@ -121,9 +121,11 @@ def add_item_to_cart_edit(request):
         ).save()
         od = order_Detail.objects.filter(order_filter=order_filter, item_id=item_id).first()
         om.total_price += od.total_price
-        om.cash_amount = 0
+        om.cash_amount += od.total_price - om.discount_amount
         om.phone_pe_amount = 0
         om.pos_machine_amount = 0
+        om.discount_amount = 0
+        om.discount_percent = 0
         om.save()
     return JsonResponse({'t':'t'})
 

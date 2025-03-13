@@ -131,7 +131,8 @@ def table_qr(request):
             return redirect('/hotel/table_qr/')
         context={
             'hotel':hotel,
-            'table':t
+            'table':t,
+            'count':Table_qr_count.objects.filter(hotel_id=hotel.id).first().count
             
         }
         return render(request, 'hotel/table_qr.html', context)
