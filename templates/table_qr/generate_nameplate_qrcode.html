@@ -15,6 +15,7 @@
     height: 4in;
     border-radius: 10px !important;
     overflow: hidden;
+    background-color: rgb(236, 180, 37);
 
 }
 #canvas {
@@ -78,11 +79,14 @@
             display: flex;
             justify-content: space-evenly;
             align-items: center;
+            margin-top: 5px;
             img{
                 height: 55px;
+                border-radius: 10px;
             }
         }
         .hotel_name{
+            padding-top: 10px;
             letter-spacing: 1px;
             font-weight: 900;
             font-family: "Tiro Devanagari Marathi", serif;
@@ -112,7 +116,7 @@
     }
 </style>
 <div id="main_canvas">
-<div id="canvas" style="transform: rotate(180deg);">
+<div id="canvas" style="transform: rotate(180deg);margin-bottom: 5px;">
     <div class="header">
         <div>{{table.name}}</div>
     </div>
@@ -122,9 +126,8 @@
                 {% if hotel.logo %}
                     <div style="z-index: +1;"><img src="{{hotel.logo.url}}" height="65"  alt=""></div>
                 {% endif %}
-                <h class="hotel_name">{{hotel.hotel_name | slice:'20'}} {% if hotel.hotel_name|length > 20 %}...{% endif %} <br> <p class="text-light" style="margin-bottom: 10px;">{{hotel.address | slice:'20'}}...</p></h>
+                <h class="hotel_name">{{hotel.hotel_name | slice:'15'}} {% if hotel.hotel_name|length > 15 %}...{% endif %} <br> <p class="text-light" style="margin-bottom: 5px;margin-top: 10px;">{{hotel.address | slice:'20'}}...</p></h>
             </div>
-            
             <mobile>Mo.{{hotel.mobile}}</mobile>
             
         </div>
@@ -148,8 +151,9 @@
                 {% if hotel.logo %}
                     <div style="z-index: +1;"><img src="{{hotel.logo.url}}" height="65"  alt=""></div>
                 {% endif %}
-                <h class="hotel_name">{{hotel.hotel_name | slice:'20'}} {% if hotel.hotel_name|length > 20 %}...{% endif %} <br> <p class="text-light" style="margin-bottom: 10px;">{{hotel.address | slice:'30'}}...</p></h>
+                <h class="hotel_name">{{hotel.hotel_name | slice:'15'}} {% if hotel.hotel_name|length > 15 %}...{% endif %} <br> <p class="text-light" style="margin-bottom: 5px;margin-top: 10px;">{{hotel.address | slice:'20'}}...</p></h>
             </div>
+            
             <mobile>Mo.{{hotel.mobile}}</mobile>
             
         </div>
