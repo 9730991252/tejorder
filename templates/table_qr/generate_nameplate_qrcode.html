@@ -1,0 +1,201 @@
+{% extends 'home/base.html' %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+{% load static %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Tiro+Devanagari+Marathi:ital@0;1&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&family=Libre+Baskerville:wght@400;700&family=Rock+Salt&family=Spicy+Rice&family=Tiro+Devanagari+Marathi:ital@0;1&display=swap');    
+</style>
+
+<style>
+    
+#main_canvas {
+    width: 4in;
+    height: 4in;
+    border-radius: 10px !important;
+    overflow: hidden;
+
+}
+#canvas {
+        position: relative;
+        width: 4in;
+        height: 2in;
+        overflow: hidden;
+        margin: 0 auto;
+        padding: 0px;
+        background-image: url('{% static "img/nameplate_background1.jpg" %}');
+        background-size: 4in;
+    }
+    .header{
+        height: 22px;
+        background-image: url('{% static "img/goldan_back.jpg" %}');
+        /* background-image: url('https://img.freepik.com/free-vector/gold-metal-background_78370-154.jpg'); */
+        background-size: 4in 2in;
+        display: flex;
+        justify-content: space-evenly;
+        font-family: "Tiro Devanagari Marathi", serif;
+        color: rgb(0, 0, 0);
+
+    }
+    .qr_box{
+        position: absolute;
+        right: 20px;
+        top: 30px;
+        padding: 5px;
+        background-color: white;
+        border-radius: 10px;
+
+        background-color: rgb(255, 255, 255);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding-top: 3px;
+        h6{
+            font-size: 10px;
+            margin-bottom: 2px;
+        }
+        .img{
+            border: 2px solid rgb(139, 139, 139);
+            border-radius: 5px;
+        }
+    }
+    .scane_me{
+        width: 80px;
+        position: absolute;
+        bottom: 8px;
+        right: 35px;
+    }
+    .hotel_detail{
+        position: absolute;
+        top: 30px;
+        left: 5px;
+        color: white;
+        width: 60%;
+        text-align: center;
+        .h5{
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            img{
+                height: 55px;
+            }
+        }
+        .hotel_name{
+            letter-spacing: 1px;
+            font-weight: 900;
+            font-family: "Tiro Devanagari Marathi", serif;
+            text-align: start;
+        }
+        p{
+            font-family: "Tiro Devanagari Marathi", serif;
+            font-size: 15px;
+            font-weight: 400;
+            width: 100%;
+        }
+        mobile{
+            font-family: "Tiro Devanagari Marathi", serif;
+            letter-spacing: 1px;
+            font-weight: 700;
+            color: rgb(255, 255, 255);
+        }
+    }
+    .Addverties{
+        position: absolute;
+        font-size: 12px;
+        color: white;
+        bottom: 10px;
+        left: 15px;
+        font-family: "Tiro Devanagari Marathi";
+
+    }
+</style>
+<div id="main_canvas">
+<div id="canvas" style="transform: rotate(180deg);">
+    <div class="header">
+        <div>{{table.name}}</div>
+    </div>
+    <div class="body">
+        <div class="hotel_detail">
+            <div class="h5">
+                {% if hotel.logo %}
+                    <div style="z-index: +1;"><img src="{{hotel.logo.url}}" height="65"  alt=""></div>
+                {% endif %}
+                <h class="hotel_name">{{hotel.hotel_name | slice:'20'}} {% if hotel.hotel_name|length > 20 %}...{% endif %} <br> <p class="text-light" style="margin-bottom: 10px;">{{hotel.address | slice:'20'}}...</p></h>
+            </div>
+            
+            <mobile>Mo.{{hotel.mobile}}</mobile>
+            
+        </div>
+        <div class="Addverties">बिलिंग व बारकोड सॉफ्टवेअरसाठी Mo.9730991252</div>
+        <div class="qr_box">
+            <h6><b>Menu/ ORDER</b></h6>
+            <canvas class="img" id="qrCode"></canvas>
+        </div>
+        
+        <img class="scane_me" src="{% static 'img/scane_me.jpg' %}" alt="">
+    </div>
+
+</div>
+<div id="canvas">
+    <div class="header">
+        <div>{{table.name}}</div>
+    </div>
+    <div class="body">
+        <div class="hotel_detail">
+            <div class="h5">
+                {% if hotel.logo %}
+                    <div style="z-index: +1;"><img src="{{hotel.logo.url}}" height="65"  alt=""></div>
+                {% endif %}
+                <h class="hotel_name">{{hotel.hotel_name | slice:'20'}} {% if hotel.hotel_name|length > 20 %}...{% endif %} <br> <p class="text-light" style="margin-bottom: 10px;">{{hotel.address | slice:'30'}}...</p></h>
+            </div>
+            <mobile>Mo.{{hotel.mobile}}</mobile>
+            
+        </div>
+        <div class="Addverties">बिलिंग व बारकोड सॉफ्टवेअरसाठी Mo.9730991252</div>
+        <div class="qr_box">
+            <h6><b>Menu/ ORDER</b></h6>
+            <canvas class="img" id="qrCode1"></canvas>
+        </div>
+        
+        <img class="scane_me" src="{% static 'img/scane_me.jpg' %}" alt="">
+    </div>
+
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+
+<script>
+const qrCodeElement = document.getElementById('qrCode');
+qrCodeElement.getContext('2d').clearRect(0, 0, qrCodeElement.width, qrCodeElement.height);
+const qr = new QRious({
+  element: qrCodeElement,
+  value: `https://tejorder.com/table_qr/{{t_qr.url}}/`,
+  size: 100,
+});
+const qrCodeElement1 = document.getElementById('qrCode1');
+qrCodeElement1.getContext('2d').clearRect(0, 0, qrCodeElement1.width, qrCodeElement1.height);
+const qr1 = new QRious({
+  element: qrCodeElement1,
+  value: `https://tejorder.com/table_qr/{{t_qr.url}}/`,
+  size: 100,
+});
+
+var pdf = document.getElementById("main_canvas");
+    html2canvas(pdf).then((canvas) => {
+    const base64image = canvas.toDataURL("image/jpeg");
+    var anchor  = document.createElement("a");
+    anchor.setAttribute("href", base64image);
+    anchor.setAttribute("download",'Hotel Bill of'+ new Date().toLocaleString() +' .jpeg');
+    anchor.click();
+
+    //location.href = "/hotel/table_qr/"
+})
+
+
+</script>
+{% endblock content %}

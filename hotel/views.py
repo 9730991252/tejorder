@@ -129,10 +129,15 @@ def table_qr(request):
             tq.active_status = 1
             tq.save()
             return redirect('/hotel/table_qr/')
+        tc = Table_qr_count.objects.filter(hotel_id=hotel.id).first()
+        if tc != None:
+            tc = tc.count
+        else:
+            tc = 0
         context={
             'hotel':hotel,
             'table':t,
-            'count':Table_qr_count.objects.filter(hotel_id=hotel.id).first().count
+            'count':tc
             
         }
         return render(request, 'hotel/table_qr.html', context)

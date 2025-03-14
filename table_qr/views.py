@@ -8,6 +8,27 @@ from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 def get_session_id(request):
     return request.session.session_key
+
+def generate_nameplate_qrcode(request, id):
+    table = Table.objects.filter(id=id).first()
+    if table:
+        t_qr = Table_QrCode.objects.filter(table_id=table.id).first()
+        if t_qr == None:
+            code = f"{random.choice(string.ascii_letters)}{random.choice(string.ascii_letters)}{table.id}{random.choice(string.ascii_letters)}{random.choice(string.ascii_letters)}"
+            Table_QrCode(
+                table_id = table.id,
+                url=code,
+            ).save()
+            t_qr = Table_QrCode.objects.filter(table_id=table.id).first()
+        context = {
+            'table':table,
+            't_qr':t_qr,
+            'hotel':table.hotel,
+        }
+        return render(request, 'table_qr/generate_nameplate_qrcode.html', context)
+    else:
+        return redirect('/hotel/table_qr/')
+    
 def generate_table_qrcode(request, id, bg):
     table = Table.objects.filter(id=id).first()
     if table:

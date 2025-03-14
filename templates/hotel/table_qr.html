@@ -114,8 +114,9 @@ label>img{
             </div>
         </div>
     {% endif %}
-    <div>
-        <a onclick="download_table_image('{{t.id}}')" class="btn btn-outline-success">Download QrCode <i class="fa fa-download" aria-hidden="true"></i></a>
+    <div style="display: flex;flex-direction: column;">
+        <a onclick="download_table_image('{{t.id}}')" class="btn btn-outline-success btn-sm">QrCode <i class="fa fa-download" aria-hidden="true"></i></a>
+        <a href="/table_qr/generate_nameplate_qrcode/{{t.id}}" class="btn btn-outline-primary mt-2 btn-sm">NamePlate QrCode <i class="fa fa-download" aria-hidden="true"></i></a>
     </div>
 </div>
 {% endfor %}

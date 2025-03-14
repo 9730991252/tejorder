@@ -15,6 +15,14 @@ def customer_selected_item_count(category_id):
     return selected_item_category.objects.filter(category_id=category_id,status = 1).count()
 
 @register.simple_tag()
+def check_item_image(item_id):
+    i = Item_image_and_youtube_url.objects.filter(item_id=item_id).first()
+    if i:
+        return i.image.url
+    else:
+        return '/static/img/dish.jpg'
+
+@register.simple_tag()
 def check_table_running_status_qr_status(table_id):
     qr_status = 0
     if Table_QrCode.objects.filter(table_id=table_id).exists():
