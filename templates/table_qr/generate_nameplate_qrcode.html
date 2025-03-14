@@ -27,6 +27,7 @@
         padding: 0px;
         background-image: url('{% static "img/nameplate_background1.jpg" %}');
         background-size: 4in;
+
     }
     .header{
         height: 22px;
@@ -191,15 +192,28 @@ const qr1 = new QRious({
 });
 
 var pdf = document.getElementById("main_canvas");
-    html2canvas(pdf).then((canvas) => {
-    const base64image = canvas.toDataURL("image/jpeg");
-    var anchor  = document.createElement("a");
+
+html2canvas(pdf, { scale: 5 }).then((canvas) => {
+    const base64image = canvas.toDataURL("image/jpeg", 1.0); // 1.0 = highest quality
+    var anchor = document.createElement("a");
     anchor.setAttribute("href", base64image);
-    anchor.setAttribute("download",'Hotel Bill of'+ new Date().toLocaleString() +' .jpeg');
+    anchor.setAttribute("download", 'Hotel Bill of ' + new Date().toLocaleString() + '.jpg');
     anchor.click();
 
-    location.href = "/hotel/table_qr/"
-})
+    // Optional: Redirect after download
+    // location.href = "/hotel/table_qr/";
+});
+
+// var pdf = document.getElementById("main_canvas");
+//     html2canvas(pdf).then((canvas) => {
+//     const base64image = canvas.toDataURL("image/jpg");
+//     var anchor  = document.createElement("a");
+//     anchor.setAttribute("href", base64image);
+//     anchor.setAttribute("download",'Hotel Bill of'+ new Date().toLocaleString() +' .jpg');
+//     anchor.click();
+
+//    // location.href = "/hotel/table_qr/"
+// })
 
 
 </script>
