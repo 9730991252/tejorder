@@ -85,7 +85,7 @@
       <div class="flex" style="justify-content: space-evenly;">
         <div data-aos="fade-left" data-aos-duration="2000">{% if c.status == 1 %}<button class="btn btn-success" type="submit" name="active" onclick="chang_status('{{c.id}}','{{c.name}}')" >Active</button>{% else %}<button onclick="chang_status('{{c.id}}')"  class="btn btn-danger" type="submit" name="deactive">Deactive</button>{% endif %}</div>
         <div><button data-bs-toggle="modal" data-bs-target="#exampleModal{{c.id}}" data-aos="fade-left" data-aos-duration="2000" class="btn btn-info">Edit</button></div>
-        <div><button data-bs-toggle="modal" data-bs-target="#item_modal{{c.id}}" data-aos="fade-left" data-aos-duration="2000" class="btn btn-primary">Item {% customer_selected_item_count c.id %}</button></div>
+        <div><button data-bs-toggle="modal" data-bs-target="#item_modal{{c.id}}" data-aos="fade-left" data-aos-duration="2000" class="btn btn-primary">Item <h id="ctegory_selected_item{{c.id}}">{% customer_selected_item_count c.id %}</h></button></div>
       </div>
 
     </div>
@@ -149,6 +149,7 @@ function select_category_item(item_id,c_id){
         },
         success: function(data){
           document.getElementById('select_item_box'+c_id).innerHTML = data.t
+          document.getElementById('ctegory_selected_item'+c_id).innerText = data.count
         }
   })
 }

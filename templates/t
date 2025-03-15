@@ -1,161 +1,65 @@
-{% extends 'home/base.html' %}
-
-{% block head %}
-{% endblock head %}
-
-{% block content %}
-{% include 'include/alert.html' %}
-
+<!doctype html>
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/index_hero.css' %}">
-<link rel="stylesheet" href="{% static 'css/index_about.css' %}">
-
-{% include 'include/navbar.html' %}
-
-    <!-- Hero Section with Image -->
-    <section class="hero">
-        <video autoplay muted loop id="myVideo" >
-            <source src="{% static 'video/food.mp4' %}" type="video/mp4">
-          </video>
-          <script>
-            var video = document.getElementById("myVideo");
-            var btn = document.getElementById("myBtn");
-            
-            function myFunction() {
-              if (video.paused) {
-                video.play();
-                btn.innerHTML = "Pause";
-              } else {
-                video.pause();
-                btn.innerHTML = "Play";
-              }
-            }
-            </script>
-        <div class="hero-content1" data-aos="zoom-in" data-aos-duration="1500">
-            <div>
-                <h1>Welcome to Tej Order</h1>
-                <p>"Your trusted solution for Hotel billing management."</p>
-                <a href="/login/" data-aos="fade-up" data-aos-duration="2000" class="btn btn-primary">Login</a>        
-                <a href="https://old.tejorder.com" data-aos="fade-up" data-aos-duration="2000" class="btn btn-success">Old Website</a>        
-            </div>
-
-        </div>
-        <div class="hero-content2" data-aos="zoom-in" data-aos-duration="1500">
-            <div class="img">
-                <img src="{% static 'img/home_page_imoji.jpg' %}" alt="">
-            </div>
-        </div>
-
-    </section>
-
-    <!-- Features Section -->
-    <section class="features">
-        <div class="container">
-            <h2>Our Features</h2>
-            <div class="feature-box">
-                <div class="feature" data-aos="fade-left" data-aos-duration="2000">
-                    <h3>Easy To Use</h3>
-                    <p>Any one can use.</p>
-                </div>
-                <div class="feature" data-aos="fade-right" data-aos-duration="2000">
-                    <h3>Fast Billing</h3>
-                    <p>Experience quick and efficient bill processing.</p>
-                </div>
-                <div class="feature" data-aos="fade-left" data-aos-duration="2000">
-                    <h3>Customer Support</h3>
-                    <p>Our support team is here to assist you anytime.</p>
-                </div>
-                <div class="feature" data-aos="fade-right" data-aos-duration="2000">
-                    <h3>Get real-time restaurant Reports</h3>
-                    <p>Automate your restaurant reports.</p>
-                </div>
-                <div class="feature" data-aos="fade-left" data-aos-duration="2000">
-                    <h3>Low Cost</h3>
-                    <p>Cost Arrount ₹100 Per 300 Bills</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    <div id="about_visiters">
-        <div data-aos="zoom-in" data-aos-duration="2000">
-            <i class="fa-solid fa-eye"></i>
-            <span class="num" data-val="{{visitors.count}}">000</span>
-            <span class="text">Visitors</span>
-        </div>
-        <div data-aos="zoom-out" data-aos-duration="2000">
-            <i class="fa-solid fa-users"></i>
-            <span class="num" data-val="{{users}}">000</span>
-            <span class="text">Happy Users</span>
-        </div>
-        <div data-aos="zoom-in" data-aos-duration="2000">
-            <i class="fa-solid fa-toilet-paper"></i>
-            <span class="bill" data-val="">{{bills}}</span>
-            <span class="text">Bills</span>
-        </div>
-        <div data-aos="zoom-out" data-aos-duration="2000">
-            <i class="fa-regular fa-calendar-days"></i>
-            <span class="num" data-val="6">000</span>
-            <span class="text">Years in Business</span>
-        </div>
-    </div>
-    <br>
-    <!-- about Section ------------------------------------------------------------>
-    <div class="about_box">
-        <h6 class="text-center" data-aos="fade-left" data-aos-duration="2000">Developed And Published By <br> <b>PRASANNA DIGITAL</b></h6>
-
-        <div class="section">
-            <div class="container">
-               <div class="content-section">
-                 <div class="title">
-                  <div class="section_heading">
-                     <span class="titel_tag" data-aos="fade-right" data-aos-duration="2000">About us</span>
-                     <h1 class="titel_name" data-aos="fade-left" data-aos-duration="2000">Hey! We’re Tejorder.com and we help Restaurant</h1><br><br>
-                     <h3 data-aos="fade-right" data-aos-duration="2000">We provide Restaurant Billing software </h3><br>
-                 </div>
-                 <div class="founder" data-aos="fade-left" data-aos-duration="2000">
-                  <p>People behind Tejorder.com</p>
-                 </div>
-                 <div class="Co-founder">
-                  <img  data-aos="fade-up" data-aos-duration="2000" src="{% static 'img/photo.jpg' %}"><br>
-                  <h1 data-aos="fade-right" data-aos-duration="2000">Mr.sunil kale</h1>
-                  <p data-aos="fade-left" data-aos-duration="2000">founder & CEO</p>
-               </div>
-               </div>
-            </div>
-         </div>
-
-    </div>
-    <!-- end about Section -------------------------------------------------------->
-
-    <!-- Footer Section -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Tej Order. All Rights Reserved.</p>
-        </div>
-    </footer>
-
-    <script src="https://unpkg.com/scrollreveal"></script>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}  Tej Order {% endblock title %}</title>
+    <link rel="shortcut icon" type="jpg" href="{% static 'img/logo.jpg' %}" class="profile-image" >
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@3.0.0-beta.6/dist/aos.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTC0W6LM1X"></script>
 <script>
-ScrollReveal().reveal('.hero-content', { delay: 375, reset: true });
-ScrollReveal().reveal('.feature', { delay: 375, reset: true });
-ScrollReveal().reveal('.num', { delay: 375, reset: true });
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-let valueDisplays = document.querySelectorAll(".num");
-let interval = 1000;
-
-valueDisplays.forEach((valueDisplays) => {
-    let startvalue = 0;
-    let endvalue = parseInt(valueDisplays.getAttribute("data-val"));
-    let duration = Math.floor(interval / endvalue );
-    let counter = setInterval(function() {
-        startvalue += 1;
-        valueDisplays.textContent = `${startvalue}+`;
-        if (startvalue == endvalue) {
-            clearInterval(counter);
-        }
-    }, duration)
-});
-
-
+  gtag('config', 'G-DTC0W6LM1X');
 </script>
-{% endblock content %}
+    {% block head %}{% endblock head %}
+  </head>
+  <body>
+    <style>
+      *{
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+      footer {
+            background-color: #343a40;
+            color: #ffffff;
+            text-align: center;
+            padding-top: 10px;
+            margin-top: auto;
+            height: 50px;
+        }
+      .at_page{
+        background-color: #343a40;
+        border-radius: 10px;
+        color: white !important;
+      }
+         
+  </style>
+    <!-- Example Code -->
+    {% block content %}{% endblock content %}
+
+    <!-- End Example Code -->
+    {% block script %}{% endblock script %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+
+    <script>
+        AOS.init({
+            offset: 2
+        });    
+
+    </script>
+  </body>
+</html>
+
+
+

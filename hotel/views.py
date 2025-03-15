@@ -27,6 +27,31 @@ def hotel_home(request):
         return redirect('login')
     
 @csrf_exempt
+def print_completed_bill(request, id):
+    if request.session.has_key('owner_mobile'):
+        mobile = request.session['owner_mobile']
+        hotel = Hotel.objects.filter(mobile=mobile).first()
+        om = order_Master.objects.filter(id=id).first()
+        without_gst_amount = order_Detail.objects.filter(order_filter=om.order_filter, item__gst_status=0).aggregate(Sum('total_price'))['total_price__sum']
+        discount_amount = order_Detail.objects.filter(order_filter=om.order_filter, item__discount_status=1).aggregate(Sum('total_price'))['total_price__sum']
+        total_price = om.total_price
+        total_price -= om.discount_amount
+        total_price += om.s_gst
+        total_price += om.s_gst
+        context={
+            'hotel':hotel,
+            'om':order_Master.objects.filter(id=id).first(),
+            'od':order_Detail.objects.filter(order_master_id=id),
+            'without_gst_amount':without_gst_amount,
+            'total_price':math.floor(total_price),
+            'discount_amount':discount_amount
+
+        }
+        return render(request, 'hotel/print_completed_bill.html', context)
+    else:
+        return redirect('login')
+    
+@csrf_exempt
 def edit_bill(request, id):
     if request.session.has_key('owner_mobile'):
         mobile = request.session['owner_mobile']

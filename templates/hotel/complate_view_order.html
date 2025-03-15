@@ -34,10 +34,8 @@ border-top: 1px solid rgb(201, 201, 201);
 .header{
     font-weight: 700;
     border-bottom: 1px solid rgb(211, 211, 211);
-    padding: 2px;
 }
 .containt{
-    padding: 2px;
     border-bottom: 1px solid rgb(233, 233, 233);
 }
 }
@@ -126,7 +124,7 @@ margin-bottom: -10px;
         <div class="header">Item</div>
         <div class="header">Qty</div>
         <div class="header">Price</div>
-        <div class="header">Amount</div>
+        <div class="header">Total</div>
         {% for o in order_detail %}
         <div class="containt">{{o.item_name}}</div>
         <div class="containt">{{o.qty}}</div>

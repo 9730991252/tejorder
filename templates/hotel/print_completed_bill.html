@@ -1,0 +1,120 @@
+{% extends 'home/base.html' %}
+{% block title %}complate order{% endblock title %}
+{% block content %}
+<style>
+  .addvertise{
+    display: none;
+  }
+</style>
+<style media="print">
+  @page{
+  size: 3in 10in;
+  margin: 0in;
+  padding: 0in;
+} 
+
+#p{
+  display: none;
+}
+
+#t{
+  font-size: 14px;
+
+}
+#order_item_head{
+  line-height: 6px;
+}
+#order_item{
+  line-height: 12px;
+}
+.addvertise{
+  display: unset;
+  text-align: center;
+  font-weight: 500;
+  font-size: 13px;
+}
+#thank_you{
+  font-weight: 500;
+  font-size: 13px;
+  text-align: center;
+  margin-bottom: -0.05in;
+}
+</style>
+
+<div class="container border">
+<div class="row">
+  <div class="col-11">
+<h3 class="text-center">{{hotel.hotel_name}}</h3>
+</div>
+</div>
+<div class="row">
+
+  <div class="col-11">
+<h6 class="text-center">{{hotel.hotel_address}}</h6>
+</div>
+</div>
+
+<div class="row">
+  <div class="col-8"> <h6>Bill Number-{{om.order_filter}}</h6> </div>
+  <div class="col-4"><h6>{{om.table.name}}</h6></div>
+</div>
+
+  <div>
+    <h6>Date- {{om.date}}</h6>
+  </div>
+</div>
+
+
+
+
+<div class="container border">
+      
+    <table id="t" class="table mb-0">
+      
+      <thead>
+        <tr>
+          <div class="row">
+          <div class="col-8"><th id="order_item_head">Item </th></div>
+          <div class="col-1"><th id="order_item_head">Qty</th></div>
+          <div class="col-1"><th id="order_item_head">Price</th></div>
+          <div class="col-2"><th id="order_item_head">Price</th></div>
+        </div>
+        </tr>
+      
+      </thead>
+      <tbody>
+        {% for o in od %}
+        <tr>
+          <div class="row">
+          <div class="col-8" ><td id="order_item">{{o.item_name}}</td></div>
+          <div class="col-1" ><td id="order_item">{{o.qty}}</td></div>
+          <div class="col-1" ><td id="order_item">{{o.price}}</td></div>
+          <div class="col-2" ><td id="order_item">{{o.total_price}}</td></div>
+        </div>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <h6>Sub Total Rs.{{om.total_price}}</h6>
+    {% if hotel.gst_status == 1 %}
+    <h6 {% if order_master.s_gst == 0 %} class="hide"{% endif %}>S Gst Rs.{{om.s_gst}}</h6>
+    <h6 {% if order_master.c_gst == 0 %} class="hide"{% endif %}>C Gst Rs.{{om.c_gst}}</h6>
+    <h6><b>Total Amount Rs.{{total_price}}</b></h6>
+    {% endif %}
+    {% if hotel.discount_status == 1 %}
+    <h6 {% if om.discount_amount == 0.0 %} style="display: none;" {% endif %}>Discount Amount Rs.{{om.discount_amount}}</h6>
+    <h6><b>Total Amount Rs.{{total_price}}</b></h6>
+    {% endif %}
+    <h6 id="thank_you">Thank You Visit Again</h6>
+    <div class="addvertise">All type Mobile Software  9730 99 1252 <br></div>
+    <div class="addvertise">.</div>
+  </div>
+  <script>
+      function print_div(){
+          window.print();
+          location.href = "/hotel/complate_view_order/{{om.order_filter}}"
+        }
+    </script>
+
+{% endblock content %}
+

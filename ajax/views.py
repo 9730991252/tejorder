@@ -288,8 +288,9 @@ def select_category_item(request):
                 category_id=c_id,
                 item_id=item_id,
             ).save()
+        count = selected_item_category.objects.filter(category_id=c_id, status=1).count()
     context = {
         'c':c
     }
     t = render_to_string('ajax/select_category_item.html', context)
-    return JsonResponse({'t':t})
+    return JsonResponse({'t':t, 'count':count})
