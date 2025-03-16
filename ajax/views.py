@@ -222,6 +222,27 @@ def filter_items_by_category(request):
 def filter_items_by_category_customer(request):
     if request.method == 'GET':
         category_id = request.GET['category_id']
+        table_qr_id = request.GET['table_qr_id']
+        
+        item_id = []
+        
+        for i in selected_item_category.objects.filter(category_id=category_id, status = 1):
+            item_id.append(i.item_id)
+        
+        items = Item.objects.filter(id__in=item_id, status=1).order_by('marathi_name')
+        
+        t = Table_QrCode.objects.filter(id=table_qr_id).first()
+        context = {
+            'item': items,
+            'table_qr':t,
+
+        }
+        t = render_to_string('ajax/filter_items_by_category_customer.html', context)
+    return JsonResponse({'t': t})
+
+def filter_items_by_category_customer_for_running(request):
+    if request.method == 'GET':
+        category_id = request.GET['category_id']
         
         item_id = []
         
@@ -232,8 +253,9 @@ def filter_items_by_category_customer(request):
         
         context = {
             'item': items,
+
         }
-        t = render_to_string('ajax/filter_items_by_category_customer.html', context)
+        t = render_to_string('ajax/filter_items_by_category_customer_for_running.html', context)
     return JsonResponse({'t': t})
     
 def search_hotel_item(request):

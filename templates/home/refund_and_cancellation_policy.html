@@ -1,0 +1,77 @@
+{% extends 'home/base.html' %}
+
+{% block head %}
+  <style>
+    .policy-container {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .policy-container h1,
+    .policy-container h2 {
+      color: #003366;
+      margin-top: 30px;
+    }
+
+    .policy-container ul {
+      padding-left: 20px;
+    }
+  </style>
+{% endblock head %}
+
+{% block content %}
+{% load static %}
+{% include 'include/alert.html' %}
+{% include 'include/navbar.html' %}
+
+<div class="policy-container">
+  <h1>Refund & Cancellation Policy</h1>
+
+  <p>This refund and cancellation policy outlines how you can cancel or seek a refund for a product or service that you have purchased through the Platform.</p>
+
+  <h2>Cancellations</h2>
+  <ul>
+    <li>Cancellation requests will only be considered if made within <strong>7 days</strong> of placing the order.</li>
+    <li>Cancellations may not be entertained if the order has already been processed, shipped, or is out for delivery.</li>
+    <li>If the product is already out for delivery, you may choose to reject it at the doorstep.</li>
+    <li>Cancellation is <strong>not allowed</strong> for perishable items such as flowers, eatables, etc., unless the product is proven to be of poor quality.</li>
+  </ul>
+
+  <h2>Damaged or Defective Products</h2>
+  <ul>
+    <li>Please report damaged or defective items to our customer service team within <strong>7 days of delivery</strong>.</li>
+    <li>Refund/replacement requests will be processed once the seller/merchant verifies the issue.</li>
+  </ul>
+
+  <h2>Product Not as Expected</h2>
+  <p>
+    If you feel that the product received is not as shown on the site or not up to expectations, you must notify our customer service within <strong>7 days</strong> of delivery. The team will review your complaint and take appropriate action.
+  </p>
+
+  <h2>Products with Manufacturer Warranty</h2>
+  <p>
+    For products covered under manufacturer warranty, please contact the respective manufacturer directly for resolution.
+  </p>
+
+  <h2>Refund Processing</h2>
+  <p>
+    In case a refund is approved by Prasanna Digital, the amount will be processed and credited to you within <strong>7 working days</strong>.
+  </p>
+</div>
+<footer>
+    <div class="container">
+        <p>&copy; 2025 Tej Order. All Rights Reserved. 
+            •<a class="footer_A" href="/terms_and_conditions/">Terms & Conditions</a> 
+            •<a class="footer_A" href="/privacy_policy/">Privacy Policy</a> 
+            •<a class="footer_A" href="/refund_and_cancellation_policy/">Refund And Cancellation Policy</a> 
+        <p>
+    </div>
+  </footer>
+{% endblock content %}

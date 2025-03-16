@@ -4,6 +4,12 @@
 {% block content %}
 <div>welcome - {{w.name}}</div>
 {% include 'include/waiter_menu.html' %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/tost.css' %}">
+
+
+
 <div class="container my-2">
     <div>
         <h5>Table-{{table.name}}</h5>
@@ -12,7 +18,7 @@
 
 
 <table class="table">
-    
+
     <tbody id="cart">
       {% for cart in cart %}
         <tr>
@@ -95,11 +101,12 @@
     <div class="flex">
         <div class="mt-2"  >Rs.<input style="border: none; width: 70px;" type="text" name="total_amount"  id="price{{i.id}}" value="{{i.price}}" ></div>
         <div style="width: 40%;"><button type="button" class="btn btn-danger btn-sm mt-2 mx-auto" onclick="add_to_cart('{{i.id}}', '{{i.price}}', '{{i.english_name}}')">Confirm </button></div>
+        
       </div>
     </div>
-</div>
-
-{% endfor %}
+  </div>
+  
+  {% endfor %}
 </div>
 
 
@@ -122,15 +129,24 @@
         .input{
             width: 95%;
         }
-  } 
+  }
   </style>
+<div id="toastBox">
+</div>
+
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
 
 <div class="footer">
   <div class="input"><input type="text" placeholder="Search Iteams..." class="form-control" id="words" oninput="search_hotel_item()" required></div>
 </div>
 
+<script src="{% static 'js/toast.js' %}"></script>
 <script>
-    
+
     function add_to_cart(id,price, name){
         var qty = document.getElementById('qty'+id).value
         var note = document.getElementById('note'+id).value
@@ -151,10 +167,17 @@
             success: function(res){
               document.getElementById('cart').innerHTML = res.t
               const msg = new SpeechSynthesisUtterance;
-              msg.text=`${name} ${qty} Qty`;
               
+              msg.text=`${name} ${qty} Qty`;
+
               msg.voice=speechSynthesis.getVoices()[1];
               speechSynthesis.speak(msg);
+
+              message = `${name} ${qty}qty Added to cart`
+
+              show_tost('Successfully submited', 'success')
+
+
             }
         })
     }
@@ -211,21 +234,21 @@ function plus(id,price){
   p=qty*price
   document.getElementById('price'+id).value=p;
     //speak code
-    
+
   const msg = new SpeechSynthesisUtterance;
   msg.text=qty;
-  
+
   msg.voice=speechSynthesis.getVoices()[1];
   speechSynthesis.speak(msg);
 
 
 //ajax
- 
+
 
 
   }
 }
-    
+
   // minus btn code
 
     function minus(id,price){
@@ -237,10 +260,10 @@ function plus(id,price){
   document.getElementById('price'+id).value=p;
 
         //speak code
-    
+
         const msg = new SpeechSynthesisUtterance;
   msg.text=qty;
-  
+
   msg.voice=speechSynthesis.getVoices()[1];
   speechSynthesis.speak(msg);
   }
@@ -250,6 +273,20 @@ function plus(id,price){
   }
     }
 
+function showToast(message, type = 'success') {
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `
+    <span>${message}</span>
+    <div class="progress-bar"></div>
+  `;
+
+  document.getElementById('toast-container').appendChild(toast);
+
+  // setTimeout(() => {
+  //   toast.remove();
+  // }, 3500);
+}
 </script>
 
 

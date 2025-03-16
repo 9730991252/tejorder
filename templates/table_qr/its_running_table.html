@@ -116,6 +116,16 @@
     </div>
     <div>
         <style>
+            .errormodal_c{
+                background-color: #00000054;
+                z-index: +1;
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                user-select: none;
+                pointer-events: none;
+            }
             .dish_main_box{
                 padding: 10px;
                 display: grid;
@@ -208,7 +218,6 @@
 
                 <br><br><br><br>
                 <div class="name"><b>{{i.marathi_name}}</b></div>
-                {% if table_qr.watch_and_order_status == 1 %}
                 <div>
                     <div><input class="note" type="text" name="" style="width: 180px;" placeholder="Note" id="note{{i.id}}"></div>
                   <div class="row my-1 text-center">
@@ -219,51 +228,53 @@
                 <div class="flex">
                     <div class="mt-2"  >Rs.<input style="border: none; width: 70px;" type="text" name="total_amount"  id="price{{i.id}}" value="{{i.price}}" readonly></div>
                 </div>
-                <div style="width: 100%;"><button type="button" class="btn btn-danger btn-sm mx-auto" style="width: 100%;" onclick="add_to_cart('{{i.id}}','{{i.price}}')">ऑर्डर करा</button></div>
+                <div style="width: 100%;"><button type="button" class="btn btn-danger btn-sm mx-auto" style="width: 100%;" onclick="add_to_cart()">ऑर्डर करा</button></div>
             </div>
-                {% else %}
-                <div class="text-center">
-                    <b>Rs.{{i.price}}</b>
-                </div>
-                {% endif %}
+
             </div>
 
             {% endfor %}
+
+              <!-- Modal -->
+  <div class="modal fade" id="error_modal_t" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">    <b>{{table.name}}</b>
+          </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="location.reload()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+              <b>Time {{first_date}}</b>
+<br>
+              <b class="text-danger">This Table Is Already Running In Other Mobile</b>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="location.reload()" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
         </div>
     </div>
 
 </div>
+
+
+
 
 <div id="toastBox">
 </div>
 <script src="{% static 'js/toast.js' %}"></script>
 
 <script>
-    function add_to_cart(id,price){
-        var qty = document.getElementById('qty'+id).value
-        var note = document.getElementById('note'+id).value
-        p=qty*price
-        $.ajax({
-            url: "{% url 'add_item_to_customer_cart' %}",
-            method: "GET",
-            data:{
-                table_id:'{{table.id}}',
-                item_id:id,
-                price:price,
-                qty:qty,
-                total_amount:p,
-                note:note
-            },
-            success: function(res){
-                $("html, body").animate({ scrollTop: 0 }, "fast");
-                show_tost('ऑर्डर वेटर कडे गेली', 'success')
-                setTimeout(function(){
-                    location.reload();
-                }, 1000)
-                
-                
-            }
-        })
+    function add_to_cart(){
+        d = document.createElement('div')
+        d.classList.add('errormodal_c')
+        document.getElementsByClassName('body')[0].appendChild(d);
+        m = new bootstrap.Modal(document.getElementById('error_modal_t'))
+        m.toggle();
     }
     last_category_id = ''
     function  filterItems(category_id){
@@ -273,63 +284,16 @@
       document.getElementById('category_btn'+category_id).className = "btn btn-warning"
       last_category_id = category_id
         $.ajax({
-            url: "{% url 'filter_items_by_category_customer' %}",
+            url: "{% url 'filter_items_by_category_customer_for_running' %}",
             method: "GET",
             data: {
                 category_id: category_id,
-                table_qr_id:'{{table_qr.id}}'
             },
   success: function(res) {
     document.getElementById('item_ruselt').innerHTML = res.t;
   }
 });
 }
-function plus(id,price){
-  var qty = document.getElementById('qty'+id).value
-  if(qty < 50){
-    qty++;
-  document.getElementById('qty'+id).value=qty;
-  p=qty*price
-  document.getElementById('price'+id).value=p;
-    //speak code
-
-  const msg = new SpeechSynthesisUtterance;
-  msg.text=qty;
-
-  msg.voice=speechSynthesis.getVoices()[1];
-  speechSynthesis.speak(msg);
-
-
-//ajax
-
-
-
-  }
-}
-
-  // minus btn code
-
-    function minus(id,price){
-  var qty = document.getElementById('qty'+id).value
-  if(qty > 1){
-  qty--;
-  document.getElementById('qty'+id).value=qty;
-  p=qty*price
-  document.getElementById('price'+id).value=p;
-
-        //speak code
-
-        const msg = new SpeechSynthesisUtterance;
-  msg.text=qty;
-
-  msg.voice=speechSynthesis.getVoices()[1];
-  speechSynthesis.speak(msg);
-  }
-  if(qty == 0){
-    document.getElementById('item_detail'+id).style.display = 'none'
-
-  }
-    }
 </script>
 
 <br><br>

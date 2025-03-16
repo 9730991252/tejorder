@@ -176,13 +176,7 @@ body {
     font-size: 18px;
 }
 
-/* Footer Section */
-footer {
-    background-color: #343a40;
-    color: #ffffff;
-    text-align: center;
-    padding: 20px;
-}
+
 
 #about_visiters{
     display: flex;

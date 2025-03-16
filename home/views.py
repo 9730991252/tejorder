@@ -29,6 +29,15 @@ def index(request):
 def contact_us(request):
     return render(request, 'home/contact_us.html')
 
+def terms_and_conditions(request):
+    return render(request, 'home/terms_and_conditions.html')
+
+def privacy_policy(request):
+    return render(request, 'home/privacy_policy.html')
+
+def refund_and_cancellation_policy(request):
+    return render(request, 'home/refund_and_cancellation_policy.html')
+
 def pricing(request):
     return render(request, 'home/pricing.html')
 

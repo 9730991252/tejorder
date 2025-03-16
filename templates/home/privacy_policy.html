@@ -1,0 +1,80 @@
+{% extends 'home/base.html' %}
+
+{% block head %}
+  <!-- AOS Animation CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+{% endblock head %}
+
+{% block content %}
+{% load static %}
+{% include 'include/alert.html' %}
+{% include 'include/navbar.html' %}
+
+<div class="container" style="max-width: 1000px; margin: 30px auto; padding: 20px; background: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+  <h1 data-aos="fade-up" style="color: #003366;">Privacy Policy</h1>
+  <p data-aos="fade-up">This Privacy Policy describes how Prasanna Digital and its affiliates (collectively "Prasanna Digital", "we", "our", "us") collect, use, share, protect or otherwise process your information/personal data through our website <a href="https://tejorder.com" target="_blank">https://tejorder.com</a> (hereinafter referred to as Platform).</p>
+
+  <h2 data-aos="fade-up">Introduction</h2>
+  <p data-aos="fade-up">By visiting this Platform or availing services, you agree to our Terms and this Privacy Policy. If you do not agree, please do not use our Platform. We store and process data only in India.</p>
+
+  <h2 data-aos="fade-up">Information We Collect</h2>
+  <ul data-aos="fade-up">
+    <li>Personal data during registration: name, contact, address, etc.</li>
+    <li>Sensitive information with consent: payment methods, biometrics, etc.</li>
+    <li>Behavioral data (via cookies or analytics)</li>
+    <li>Transaction-related data</li>
+    <li>Third-party data (governed by their privacy policies)</li>
+  </ul>
+
+  <h2 data-aos="fade-up">Usage of Information</h2>
+  <p data-aos="fade-up">We use your data for processing orders, support, legal compliance, fraud detection, customer communication, marketing (opt-out available), research, and user experience enhancement.</p>
+
+  <h2 data-aos="fade-up">Sharing of Information</h2>
+  <ul data-aos="fade-up">
+    <li>Shared with group entities and affiliates for service delivery</li>
+    <li>Third-party service providers (logistics, payment, etc.)</li>
+    <li>Law enforcement when legally required</li>
+    <li>To protect rights and safety of users and platform</li>
+  </ul>
+
+  <h2 data-aos="fade-up">Security</h2>
+  <p data-aos="fade-up">We use reasonable security practices to protect your data. While we try our best, we cannot guarantee complete security due to internet limitations. Users must protect their account credentials.</p>
+
+  <h2 data-aos="fade-up">Data Retention & Deletion</h2>
+  <p data-aos="fade-up">You can delete your account anytime from profile settings. We may retain data as required under applicable law or to resolve disputes or prevent fraud.</p>
+
+  <h2 data-aos="fade-up">Your Rights</h2>
+  <p data-aos="fade-up">You can access, correct or update your data via the Platform interface. For deletion or consent withdrawal, contact our Grievance Officer.</p>
+
+  <h2 data-aos="fade-up">Consent</h2>
+  <p data-aos="fade-up">By using our services or sharing data, you consent to its use per this policy. You also confirm you have authority to share others' personal data when applicable.</p>
+
+  <h2 data-aos="fade-up">Changes to This Policy</h2>
+  <p data-aos="fade-up">We may update this Privacy Policy from time to time. Please review it regularly. We may notify you as required by law for significant changes.</p>
+
+  <h2 data-aos="fade-up">Grievance Officer</h2>
+  <p data-aos="fade-up">
+    <strong>Name:</strong> [Insert Name]<br>
+    <strong>Designation:</strong> [Insert Designation]<br>
+    <strong>Company:</strong> Prasanna Digital, Korti, Tal Karmala, Dist. Solapur, Akkalkot, India<br>
+    <strong>Email:</strong> [Insert Email]<br>
+    <strong>Phone:</strong> [Insert Phone Number] <br>
+    <strong>Time:</strong> Monday - Friday (9:00 - 18:00)
+  </p>
+</div>
+<footer>
+  <div class="container">
+      <p>&copy; 2025 Tej Order. All Rights Reserved. 
+          •<a class="footer_A" href="/terms_and_conditions/">Terms & Conditions</a> 
+          •<a class="footer_A" href="/privacy_policy/">Privacy Policy</a> 
+          •<a class="footer_A" href="/refund_and_cancellation_policy/">Refund And Cancellation Policy</a> 
+      <p>
+  </div>
+</footer>
+
+<!-- AOS Script -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 800 });
+</script>
+{% endblock content %}

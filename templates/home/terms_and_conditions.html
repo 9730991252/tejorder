@@ -1,0 +1,131 @@
+{% extends 'home/base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="https://unpkg.com/aos@3.0.0-beta.6/dist/aos.css">
+
+    <!-- Include AOS CSS -->
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+<!-- Include AOS JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+{% endblock head %}
+
+{% block content %}
+{% include 'include/alert.html' %}
+
+{% load static %}
+
+{% include 'include/navbar.html' %}
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    header {
+      background-color: #003366;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 0 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    h1 {
+      color: #003366;
+      padding-top: 20px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #00509e;
+      margin-top: 40px;
+    }
+
+    ol, ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    .back-to-top {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 15px;
+      background-color: #00509e;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .back-to-top:hover {
+      background-color: #003f7f;
+    }
+  </style>
+
+  <header>
+    <h1>Terms & Conditions</h1>
+  </header>
+
+  <div class="container">
+    <p>This document is an electronic record in terms of the Information Technology Act, 2000 and related provisions. It does not require any physical or digital signature.</p>
+
+    <p>This document is published in accordance with Rule 3(1) of the Information Technology (Intermediaries Guidelines) Rules, 2011, requiring publication of rules and Terms of Use for using the domain <a href="https://tejorder.com" target="_blank">https://tejorder.com</a> (hereinafter "Platform").</p>
+
+    <p>The Platform is owned by <strong>Prasanna Digital</strong>, based in Korti, Tal Karmala, Dist. Solapur, Akkalkot, India ("Platform Owner").</p>
+
+    <p>By accessing or using the Platform, you agree to be bound by these Terms of Use. These Terms may be modified at any time. Please review them regularly.</p>
+
+    <h2>Terms of Use</h2>
+    <ol>
+      <li>You must provide accurate and complete registration information and are responsible for all activity under your account.</li>
+      <li>We do not guarantee accuracy or completeness of any information or services provided.</li>
+      <li>Your use of our Services is at your sole risk. We are not liable for any outcome.</li>
+      <li>All content is proprietary and you do not gain rights to it.</li>
+      <li>Unauthorized use may lead to legal action.</li>
+      <li>You agree to pay any service charges.</li>
+      <li>You must not use the Platform for unlawful activities.</li>
+      <li>External links may be included; we are not responsible for third-party content.</li>
+      <li>Transactions on the Platform are legally binding.</li>
+      <li>You agree to indemnify us against any third-party claims or legal penalties.</li>
+      <li>We are not responsible for events beyond our control (force majeure).</li>
+      <li>These Terms are governed by Indian law.</li>
+      <li>Disputes shall be resolved under the jurisdiction of courts in Akkalkot, Maharashtra.</li>
+      <li>Contact us via the website for any concerns regarding these Terms.</li>
+    </ol>
+
+    <a class="back-to-top" onclick="scrollToTop()">Back to Top</a>
+  </div>
+
+  <footer>
+    <div class="">
+        <p>&copy; 2025 Tej Order. All Rights Reserved. 
+            •<a class="footer_A" href="/terms_and_conditions/">Terms & Conditions</a> 
+            •<a class="footer_A" href="/privacy_policy/">Privacy Policy</a> 
+            •<a class="footer_A" href="/refund_and_cancellation_policy/">Refund And Cancellation Policy</a> 
+        <p>
+    </div>
+</footer>
+
+  <script>
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+{% endblock content %}

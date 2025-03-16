@@ -1,5 +1,6 @@
 {% load hotel_tag %}
 {% load static %}
+
 {% for i in item %}
 <input type="hidden" name="id" value="{{i.id}}">
 <input type="hidden" name="price" value="{{i.price}}">
@@ -17,7 +18,6 @@
 
     <br><br><br><br>
     <div class="name"><b>{{i.marathi_name}}</b></div>
-    {% if table_qr.watch_and_order_status == 1 %}
     <div>
         <div><input class="note" type="text" name="" style="width: 180px;" placeholder="Note" id="note{{i.id}}"></div>
       <div class="row my-1 text-center">
@@ -27,14 +27,11 @@
     </div>
     <div class="flex">
         <div class="mt-2"  >Rs.<input style="border: none; width: 70px;" type="text" name="total_amount"  id="price{{i.id}}" value="{{i.price}}" readonly></div>
+        
     </div>
-    <div style="width: 100%;"><button type="button" class="btn btn-danger btn-sm mx-auto" style="width: 100%;" onclick="add_to_cart('{{i.id}}','{{i.price}}')">ऑर्डर करा</button></div>
+    <div style="width: 100%;"><button type="button" class="btn btn-danger btn-sm mx-auto" style="width: 100%;" onclick="add_to_cart()">ऑर्डर करा</button></div>
 </div>
-    {% else %}
-    <div class="text-center">
-        <b>Rs.{{i.price}}</b>
-    </div>
-    {% endif %}
+
 </div>
 
 {% endfor %}

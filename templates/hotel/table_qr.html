@@ -25,6 +25,7 @@
         border: 1px solid rgb(138, 136, 136);
         border-radius: 10px;
         text-align: center;
+        height: fit-content;
         
 }
 </style>
@@ -92,7 +93,7 @@ label>img{
             </div>
             {% endif %}
             <div class="text-center">
-                <form method="POST" style="display: flex;justify-content: center;align-items: center;">
+                <form method="POST" style="display: flex;justify-content: center;align-items: center;margin-bottom: 5px; border-radius: 10px; background-color: rgb(235, 235, 235);">
                     <input type="hidden" name="id" value="{{t.id}}">
                     <div>Status</div>
                     {% if n.active_status == 1 %}
@@ -110,6 +111,25 @@ label>img{
                     </div>
                     <div>OFF</div>
                     {% endif %}
+                </form> 
+                <form method="POST" style="display: flex;justify-content: center;align-items: center; margin-bottom: 5px; border-radius: 10px; background-color: rgb(235, 235, 235);">
+                    <input type="hidden" name="id" value="{{t.id}}">
+                    <div>watch</div>
+                    {% if n.watch_status == 1 %}
+                    <div class="form-check form-switch form-check-reverse lable ">
+                        <button class="btn" type="submit" name="watch_and_order_status" id="watch_and_order_status{{t.id}}">
+                            <input class="form-check-input" onclick="document.getElementById('watch_and_order_status{{t.id}}').click()" type="checkbox" id="flexSwitchCheckReverse" name="life_weight"  checked >                        
+                        </button>
+                    </div>
+                    {% else %}
+                    <div class="form-check form-switch form-check-reverse lable ">
+                        <button class="btn" type="submit" name="watch_and_order_status" id="deactive_watch_and_order_status_btn{{t.id}}">
+                            <input class="form-check-input" onclick="document.getElementById('deactive_watch_and_order_status_btn{{t.id}}').click()"  type="checkbox" id="flexSwitchCheckReverse" name="life_weight" >                        
+                        </button>
+                    </div>
+                    {% endif %}
+                    <div>Order</div>
+
                 </form> 
             </div>
         </div>

@@ -154,6 +154,18 @@ def table_qr(request):
             tq.active_status = 1
             tq.save()
             return redirect('/hotel/table_qr/')
+        if 'watch_and_order_status'in request.POST:
+            id = request.POST.get('id')
+            tq = Table_QrCode.objects.filter(table_id=id).first()
+            if int(tq.watch_and_order_status) == 1:
+                tq.watch_and_order_status = 0
+                tq.save()
+            else:
+                tq.watch_and_order_status = 1
+                tq.save()
+            return redirect('/hotel/table_qr/')
+            
+            
         tc = Table_qr_count.objects.filter(hotel_id=hotel.id).first()
         if tc != None:
             tc = tc.count

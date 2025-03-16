@@ -5,6 +5,8 @@ class Table_QrCode(models.Model):
     table = models.ForeignKey(Table, on_delete=models.PROTECT,null=True)
     url = models.CharField(max_length=100)
     active_status = models.IntegerField(default=1)
+    watch_and_order_status = models.IntegerField(default=1)
+    
     
 class Customer_cart(models.Model):
     table = models.ForeignKey(Table, on_delete=models.PROTECT,null=True)

@@ -16,4 +16,5 @@ urlpatterns = [
     path('add_item_to_customer_cart/', views.add_item_to_customer_cart, name='add_item_to_customer_cart'),
     path('add_item_to_cart_edit/', views.add_item_to_cart_edit, name='add_item_to_cart_edit'),
     path('filter_items_by_category_customer/', views.filter_items_by_category_customer, name='filter_items_by_category_customer'),
+    path('filter_items_by_category_customer_for_running/', views.filter_items_by_category_customer_for_running, name='filter_items_by_category_customer_for_running'),
 ]

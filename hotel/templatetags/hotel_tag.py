@@ -34,8 +34,12 @@ def check_table_running_status_qr_status(table_id):
     # print(table_id, Table_QrCode.objects.filter(table_id=table_id, active_status=1).first())
     if Table_QrCode.objects.filter(table_id=table_id, active_status=1).exists():
         active_status = 1
+    watch_status = 0
+    # print(table_id, Table_QrCode.objects.filter(table_id=table_id, active_status=1).first())
+    if Table_QrCode.objects.filter(table_id=table_id, watch_and_order_status=1).exists():
+        watch_status = 1
     
-    return {'qr_status': qr_status, 'running_status': running_status, 'active_status':active_status}
+    return {'qr_status': qr_status, 'running_status': running_status, 'active_status':active_status, 'watch_status':watch_status}
 @register.simple_tag()
 def get_item_image_and_youtube_url(i_id):
     return Item_image_and_youtube_url.objects.filter(item_id=i_id).first()

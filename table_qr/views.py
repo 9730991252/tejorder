@@ -4,6 +4,8 @@ from .models import *
 import random
 import string  
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Avg, Sum, Min, Max
+
 
 # Create your views here.
 def get_session_id(request):
@@ -83,6 +85,9 @@ def customer_order(request, url):
                 else:
                     running_status = 0
                 
+                if running_status == 1:
+                    return redirect(f'/its_running_table/{url}/')
+                
                 table = t.table
                 hotel = table.hotel
                 if request.session.has_key('customer_status'):
@@ -94,6 +99,10 @@ def customer_order(request, url):
                     cart_id = request.POST.get('cart_id')
                     Customer_cart.objects.filter(id=cart_id).delete()
                     return redirect(f'/table_qr/{url}/')
+                
+                tp = Hotel_cart.objects.filter(table=table).aggregate(Sum('total_amount'))['total_amount__sum'] 
+                tp += Customer_cart.objects.filter(table=table).aggregate(Sum('total_amount'))['total_amount__sum'] or 0
+                
                 context = {
                     'url':url,
                     'table':table,
@@ -104,9 +113,88 @@ def customer_order(request, url):
                     'customer_cart':Customer_cart.objects.filter(table=table, customer_session_id = session_id),
                     'running_status':running_status,
                     'hotel_cart':Hotel_cart.objects.filter(table=table),
-                    'count':c.count
+                    'count':c.count,
+                    'tp':tp
                 }
                 return render(request, 'table_qr/customer_order.html', context)
+            else:
+                return redirect('/')
+        else:
+            return redirect('https://www.google.com/')
+    else:
+        return redirect('/')
+    
+@csrf_exempt
+def its_running_table(request, url):   
+    if url:
+        t = Table_QrCode.objects.filter(url=url).first()
+        if t:
+            if t.active_status == 1:
+                c = Table_qr_count.objects.filter(hotel_id=t.table.hotel_id).first()
+                if c:
+                    c.count += 1
+                    c.save()
+                else:
+                    Table_qr_count(
+                        hotel_id = t.table.hotel_id,
+                        count=1,
+                    ).save()
+                c = Table_qr_count.objects.filter(hotel_id=t.table.hotel_id).first()
+                
+                customer_session = get_session_id(request)
+                hc = Hotel_cart.objects.filter(table_id=t.table.id).first()
+                cc = Customer_cart.objects.filter(table_id=t.table.id).first()
+                if cc:
+                    if cc.customer_session_id == customer_session:
+                        running_status = 0
+                    else:
+                        running_status = 1
+                elif hc:
+                    if hc.session_id == customer_session:
+                        running_status = 0
+                    else:
+                        running_status = 1
+                else:
+                    running_status = 0
+                
+                if running_status == 0:
+                    return redirect('/')
+                
+                table = t.table
+                hotel = table.hotel
+                if request.session.has_key('customer_status'):
+                    pass
+                else:
+                    request.session['customer_status'] = 1
+                session_id = get_session_id(request)
+
+                
+                tp = Hotel_cart.objects.filter(table=table).aggregate(Sum('total_amount'))['total_amount__sum'] 
+                tp += Customer_cart.objects.filter(table=table).aggregate(Sum('total_amount'))['total_amount__sum'] or 0
+                
+                cc = Customer_cart.objects.filter(table=table).first()
+                h = Hotel_cart.objects.filter(table=table).first()
+                first_date = ''
+                if cc:
+                    first_date =  cc.date
+                else:
+                    first_date = h.date
+                
+                context = {
+                    'url':url,
+                    'table':table,
+                    'hotel':hotel,
+                    'table_qr':t,
+                    'category':Category.objects.filter(hotel=hotel),
+                    'item':Item.objects.filter(hotel=hotel),
+                    'customer_cart':Customer_cart.objects.filter(table=table, customer_session_id = session_id),
+                    'running_status':running_status,
+                    'hotel_cart':Hotel_cart.objects.filter(table=table),
+                    'count':c.count,
+                    'tp':tp,
+                    'first_date':first_date
+                }
+                return render(request, 'table_qr/its_running_table.html', context)
             else:
                 return redirect('/')
         else:
