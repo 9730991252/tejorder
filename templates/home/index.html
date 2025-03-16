@@ -1,14 +1,6 @@
 {% extends 'home/base.html' %}
 
 {% block head %}
-    <link rel="stylesheet" href="https://unpkg.com/aos@3.0.0-beta.6/dist/aos.css">
-
-    <!-- Include AOS CSS -->
-<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-
-<!-- Include AOS JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-
 {% endblock head %}
 
 {% block content %}
@@ -22,16 +14,16 @@
 
     <!-- Hero Section with Image -->
     <section class="hero">
-        <div class="hero-content1" data-aos="zoom-in" data-aos-duration="1500">
+        <div class="hero-content1">
             <div>
                 <h1>Welcome to Tej Order</h1>
                 <p>Your trusted solution for Hotel billing management.</p>
-                <a href="/login/" data-aos="fade-up" data-aos-duration="2000" class="btn login_button">Login</a><br>        
-                <a href="https://old.tejorder.com" data-aos="fade-up" data-aos-duration="2000" class="btn btn-success">Old Website</a>        
+                <a href="/login/"   class="btn login_button">Login</a><br>        
+                <a href="https://old.tejorder.com" class="btn btn-success">Old Website</a>        
             </div>
 
         </div>
-        <div class="hero-content2" data-aos="zoom-in" data-aos-duration="1500">
+        <div class="hero-content2">
             <div class="img">
                 <img src="{% static 'img/home_page_imoji.jpg' %}" alt="">
             </div>
@@ -44,23 +36,23 @@
         <div class="container">
             <h2>Our Features</h2>
             <div class="feature-box">
-                <div class="feature" data-aos="zoom-in" data-aos-duration="2000">
+                <div class="feature">
                     <h3>Easy To Use</h3>
                     <p>Any one can use.</p>
                 </div>
-                <div class="feature" data-aos="zoom-out" data-aos-duration="2000">
+                <div class="feature">
                     <h3>Fast Billing</h3>
                     <p>Experience quick and efficient bill processing.</p>
                 </div>
-                <div class="feature" data-aos="zoom-in" data-aos-duration="2000">
+                <div class="feature">
                     <h3>Customer Support</h3>
                     <p>Our support team is here to assist you anytime.</p>
                 </div>
-                <div class="feature" data-aos="zoom-out" data-aos-duration="2000">
+                <div class="feature">
                     <h3>Get real-time restaurant Reports</h3>
                     <p>Automate your restaurant reports.</p>
                 </div>
-                <div class="feature" data-aos="zoom-in" data-aos-duration="2000">
+                <div class="feature">
                     <h3>Low Cost</h3>
                     <p>Cost Arrount ₹100 Per 300 Bills</p>
                 </div>
@@ -68,22 +60,22 @@
         </div>
     </section>
     <div id="about_visiters">
-        <div data-aos="zoom-in" data-aos-duration="2000">
+        <div>
             <i class="fa-solid fa-eye"></i>
             <span class="num" data-val="{{visitors.count}}">000</span>
             <span class="text">Visitors</span>
         </div>
-        <div data-aos="zoom-out" data-aos-duration="2000">
+        <div>
             <i class="fa-solid fa-users"></i>
             <span class="num" data-val="{{users}}">000</span>
             <span class="text">Happy Users</span>
         </div>
-        <div data-aos="zoom-in" data-aos-duration="2000">
+        <div>
             <i class="fa-solid fa-toilet-paper"></i>
             <span class="bill" data-val="">{{bills}}</span>
             <span class="text">Bills</span>
         </div>
-        <div data-aos="zoom-out" data-aos-duration="2000">
+        <div>
             <i class="fa-regular fa-calendar-days"></i>
             <span class="num" data-val="6">000</span>
             <span class="text">Years in Business</span>
@@ -92,24 +84,24 @@
     <br>
     <!-- about Section ------------------------------------------------------------>
     <div class="about_box">
-        <h6 class="text-center" data-aos="zoom-in" data-aos-duration="2000">Developed And Published By <br> <b>PRASANNA DIGITAL</b></h6>
+        <h6 class="text-center">Developed And Published By <br> <b>PRASANNA DIGITAL</b></h6>
 
         <div class="section">
             <div class="container">
                <div class="content-section">
                  <div class="title">
                   <div class="section_heading">
-                     <span class="titel_tag" data-aos="zoom-out" data-aos-duration="2000">About us</span>
-                     <h1 class="titel_name" data-aos="zoom-in" data-aos-duration="2000">Hey! We’re Tejorder.com and we help Restaurant</h1><br><br>
-                     <h3 data-aos="zoom-out" data-aos-duration="2000">We provide Restaurant Billing software </h3><br>
+                     <span class="titel_tag">About us</span>
+                     <h1 class="titel_name">Hey! We’re Tejorder.com and we help Restaurant</h1><br><br>
+                     <h3>We provide Restaurant Billing software </h3><br>
                  </div>
-                 <div class="founder" data-aos="zoom-in" data-aos-duration="2000">
+                 <div class="founder">
                   <p>People behind Tejorder.com</p>
                  </div>
                  <div class="Co-founder">
-                  <img  data-aos="fade-up" data-aos-duration="2000" src="{% static 'img/photo.jpg' %}"><br>
-                  <h1 data-aos="zoom-out" data-aos-duration="2000">Mr.sunil kale</h1>
-                  <p data-aos="zoom-in" data-aos-duration="2000">founder & CEO</p>
+                  <img  src="{% static 'img/photo.jpg' %}"><br>
+                  <h1>Mr.sunil kale</h1>
+                  <p>founder & CEO</p>
                </div>
                </div>
             </div>

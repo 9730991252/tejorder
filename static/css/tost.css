@@ -1,7 +1,7 @@
 #tostBox{
     position: fixed;
     bottom: 30px;
-    right: 30px;
+    right: 10px;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -9,7 +9,7 @@
     padding: 20px;
 }
 .tost{
-    width: 350px;
+    width: 300px;
     height: 80px;
     background: #ffffff;
     font-weight: 500;

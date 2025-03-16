@@ -86,7 +86,7 @@ def customer_order(request, url):
                     running_status = 0
                 
                 if running_status == 1:
-                    return redirect(f'/table_qr/its_running_table/{url}/')
+                    return redirect(f'/table_qr/its_running_table/{url}')
                 
                 table = t.table
                 hotel = table.hotel

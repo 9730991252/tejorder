@@ -67,6 +67,8 @@
         margin: auto;
     }
 </style>
+
+{% if customer_cart or hotel_cart %}
 <table class="table">
     <thead>
         <tr>
@@ -105,6 +107,7 @@
     </tbody>
 </table>
 <b >Total Amount Rs.{{tp}}</b>
+{% endif %}
 
 <style>
     .body{
