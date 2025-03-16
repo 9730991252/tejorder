@@ -15,7 +15,7 @@
     <button onclick="show_tost('Invalid input, check again', 'invalid')">Invalid</button>
   </div>
 
-  <div id="toastBox"></div>
+  <div id="tostBox"></div>
   
   <script src="/static/js/toast.js"></script>
 </body>

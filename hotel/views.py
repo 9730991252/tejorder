@@ -679,6 +679,7 @@ def item(request):
                 english_name=english_name,
                 price=price
             ).save()
+            messages.success(request,"Successfully Added")
             return redirect('item')
         context={
             'hotel':hotel,
@@ -699,6 +700,7 @@ def category(request):
                 hotel_id=hotel.id,
                 name=name
             ).save()
+            messages.success(request,"Category saved successfully")            
             return redirect('category')
         if 'save_order_by'in request.POST:
             id = request.POST.get('category_id')

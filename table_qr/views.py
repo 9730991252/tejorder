@@ -5,7 +5,7 @@ import random
 import string  
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Avg, Sum, Min, Max
-
+from django.contrib import messages
 
 # Create your views here.
 def get_session_id(request):
@@ -86,7 +86,7 @@ def customer_order(request, url):
                     running_status = 0
                 
                 if running_status == 1:
-                    return redirect(f'/its_running_table/{url}/')
+                    return redirect(f'/table_qr/its_running_table/{url}/')
                 
                 table = t.table
                 hotel = table.hotel
@@ -98,9 +98,10 @@ def customer_order(request, url):
                 if 'delete_order'in request.POST:
                     cart_id = request.POST.get('cart_id')
                     Customer_cart.objects.filter(id=cart_id).delete()
+                    messages.error(request,"Successfully deleted")
                     return redirect(f'/table_qr/{url}/')
                 
-                tp = Hotel_cart.objects.filter(table=table).aggregate(Sum('total_amount'))['total_amount__sum'] 
+                tp = Hotel_cart.objects.filter(table=table).aggregate(Sum('total_amount'))['total_amount__sum'] or 0
                 tp += Customer_cart.objects.filter(table=table).aggregate(Sum('total_amount'))['total_amount__sum'] or 0
                 
                 context = {
@@ -169,7 +170,7 @@ def its_running_table(request, url):
                 session_id = get_session_id(request)
 
                 
-                tp = Hotel_cart.objects.filter(table=table).aggregate(Sum('total_amount'))['total_amount__sum'] 
+                tp = Hotel_cart.objects.filter(table=table).aggregate(Sum('total_amount'))['total_amount__sum']  or 0
                 tp += Customer_cart.objects.filter(table=table).aggregate(Sum('total_amount'))['total_amount__sum'] or 0
                 
                 cc = Customer_cart.objects.filter(table=table).first()
