@@ -142,7 +142,7 @@ margin-bottom: -10px;
     <h6><b>Total Amount Rs.{{total_price}}</b></h6>
     {% endif %}
     <div class="text-center" id="qr_box" style="display: none;grid-template-columns: 1fr 3fr;">
-        <canvas  id="qrCode"></canvas>
+        <canvas  id="qrCode" height="0" width="0"></canvas>
         <b >Scan QR And Pay Amount</b>
     </div>
     <div class="text-center" id="thank_you" ><h6><b>Thank You Visit Again</b></h6></div>
@@ -274,9 +274,11 @@ function chang_bill_paid_status(id=1){
         });
 }
 function print_div(){
-    document.getElementById('body').style.display = 'unset';
-    window.print();
-    document.getElementById('body').style.display = 'grid';
+qr_status = 0
+if(document.getElementById('qrCode').height != 0){
+    qr_status = 1
+}
+location.href = `/hotel/print_completed_bill/{{om.order_filter}}/${qr_status}`
 }
 
 function check_input_value(old_amount, new_amount, btn_id) {

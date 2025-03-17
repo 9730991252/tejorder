@@ -17,10 +17,13 @@ def customer_selected_item_count(category_id):
 @register.simple_tag()
 def check_item_image(item_id):
     i = Item_image_and_youtube_url.objects.filter(item_id=item_id).first()
-    if i is not None:
-        return i.image.url
-    else:
-        return '/static/img/dish.jpg'
+    if i:
+        if i.image:
+            print('yes')
+            return i.image.url
+        else:
+            print('no')
+            return '/static/img/dish.jpg'
 
 @register.simple_tag()
 def check_table_running_status_qr_status(table_id):

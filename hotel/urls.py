@@ -15,5 +15,5 @@ urlpatterns = [
     path('table_qr/', views.table_qr, name='table_qr'),
     path('report/', views.report, name='report'),
     path('edit_bill/<id>', views.edit_bill, name='edit_bill'),
-    path('print_completed_bill/<id>', views.print_completed_bill, name='report'),
+    path('print_completed_bill/<order_filter>/<qr_status>', views.print_completed_bill, name='report'),
 ]
