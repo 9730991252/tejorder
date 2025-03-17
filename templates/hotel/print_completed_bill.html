@@ -41,6 +41,11 @@
 }
 </style>
 
+<h id="p" class="p-5">Welcome - {{hotel.hotel_name}}</h>
+<div id="p" class="container p-5  border rounded">
+  <a id="p" href="/complate_order/"   class="btn btn-success px-5 btn-sm" >Back</a>
+</div>
+
 <div class="container border">
 <div class="row">
   <div class="col-11">
@@ -56,7 +61,7 @@
 
 <div class="row">
   <div class="col-8"> <h6>Bill Number-{{om.order_filter}}</h6> </div>
-  <div class="col-4"><h6>{{om.table.name}}</h6></div>
+  <div class="col-4"><h6>Table-{{om.table.name}}</h6></div>
 </div>
 
   <div>
@@ -95,27 +100,24 @@
         {% endfor %}
       </tbody>
     </table>
-    <h6>Sub Total Rs.{{om.total_price}}</h6>
-    {% if hotel.gst_status == 1 %}
-    <h6 {% if order_master.s_gst == 0 %} class="hide"{% endif %}>S Gst Rs.{{om.s_gst}}</h6>
-    <h6 {% if order_master.c_gst == 0 %} class="hide"{% endif %}>C Gst Rs.{{om.c_gst}}</h6>
-    <h6><b>Total Amount Rs.{{total_price}}</b></h6>
-    {% endif %}
-    {% if hotel.discount_status == 1 %}
-    <h6 {% if om.discount_amount == 0.0 %} style="display: none;" {% endif %}>Discount Amount Rs.{{om.discount_amount}}</h6>
-    <h6><b>Total Amount Rs.{{total_price}}</b></h6>
-    {% endif %}
+    <h6>Total Amount Rs. {{om.total_price}}</h6>
     <h6 id="thank_you">Thank You Visit Again</h6>
     <div class="addvertise">All type Mobile Software  9730 99 1252 <br></div>
     <div class="addvertise">.</div>
   </div>
 
-  <button onclick="print_div()">p</button>
+
+  <div class="container">
+    <button id="p" type="button" class="btn btn-primary my-3" onclick="Bill_print()">Print</button>
+  </div>
+
   <script>
-      function print_div(){
-          window.print();
-          location.href = "/hotel/complate_view_order/{{om.order_filter}}"
-        }
+
+    function Bill_print(){
+    window.print();
+    }
+    
+    
     </script>
 
 {% endblock content %}
