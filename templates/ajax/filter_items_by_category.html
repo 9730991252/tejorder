@@ -5,16 +5,16 @@
 <div class="dish_box">
     <div class="name"><b>{{i.marathi_name}}</b></div>
     <div>
-        <div><input type="text" name="" style="width: 180px; text-align: center; border: none;" placeholder="Note" id="note{{i.id}}"></div>
-      <div class="row my-1 text-center">
-        <div class="col-3"><button type="button" onclick="minus('{{i.id}}','{{i.price}}')" class="btn btn-success btn-sm px-3">-</button></div>
-        <div class="col-5"><input type="text" name="qty" style="width: 50px; text-align: center;" id="qty{{i.id}}" value="1" ></div>
-        <div class="col-3"><button type="button" onclick="plus('{{i.id}}','{{i.price}}')" class="btn btn-success btn-sm px-3">+</button></div>
-    </div>
+      <div><input type="text" name="" style="width: 180px; text-align: center; border: none;" placeholder="Note" id="note{{i.id}}"></div>
+    <div class="row my-1 text-center">
+      <div class="col-3"><button type="button" onclick="minus('{{i.id}}','{{i.price}}')" class="pluse_minus_btn text-danger btn-sm px-3">-</button></div>
+      <div class="col-5"><input type="text" name="qty" style="width: 50px; text-align: center;" id="qty{{i.id}}" value="1" ></div>
+      <div class="col-3"><button type="button" onclick="plus('{{i.id}}','{{i.price}}')" class="pluse_minus_btn text-success btn-sm px-3">+</button></div>
+  </div>
     <div class="flex">
         <div class="mt-2"  >Rs.<input style="border: none; width: 70px;" type="text" name="total_amount"  id="price{{i.id}}" value="{{i.price}}" ></div>
-        <div style="width: 40%;"><button type="button" class="btn btn-danger btn-sm mt-2 mx-auto" onclick="add_to_cart('{{i.id}}', '{{i.price}}', '{{i.english_name}}')">Confirm </button></div>
       </div>
+      <div style="width: 100%;"><button type="button" class="form-control btn btn-danger btn-sm mt-2 mx-auto" onclick="add_to_cart('{{i.id}}', '{{i.price}}', '{{i.english_name}}')">Confirm </button></div>
     </div>
 </div>
 

@@ -204,7 +204,8 @@ def complate_order(request):
                     'total_price': b.total_price,
                     'ordered_date': b.ordered_date,
                     'status':b.status,
-                    'cancel_btn_show_status':cancel_btn_show_status
+                    'cancel_btn_show_status':cancel_btn_show_status,
+                    'table_name':b.table.name
                 })
             
             paginator = Paginator(order_master, per_page=100)
@@ -355,6 +356,7 @@ def view_order(request, table_id):
             if 'Delete'in request.POST:
                 cart_id = request.POST.get('cart_id')
                 Hotel_cart.objects.filter(id=cart_id).delete()
+                messages.warning(request,f"Removed SuccessFully.")
                 return redirect(f'/hotel/view_order/{table_id}')
             if 'complete_order'in request.POST:
                 order_filter = (int(order_Master.objects.filter(hotel_id=hotel.id).count()) + 1)
@@ -403,13 +405,15 @@ def comolete_order(order_filter, table_id, hotel_id):
     ).save()
     o = order_Master.objects.filter(hotel_id=hotel_id,order_filter=order_filter).first()
     for i in Item.objects.filter(status=1):
-        if Hotel_cart.objects.filter(table_id=table_id, item_id=i.id):
+        c_i = Hotel_cart.objects.filter(table_id=table_id, item_id=i.id).first()
+        if c_i:
+            mc_i = Hotel_cart.objects.filter(table_id=table_id, item_id=i.id)
             order_Detail(
                 order_master_id=o.id,
                 item_id=i.id,
-                qty=Hotel_cart.objects.filter(table_id=table_id, item_id=i.id).aggregate(Sum('qty'))['qty__sum'],
-                price=Hotel_cart.objects.filter(table_id=table_id, item_id=i.id).aggregate(Sum('price'))['price__sum'],
-                total_price=Hotel_cart.objects.filter(table_id=table_id, item_id=i.id).aggregate(Sum('total_amount'))['total_amount__sum'],
+                qty=mc_i.aggregate(Sum('qty'))['qty__sum'],
+                price=c_i.price,
+                total_price=mc_i.aggregate(Sum('total_amount'))['total_amount__sum'],
                 order_filter=order_filter,
                 item_name=i.marathi_name,
             ).save()

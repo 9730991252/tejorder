@@ -1,22 +1,155 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=z, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="/static/css/tost.css">
-</head>
-<body>
-  
-  <div class="buttons">
-    <button onclick="show_tost('Successfully submited', 'success')">Success</button>
-    <button onclick="show_tost('Please fix the error!', 'error')">Error</button>
-    <button onclick="show_tost('Invalid input, check again', 'invalid')">Invalid</button>
-  </div>
+{% extends 'home/base.html' %}
+{% block head %}
 
-  <div id="tostBox"></div>
-  
-  <script src="/static/js/toast.js"></script>
-</body>
-</html>
+{% endblock head %}
+{% block content %}
+{% include 'include/navbar.html' %}
+<style>
+   @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+   @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;1,500&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+   .main_box {
+      margin: auto;
+      margin-top: 20px;
+      margin-bottom: 20px;
+   }
+
+   .main {
+      padding: 10px;
+      padding-top: 20px;
+      height: 320px;
+      width: 320px;
+      margin: auto;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      background-color: rgba(0, 0, 0, 0.01);
+      font-family: "Montserrat", sans-serif;
+      background-color: white;
+      box-shadow: inset -2px 2px 10px #000;
+      
+    }
+
+   .card-title {
+      text-align: left;
+      text-transform: none;
+      font-size: 27px;
+      font-weight: bold;
+      line-height: 34px;
+      margin-bottom: 20px;
+   }
+
+   .card-item {
+      font-size: 16px;
+      margin-top: 20px;
+      font-weight: 400;
+   }
+
+   a {
+      font-weight: 600;
+      font-size: 16px;
+      color: #09757A;
+      text-decoration: underline;
+      background-color: transparent;
+   }
+
+   .time {
+      font-family: "Poppins", sans-serif;
+      font-weight: 400;
+      color: black;
+   }
+
+   .marathi {
+      margin-top: 20px;
+   }
+
+   .time_marathi {
+      font-weight: 600;
+      margin-top: 10px;
+   }
+
+   .Prasanna_Digitle {
+      font-size: 20px;
+      margin: 20px;
+   }
+
+   .card-item ul {
+      padding: 0;
+      list-style: none;
+   }
+
+   .card-item li {
+      font-size: 20px;
+      margin-bottom: 5px;
+   }
+
+   .Address {
+      height: 270px;
+   }
+
+   .gmail {
+      font-weight: 500;
+      margin-top: 10px;
+   }
+   .address-item{
+      font-size: large;
+   }
+   .title{
+      margin-bottom: 15px;
+   }
+   .no-underline{
+      text-decoration: none;
+   }
+   .bg_image{
+    background: url('https://qul.imgix.net/150ee868-a39f-434d-b2d9-ccb750f515b6/438489_sld.jpg') no-repeat center center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+   }
+   @media only screen and (min-width: 600px) {
+        .container_box{
+            display: flex;
+        }
+    }
+   </style>
+<div class="bg_image"></div>
+<div class="container_box">
+
+    
+    <div class="main_box">
+        <div class="main">
+            <strong class="card-title">Call Us</strong>
+            <div class="card-item">
+                <b class="text">Contact our support team</b>
+                <div class="time">Everyday 6:00 am - 10:00 pm.</div>
+                <a href="tel:9730991252" class="no-underline">9730991252</a>
+                <div class="marathi">
+            <b class="text">आमच्या सपोर्ट टीमशी संपर्क साधा</b>
+            <div class="time time_marathi">दररोज सकाळी 6 ते संध्याकाळी 10 वा</div>
+            <a href="tel:9730991252" class="no-underline">+१९ ९७३०९९१२५२</a>
+            <div class="gmail">
+                <b class="text">Gmail </b>
+                <div class="time gmail">sunilkale101@gmail.com</div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="main_box">
+    <div class="main Address">
+        <strong class="card-title">Address</strong>
+        <ul class="card-item">
+            <div class="title">
+                <strong class="Prasanna_Digitle">Prasanna Digital</strong>
+            </div>
+            <strong class="address-item ">गाव - कोर्टी</strong><br><br>
+            <strong class="address-item">तालुका - करमाळा</strong><br><br>
+            <strong class="address-item">जिल्हा - सोलापूर</strong><br>
+        </ul>
+    </div>
+</div>
+</div>
+{% endblock content %}

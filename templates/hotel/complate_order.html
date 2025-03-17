@@ -19,7 +19,10 @@
         <div class="card-container">
             {% for bill in order_master %}
             <div class="card">
-                <h6>Bill Number: {{ bill.order_filter }}</h6>
+                <div style="display: flex; justify-content: space-evenly;">
+                    <h6>Bill: {{ bill.order_filter }}</h6>
+                    <h6>{{bill.table_name}}</h6>
+                </div>
                 <p>Total Amount: {{ bill.total_price }}</p>
                 <p> {{ bill.ordered_date }}</p>
                 {% if bill.status == 1 %}

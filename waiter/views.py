@@ -4,6 +4,8 @@ from sunil.models import *
 from hotel.models import *
 from table_qr.models import *
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib import messages 
+
 # Create your views here.
 def waiter_home(request):
     if request.session.has_key('waiter_mobile'):
@@ -57,6 +59,7 @@ def order(request,table_id):
         if 'Delete'in request.POST:
             cart_id = request.POST.get('cart_id')
             Hotel_cart.objects.filter(id=cart_id).delete()
+            messages.warning(request,f"Removed SuccessFully.")
             return redirect(f'/waiter/order/{table_id}') 
         context={
             'w':w,

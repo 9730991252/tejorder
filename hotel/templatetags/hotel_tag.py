@@ -17,7 +17,7 @@ def customer_selected_item_count(category_id):
 @register.simple_tag()
 def check_item_image(item_id):
     i = Item_image_and_youtube_url.objects.filter(item_id=item_id).first()
-    if i:
+    if i is not None:
         return i.image.url
     else:
         return '/static/img/dish.jpg'

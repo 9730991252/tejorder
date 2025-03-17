@@ -7,6 +7,7 @@
     flex-direction: column;
     overflow: hidden;
     padding: 20px;
+    z-index: +23;
 }
 .tost{
     width: 300px;
