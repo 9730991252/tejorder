@@ -13,6 +13,35 @@
   </head>
   <body>
 
+    <style>
+      *{
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+      footer {
+            background-color: #343a40;
+            color: #ffffff;
+            text-align: center;
+            padding-top: 10px;
+            margin-top: auto;
+            height: fit-content;
+        }
+      .at_page{
+        background-color: #343a40;
+        border-radius: 10px;
+        color: white !important;
+      }
+      .footer_A{
+        text-decoration: none;
+        color: antiquewhite;
+        transition: 2s;
+        &:hover{
+          color: rgb(255, 0, 0);
+        }
+      }
+  </style>
+
     <!-- Example Code -->
     <div class="container">
     {% block content %}{% endblock content %}
