@@ -103,6 +103,52 @@ def customer_order(request, url):
                 
                 tp = Hotel_cart.objects.filter(table=table).aggregate(Sum('total_amount'))['total_amount__sum'] or 0
                 tp += Customer_cart.objects.filter(table=table).aggregate(Sum('total_amount'))['total_amount__sum'] or 0
+                if 'add_rattings'in request.POST:
+                    id = request.POST.get('id')
+                    ratings = request.POST.get('ratings')
+                    
+                    ra = Rattings.objects.filter(item_id=id, customer_session_id=session_id).first()
+                    if ra is not None:
+                        ra.star = ratings
+                        ra.save()
+                    else:
+                        Rattings(
+                            item_id=id,
+                            customer_session_id=session_id,
+                            star=ratings
+                        ).save()
+                    print('Added ratings')
+                    # return redirect(f'/table_qr/its_running_table/{url}')
+                item = []
+                for i in Item.objects.filter(hotel=hotel):
+                    r = Rattings.objects.filter(item_id=i.id)
+                    avrage_r = r.aggregate(Avg('star'))
+                    avg = r.filter(customer_session_id=session_id).aggregate(Avg('star'))
+                            
+                    added_status = 1 if r.filter(item_id=i.id, customer_session_id=session_id).exists() else 0
+                    total_r = r.count() 
+                    item.append({
+                        'id':i.id,
+                        'hotel':i.hotel,
+                        'marathi_name':i.marathi_name,
+                        'english_name':i.english_name,
+                        'gst_status':i.gst_status,
+                        'discount_status':i.discount_status,
+                        'price':i.price,
+                        'status':i.status,
+                        
+                        'average_ratings':(avrage_r['star__avg'] if avrage_r['star__avg'] else 0),
+                        'total_r':total_r,
+                        
+                        '1_star_per':round(float(r.filter(item_id=i.id, star=1).count())*(100/total_r)) if total_r != 0 else 0,
+                        '2_star_per':round(float(r.filter(item_id=i.id, star=2).count())*(100/total_r)) if total_r != 0 else 0,
+                        '3_star_per':round(float(r.filter(item_id=i.id, star=3).count())*(100/total_r)) if total_r != 0 else 0,
+                        '4_star_per':round(float(r.filter(item_id=i.id, star=4).count())*(100/total_r)) if total_r != 0 else 0,
+                        '5_star_per':round(float(r.filter(item_id=i.id, star=5).count())*(100/total_r)) if total_r != 0 else 0,
+                        
+                        'added_status':added_status,
+                        'add_avg':avg['star__avg'] if avg['star__avg'] else 0
+                    })
                 
                 context = {
                     'url':url,
@@ -110,7 +156,7 @@ def customer_order(request, url):
                     'hotel':hotel,
                     'table_qr':t,
                     'category':Category.objects.filter(hotel=hotel),
-                    'item':Item.objects.filter(hotel=hotel),
+                    'item':item,
                     'customer_cart':Customer_cart.objects.filter(table=table, customer_session_id = session_id),
                     'running_status':running_status,
                     'hotel_cart':Hotel_cart.objects.filter(table=table),

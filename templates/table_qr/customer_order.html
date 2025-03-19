@@ -8,7 +8,80 @@
 {% include 'include/alert.html' %}
 
 {% load hotel_tag %}
+<style>
+    .checked {
+      color: orange;
+    }
+    /* #first:hover, 
+    #second:hover,
+    #third:hover,
+    #fourth:hover,
+    #fifth:hover {
+      color: orange;
+    } */
+/* Main wrapper for each rating line */
+/* Import clean font (optional if you're using custom setup) */
+/* Optional font */
+/* Font & container layout */
+.prograss_div {
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr;
+  align-items: center;
+  gap: 16px;
+  padding: 4px 8px;
+  margin: 10px 0;
+  font-family: 'Inter', sans-serif;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
 
+/* Label */
+.prograss_div > div:first-child {
+  font-weight: 600;
+  font-size: 15px;
+  color: #333;
+  white-space: nowrap;
+  position: relative;
+}
+.prograss_div > div:first-child::before {
+  position: absolute;
+  left: -18px;
+  font-size: 16px;
+}
+
+/* Progress wrapper (still gets style="width: 80%" from HTML) */
+.progress {
+  height: 16px;
+  background: #e0e0e0;
+  border-radius: 999px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+/* Progress fill bar */
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #ffb700, #fdd835);
+  background-size: 200% 100%;
+  border-radius: 999px;
+  transition: width 0.5s ease-in-out;
+}
+
+
+/* Percentage text */
+.prograss_div > div:last-child {
+  font-weight: 600;
+  font-size: 14px;
+  color: #2c3e50;
+  text-align: right;
+  white-space: nowrap;
+}
+
+    </style>
 <style>
     body{
         position: relative;
@@ -233,8 +306,98 @@
                     <b>Rs.{{i.price}}</b>
                 </div>
                 {% endif %}
+                <div class="text-center">
+                    <b>{{i.average_ratings}}</b>
+                    <span class="fa fa-star {% if i.average_ratings >= 1 %} checked {% endif %}"></span>
+                    {% if i.average_ratings == 1.5 %}<i class="fa fa-star-half checked"></i>{% else %}<span class="fa fa-star {% if i.average_ratings >= 2 %} checked {% endif %}"></span>{% endif %}
+                    {% if i.average_ratings == 2.5 %}<i class="fa fa-star-half checked"></i>{% else %}<span class="fa fa-star {% if i.average_ratings >= 3 %} checked {% endif %}"></span>{% endif %}
+                    {% if i.average_ratings == 3.5 %}<i class="fa fa-star-half checked"></i>{% else %}<span class="fa fa-star {% if i.average_ratings >= 4 %} checked {% endif %}"></span>{% endif %}
+                    {% if i.average_ratings == 4.5 %}<i class="fa fa-star-half checked"></i>{% else %}<span class="fa fa-star {% if i.average_ratings >= 5 %} checked {% endif %}"></span>{% endif %}
+                  </div>
+                  <div class="row">
+                      <div class="col-sm-6">
+                          <h> &nbsp; {{i.total_r}} Ratings</h>
+                      </div>
+                      <div class="col-sm-6 text-center">
+                          <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#rate{{i.id}}">
+                          Rate
+                          </button>
+                      </div>
+                  </div>
             </div>
-
+        <!-- Modal -->
+        <div class="modal fade" id="rate{{i.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Rate To {{i.name}}</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>Click on the Star for Rattings</p>
+                  
+                  <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{i.id}}">
+                    <input type="hidden" name="ratings" id="ratings{{i.id}}" >
+  
+                    <button type="submit" style="display: none;" id="submit_btn{{i.id}}" name="add_rattings" ></button>
+  
+                    <span class="fa fa-star  fa-2x {% if i.add_avg >= 1 %} checked {% endif %}" onmouseout="clear_hower('{{i.id}}', '{{i.add_avg}}')" onmouseover="first('{{i.id}}')" onclick="document.getElementById('ratings{{i.id}}').value = '1';document.getElementById('submit_btn{{i.id}}').click()" id="first{{i.id}}"></span>
+                    <span class="fa fa-star  fa-2x {% if i.add_avg >= 2 %} checked {% endif %}" onmouseout="clear_hower('{{i.id}}', '{{i.add_avg}}')" onmouseover="second('{{i.id}}')" onclick="document.getElementById('ratings{{i.id}}').value = '2';document.getElementById('submit_btn{{i.id}}').click()" id="second{{i.id}}"></span>
+                    <span class="fa fa-star  fa-2x {% if i.add_avg >= 3 %} checked {% endif %}" onmouseout="clear_hower('{{i.id}}', '{{i.add_avg}}')" onmouseover="third('{{i.id}}')" onclick="document.getElementById('ratings{{i.id}}').value = '3';document.getElementById('submit_btn{{i.id}}').click()" id="third{{i.id}}"></span>
+                    <span class="fa fa-star  fa-2x {% if i.add_avg >= 4 %} checked {% endif %}" onmouseout="clear_hower('{{i.id}}', '{{i.add_avg}}')" onmouseover="fourth('{{i.id}}')" onclick="document.getElementById('ratings{{i.id}}').value = '4';document.getElementById('submit_btn{{i.id}}').click()" id="fourth{{i.id}}"></span>
+                    <span class="fa fa-star  fa-2x {% if i.add_avg >= 5 %} checked {% endif %}" onmouseout="clear_hower('{{i.id}}', '{{i.add_avg}}')" onmouseover="fifth('{{i.id}}')" onclick="document.getElementById('ratings{{i.id}}').value = '5';document.getElementById('submit_btn{{i.id}}').click()" id="fifth{{i.id}}"></span>
+                  </form>
+                  <br><br><br>
+                  <!--------------------------------------------------------->
+                  <div class="prograss_div">
+                    <div>5 star</div>
+                    <div class="progress" style="width: 80%;" role="progressbar"  aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                      <div class="progress-bar w-{{i.5_star_per}}"></div>
+                    </div>
+                    <div>{{i.5_star_per}}%</div>
+                  </div>
+  
+                  <div class="prograss_div">
+                    <div >4 star</div>
+                    <div class="progress" style="width: 80%;" role="progressbar"  aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                      <div class="progress-bar w-{{i.4_star_per}}"></div>
+                    </div>
+                    <div >{{i.4_star_per}}%</div>
+                  </div>
+  
+                  <div class="prograss_div">
+                    <div >3 star</div>
+                    <div class="progress" style="width: 80%;" role="progressbar"  aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                      <div class="progress-bar w-{{i.3_star_per}}"></div>
+                    </div>
+                    <div >{{i.3_star_per}}%</div>
+                  </div>
+  
+                  <div class="prograss_div">
+                    <div>2 star</div>
+                    <div class="progress" style="width: 80%;" role="progressbar"  aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                      <div class="progress-bar w-{{i.2_star_per}}"></div>
+                    </div>
+                    <div>{{i.2_star_per}}%</div>
+                  </div>
+  
+                  <div class="prograss_div">
+                    <div>1 star</div>
+                    <div class="progress" style="width: 80%;" role="progressbar"  aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                      <div class="progress-bar w-{{i.1_star_per}}"></div>
+                    </div>
+                    <div>{{i.1_star_per}}%</div>
+                  </div>
+                  <!--------------------------------------------------------->
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
             {% endfor %}
         </div>
     </div>
@@ -338,7 +501,75 @@ function plus(id,price){
   }
     }
 </script>
-
+<script>
+    function clear_hower(id, avg){
+      if (avg >= 1){
+        document.getElementById('first'+id).style.color = 'orange';
+      }
+      else{
+        document.getElementById('first'+id).style.color = 'black';
+      }
+      if (avg >= 2){
+        document.getElementById('second'+id).style.color = 'orange';
+      }
+      else{
+        document.getElementById('second'+id).style.color = 'black';
+      }
+      if (avg >= 3){
+        document.getElementById('third'+id).style.color = 'orange';
+      }
+      else{
+        document.getElementById('third'+id).style.color = 'black';
+      }
+      if (avg >= 4){
+        document.getElementById('fourth'+id).style.color = 'orange';
+      }
+      else{
+        document.getElementById('fourth'+id).style.color = 'black';
+      }
+      if (avg >= 5){
+        document.getElementById('fifth'+id).style.color = 'orange';
+      }
+      else{
+        document.getElementById('fifth'+id).style.color = 'black';
+      }
+    }
+    function first(id) {
+      document.getElementById('first'+id).style.color = 'orange';
+      document.getElementById('second'+id).style.color = 'black';
+      document.getElementById('third'+id).style.color = 'black';
+      document.getElementById('fourth'+id).style.color = 'black';
+      document.getElementById('fifth'+id).style.color = 'black';
+    }
+    function second(id) {
+      document.getElementById('first'+id).style.color = 'orange';
+      document.getElementById('second'+id).style.color = 'orange';
+      document.getElementById('third'+id).style.color = 'black';
+      document.getElementById('fourth'+id).style.color = 'black';
+      document.getElementById('fifth'+id).style.color = 'black';
+    }
+    function third(id) {
+      document.getElementById('first'+id).style.color = 'orange';
+      document.getElementById('second'+id).style.color = 'orange';
+      document.getElementById('third'+id).style.color = 'orange';
+      document.getElementById('fourth'+id).style.color = 'black';
+      document.getElementById('fifth'+id).style.color = 'black';
+    }
+    function fourth(id) {
+      document.getElementById('first'+id).style.color = 'orange';
+      document.getElementById('second'+id).style.color = 'orange';
+      document.getElementById('third'+id).style.color = 'orange';
+      document.getElementById('fourth'+id).style.color = 'orange';
+      document.getElementById('fifth'+id).style.color = 'black';
+    }
+    function fifth(id) {
+      document.getElementById('first'+id).style.color = 'orange';
+      document.getElementById('second'+id).style.color = 'orange';
+      document.getElementById('third'+id).style.color = 'orange';
+      document.getElementById('fourth'+id).style.color = 'orange';
+      document.getElementById('fifth'+id).style.color = 'orange';
+    }
+  </script>
 <br><br>
 <br><br>
 <br><br>

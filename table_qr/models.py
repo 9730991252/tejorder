@@ -22,3 +22,9 @@ class Customer_cart(models.Model):
 class Table_qr_count(models.Model):
     hotel = models.ForeignKey(Hotel, on_delete=models.PROTECT,null=True)
     count = models.IntegerField(default=0)
+    
+class Rattings(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, null=True)
+    star = models.IntegerField()
+    customer_session_id = models.CharField(max_length=500, null=True)
+    
