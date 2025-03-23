@@ -74,7 +74,7 @@ def edit_bill(request, id):
             'om':order_Master.objects.filter(id=id).first(),
             'ord':ord,
             'amount':amount,
-            'category':Category.objects.filter(status=1),
+            'category':Category.objects.filter(status=1, hotel_id=hotel.id).order_by('-order_by'),
             'item':Item.objects.filter(status=1),
         }
         return render(request, 'hotel/edit_bill.html', context)
