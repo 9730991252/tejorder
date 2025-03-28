@@ -60,9 +60,10 @@ def customer_selected_item(category_id):
     return item
 
 @register.simple_tag()
-def get_percenteg_amount(percent, without_discount_amount):
-    if without_discount_amount:
-        return (int(math.floor(float(without_discount_amount))) / 100) * int(percent)
+def get_percenteg_amount(percent, discount_amount):
+    # print(discount_amount)
+    if discount_amount:
+        return (int(math.floor(float(discount_amount))) / 100) * int(percent)
     else:
         return 0
     

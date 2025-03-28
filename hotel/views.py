@@ -75,7 +75,7 @@ def edit_bill(request, id):
             'ord':ord,
             'amount':amount,
             'category':Category.objects.filter(status=1, hotel_id=hotel.id).order_by('-order_by'),
-            'item':Item.objects.filter(status=1),
+            'item':Item.objects.filter(status=1, hotel_id=hotel.id).order_by('marathi_name'),
         }
         return render(request, 'hotel/edit_bill.html', context)
     else:
@@ -266,8 +266,8 @@ def complate_view_order(request,order_filter):
                 if type == 'chang_bill_paid_status':
                     om.paid_status = 1
                     om.save()
-            without_gst_amount = order_Detail.objects.filter(order_filter=order_filter, item__gst_status=0).aggregate(Sum('total_price'))['total_price__sum']
-            discount_amount = order_Detail.objects.filter(order_filter=order_filter, item__discount_status=1).aggregate(Sum('total_price'))['total_price__sum']
+            without_gst_amount = order_Detail.objects.filter(order_master_id=om.id, order_filter=order_filter, item__gst_status=0).aggregate(Sum('total_price'))['total_price__sum']
+            discount_amount = order_Detail.objects.filter(order_master_id=om.id, order_filter=order_filter, item__discount_status=1).aggregate(Sum('total_price'))['total_price__sum']
             
             total_price = om.total_price
             total_price -= om.discount_amount
