@@ -7,8 +7,6 @@ def handling_404(request, exception):
     return render(request, '404.html')
 
 def index(request):
-    order_Detail.objects.all().delete()
-    order_Master.objects.all().delete()
     visitors = Visitors.objects.all().first()
     if Visitors.objects.all().exists():
         visitors.count += 1
