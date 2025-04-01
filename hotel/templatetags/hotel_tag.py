@@ -95,21 +95,14 @@ def todays_sell(hotel_id):
         total_amount += total_price
         if qty != None:
             item.append({'name':i.marathi_name, 'qty':qty, 'total_price':total_price})        
-    ft_date = date(date.today().year, date.today().month, date.today().day)
-    ft_time = time(00, 00, 00)
-    from_date = datetime.combine(ft_date, ft_time)
-    print(from_date)
+
+    from_date = date.today()
+    to_date = date.today()
     
-    day = int(date.today().day) + 1
-    
-    t_date = date(date.today().year, date.today().month, day)
-    t_time = time(00, 00, 00)
-    to_date = datetime.combine(t_date, t_time)
-    
-    total_cash = order_Master.objects.filter(hotel_id=hotel_id, ordered_date__range=[from_date, to_date]).aggregate(Sum('cash_amount'))['cash_amount__sum']
-    total_phone_pe = order_Master.objects.filter(hotel_id=hotel_id, ordered_date__range=[from_date, to_date]).aggregate(Sum('phone_pe_amount'))['phone_pe_amount__sum']
-    total_pos_machine = order_Master.objects.filter(hotel_id=hotel_id, ordered_date__range=[from_date, to_date]).aggregate(Sum('pos_machine_amount'))['pos_machine_amount__sum']
-    discount = order_Master.objects.filter(hotel_id=hotel_id, ordered_date__range=[from_date, to_date]).aggregate(Sum('discount_amount'))['discount_amount__sum']
+    total_cash = order_Master.objects.filter(hotel_id=hotel_id, date__range=[from_date, to_date]).aggregate(Sum('cash_amount'))['cash_amount__sum']
+    total_phone_pe = order_Master.objects.filter(hotel_id=hotel_id, date__range=[from_date, to_date]).aggregate(Sum('phone_pe_amount'))['phone_pe_amount__sum']
+    total_pos_machine = order_Master.objects.filter(hotel_id=hotel_id, date__range=[from_date, to_date]).aggregate(Sum('pos_machine_amount'))['pos_machine_amount__sum']
+    discount = order_Master.objects.filter(hotel_id=hotel_id, date__range=[from_date, to_date]).aggregate(Sum('discount_amount'))['discount_amount__sum']
     hotel = Hotel.objects.filter(id=hotel_id).first()
     return{
         'item':item,

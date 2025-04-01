@@ -120,7 +120,7 @@ def customer_order(request, url):
                     print('Added ratings')
                     # return redirect(f'/table_qr/its_running_table/{url}')
                 item = []
-                for i in Item.objects.filter(hotel=hotel):
+                for i in Item.objects.filter(hotel=hotel, status=1):
                     r = Rattings.objects.filter(item_id=i.id)
                     avrage_r = r.aggregate(Avg('star'))
                     avg = r.filter(customer_session_id=session_id).aggregate(Avg('star'))
