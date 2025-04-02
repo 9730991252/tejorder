@@ -1,124 +1,90 @@
 {% extends 'home/base.html' %}
 
 {% block head %}
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 {% endblock head %}
 
 {% block content %}
-{% include 'include/alert.html' %}
 
-{% load static %}
-
+    {% include 'include/alert.html' %}
 {% include 'include/navbar.html' %}
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #444;
+            text-align: center;
+        }
+        h2 {
+            color: #555;
+            margin-top: 20px;
+        }
+        p {
+            margin: 10px 0;
+        }
+        ol {
+            padding-left: 20px;
+        }
+        ol li {
+            margin-bottom: 15px;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .contact-info {
+            background-color: #eef;
+            padding: 10px;
+            border-left: 4px solid #06c;
+            margin: 20px 0;
+        }
+        .note {
+            font-style: italic;
+            color: #666;
+        }
+    </style>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      line-height: 1.6;
-      background-color: #f9f9f9;
-      color: #333;
-    }
-
-    header {
-      background-color: #003366;
-      color: #fff;
-      padding: 20px 0;
-      text-align: center;
-    }
-
-    .container {
-      max-width: 1000px;
-      margin: 30px auto;
-      padding: 0 20px;
-      background-color: #fff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-    }
-
-    h1 {
-      color: #003366;
-      padding-top: 20px;
-      text-align: center;
-    }
-
-    h2 {
-      color: #00509e;
-      margin-top: 40px;
-    }
-
-    ol, ul {
-      padding-left: 20px;
-    }
-
-    li {
-      margin-bottom: 10px;
-    }
-
-    .back-to-top {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 15px;
-      background-color: #00509e;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .back-to-top:hover {
-      background-color: #003f7f;
-    }
-  </style>
-
-  <header>
-    <h1>Terms & Conditions</h1>
-  </header>
-
-  <div class="container">
-    <p>This document is an electronic record in terms of the Information Technology Act, 2000 and related provisions. It does not require any physical or digital signature.</p>
-
-    <p>This document is published in accordance with Rule 3(1) of the Information Technology (Intermediaries Guidelines) Rules, 2011, requiring publication of rules and Terms of Use for using the domain <a href="https://tejorder.com" target="_blank">https://tejorder.com</a> (hereinafter "Platform").</p>
-
-    <p>The Platform is owned by <strong>Prasanna Digital</strong>, based in Korti, Tal Karmala, Dist. Solapur, Akkalkot, India ("Platform Owner").</p>
-
-    <p>By accessing or using the Platform, you agree to be bound by these Terms of Use. These Terms may be modified at any time. Please review them regularly.</p>
-
-    <h2>Terms of Use</h2>
-    <ol>
-      <li>You must provide accurate and complete registration information and are responsible for all activity under your account.</li>
-      <li>We do not guarantee accuracy or completeness of any information or services provided.</li>
-      <li>Your use of our Services is at your sole risk. We are not liable for any outcome.</li>
-      <li>All content is proprietary and you do not gain rights to it.</li>
-      <li>Unauthorized use may lead to legal action.</li>
-      <li>You agree to pay any service charges.</li>
-      <li>You must not use the Platform for unlawful activities.</li>
-      <li>External links may be included; we are not responsible for third-party content.</li>
-      <li>Transactions on the Platform are legally binding.</li>
-      <li>You agree to indemnify us against any third-party claims or legal penalties.</li>
-      <li>We are not responsible for events beyond our control (force majeure).</li>
-      <li>These Terms are governed by Indian law.</li>
-      <li>Disputes shall be resolved under the jurisdiction of courts in Akkalkot, Maharashtra.</li>
-      <li>Contact us via the website for any concerns regarding these Terms.</li>
-    </ol>
-
-    <a class="back-to-top" onclick="scrollToTop()">Back to Top</a>
-  </div>
-
-  <footer>
-    <div class="">
-        <p>&copy; 2025 Tej Order. All Rights Reserved. 
-            •<a class="footer_A" href="/terms_and_conditions/">Terms & Conditions</a> 
-            •<a class="footer_A" href="/privacy_policy/">Privacy Policy</a> 
-            •<a class="footer_A" href="/refund_and_cancellation_policy/">Refund And Cancellation Policy</a> 
-        <p>
+    <div class="container">
+        <h1>अटी व शर्ती</h1>
+        <ol>
+            <li>
+                आर्थिक वर्ष १ एप्रिल ते ३१ मार्च असल्याने, ३१ मार्च रोजी मागील वर्षाची सर्व माहिती डिलीट (काढून टाकली) जाईल. याची सर्वांनी नोंद घ्यावी. डिलीट होण्यापूर्वी आपली महत्त्वाची माहिती आपण स्वतः बॅकअप घ्यावी. आम्ही कोणत्याही माहितीच्या नुकसानासाठी जबाबदार नाही.
+            </li>
+            <li>
+                १ एप्रिल पासून नव्याने बिल क्रमांक १ पासून सुरु होईल. मागील डेटा उपलब्ध नसल्याने, सुरुवातीला सर्व पुरेशी माहिती नव्याने भरावी लागेल.
+            </li>
+            <li>
+                ही वेबसाइट अनेक व्यापाऱ्यांद्वारे बिलिंगसाठी वापरली जात असल्याने, वैयक्तिक वापरकर्त्याच्या गरजेनुसार ती बदलली जाणार नाही.
+            </li>
+            <li>
+                वापरकर्ता स्वतःच्या वापरकर्तानाव, पासवर्ड आणि इतर संवेदनशील माहितीची गोपनीयता राखण्यासाठी जबाबदार आहे. त्याच्या/तिच्या वापरकर्ता खात्यात होणाऱ्या सर्व क्रियाकलापांसाठी तो/ती जबाबदार आहे आणि तो/ती <a href="mailto:sunilkale101@gmail.com">sunilkale101@gmail.com</a> या ईमेलद्वारे किंवा <a href="https://banana.tejorder.com/#contact">https://banana.tejorder.com/#contact</a> वर सूचीबद्ध केलेल्या कोणत्याही क्रमांकावर कॉल करून त्यांच्या वापरकर्ता खात्याच्या कोणत्याही अनधिकृत वापराबद्दल आम्हाला तात्काळ कळवण्यास सहमत आहे. त्याच्या/तिच्या वापरकर्ता खात्याच्या कोणत्याही अनधिकृत प्रवेशामुळे आणि/किंवा वापरामुळे किंवा अन्यथा त्याच्या/तिच्या किंवा कोणत्याही तृतीय पक्षाच्या कोणत्याही नुकसानासाठी आम्ही जबाबदार नाही. डेटाचे आवश्यक बॅकअप घेणे ही केवळ वापरकर्त्याची जबाबदारी असल्याने कोणत्याही प्रकारच्या डेटा विसंगतीसाठी किंवा डेटा विसंगती/सॉफ्टवेअर समस्येमुळे झालेल्या कोणत्याही प्रकारच्या नुकसानासाठी आम्ही जबाबदार नाही.
+            </li>
+            <li>
+                वापरकर्त्याने बनवलेला किंवा साठवलेला कंटेंट (माहिती, चित्रे, फायली इ.) त्यांच्या मालकीचा असतो. आम्ही त्यांच्या मालकीचा आदर करतो. पण जेव्हा वापरकर्ते आमच्या सेवा वापरतात, तेव्हा ते आम्हाला त्यांच्या कंटेंटचा वापर करण्याची, त्याची प्रत बनवण्याची, त्या कंटेंटमध्ये बदल करण्याची, सुधारणा करण्याची, प्रकाशित करण्याची किंवा इतरांना दाखवण्याची परवानगी देतात. हे सगळे आम्ही फक्त आमच्या कामासाठी करतो. आम्ही वापरकर्त्यांचा डेटा सुरक्षित ठेवण्याचा प्रयत्न करतो, पण जर कधी डेटा लीक झाला किंवा सुरक्षित राहिला नाही, तर त्यासाठी आम्ही जबाबदार नाही.
+            </li>
+            <li>
+                सदर बिलिंग सर्व्हिसेस वापरण्यासाठी भरलेली अतिरिक्त रक्कम प्रत्येक वित्तीय वर्षाच्या मार्च महिन्याच्या शेवटच्या तारखेपर्यंत वैध असेल.
+            </li>
+            <li>
+                भविष्यात या अटी वेळोवेळी अपडेट केल्या जाऊ शकतात. वापरकर्त्याने या पृष्ठाला भेट देऊन आमच्या अटी आणि शर्तींचे नियमितपणे पुनरावलोकन करण्यास सहमती दर्शविली पाहिजे. सेवेचा सतत प्रवेश किंवा वापर याचा अर्थ असा होईल की वापरकर्ता बदलास सहमत आहे.
+            </li>
+        </ol>
     </div>
-</footer>
-
-  <script>
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  </script>
-{% endblock content %}
+    {% endblock content %}
