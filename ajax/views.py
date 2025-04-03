@@ -260,7 +260,14 @@ def filter_items_by_category_customer_for_running(request):
     
 def search_hotel_item(request):
     if request.method == 'GET':
-        pass
+        words = request.GET['words']
+        hotel_id = request.GET['hotel_id']
+        
+        context = {
+            'item': Item.objects.filter(english_name__icontains=words, status = 1, hotel_id=hotel_id).order_by('marathi_name'),
+        }
+        t = render_to_string('ajax/filter_items_by_category.html', context)
+    return JsonResponse({'t': t})
     
 def select_item_category(request):
     if request.method == 'GET':

@@ -27,6 +27,20 @@ def hotel_home(request):
         return redirect('login')
     
 @csrf_exempt
+def software_charges(request):
+    if request.session.has_key('owner_mobile'):
+        mobile = request.session['owner_mobile']
+        hotel = Hotel.objects.filter(mobile=mobile).first()
+
+        context={
+            'hotel':hotel,
+            'Hotel_Payment':Hotel_Payment.objects.filter(hotel=hotel)
+        }
+        return render(request, 'hotel/software_charges.html', context)
+    else:
+        return redirect('login')
+    
+@csrf_exempt
 def print_completed_bill(request, order_filter, qr_status):
     if request.session.has_key('owner_mobile'):
         mobile = request.session['owner_mobile']

@@ -40,6 +40,9 @@
           <a  {% if request.path == '/hotel/table_qr/' %} class="nav-link active at_page" data-aos="fade-up" data-aos-duration="150" data-aos-delay="100" {% else %} class="nav-link active" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="750" {% endif %}  aria-current="page" href="/hotel/table_qr/">Table Qr Code</a>
         </li>
         <li class="nav-item text-center">
+          <a  {% if request.path == '/hotel/software_charges/' %} class="nav-link active at_page" {% else %} class="nav-link active" {% endif %}  aria-current="page" href="/hotel/software_charges/">Software Charges</a>
+        </li>
+        <li class="nav-item text-center">
           <a class="nav-link active text-danger" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="550"  aria-current="page" href="/logout/">Logout</a>
         </li>
         <!-- <li class="nav-item text-center">
@@ -52,4 +55,11 @@
 {% remaining_bills hotel.id as remaining_bills %}
 <div class="container">
   <p style="font-weight: 500;">{{hotel.hotel_name}}, <h class="{% if remaining_bills >= 50 %} text-success {% elif remaining_bills >= 10 %} text-danger {% else %} text-danger {% endif %}">शिल्लक बिले {{remaining_bills}}</h></p>
+  {% if remaining_bills <= 0 %}
+
+    <div class="alert alert-danger" role="alert">
+      तुमच्या खात्यातील शिल्लक बिले वजा मध्ये गेले आहेत, त्यामुळे ५० पर्यंत बिल वजा झाल्यावर बिल पूर्ण होऊ शकणार नाही.
+    </div>
+
+  {% endif %}
 </div>

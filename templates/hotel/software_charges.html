@@ -1,0 +1,38 @@
+{% extends 'home/base.html' %}
+
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock head %}
+
+{% block content %}
+    {% include 'include/alert.html' %}
+    {% include 'include/hotel_navbar.html' %}
+    {% load hotel_tag %}
+
+    <style>
+        .container_box{
+            width: 85%;
+            margin: 0 auto;
+            background-color: black;
+            padding: 1px;
+            display: grid !important;;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1px;
+            font-weight: 700;
+            div{
+                text-align: center;
+                background-color: white;
+            }
+        }
+    </style>
+    <div class="container">
+        <div class="container_box">
+            {% for p in Hotel_Payment %}
+                <div>Rs.{{ p.amount }}</div>
+                <div>Bills.{{p.bills}}</div>
+                <div>{{p.date}}</div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock content %}

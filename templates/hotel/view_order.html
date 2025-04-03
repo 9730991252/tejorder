@@ -266,7 +266,7 @@ function search_hotel_item(){
     method: "GET",
     data:{
       words:document.getElementById('words').value,
-      table_id:'{{table_id}}'
+      hotel_id:'{{hotel.id}}'
     },
     success: function(res){
       document.getElementById('item_ruselt').innerHTML = res.t
