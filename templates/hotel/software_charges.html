@@ -18,7 +18,6 @@
             display: grid !important;;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 1px;
-            font-weight: 700;
             div{
                 text-align: center;
                 background-color: white;
@@ -28,9 +27,9 @@
     <div class="container">
         <div class="container_box">
             {% for p in Hotel_Payment %}
+                <div>{{p.date|date:"d-m-Y"}}</div>
                 <div>Rs.{{ p.amount }}</div>
                 <div>Bills.{{p.bills}}</div>
-                <div>{{p.date}}</div>
             {% endfor %}
         </div>
     </div>
