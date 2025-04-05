@@ -381,7 +381,7 @@ def view_order(request, table_id):
             'hotel':hotel,
             'cart':Hotel_cart.objects.filter(table_id=table_id),
             'amount':amount,
-            'item':Item.objects.filter(status=1,hotel_id=hotel.id).order_by('marathi_name'),
+            'item':Item.objects.filter(status=1,hotel_id=hotel.id).order_by('marathi_name')[:10],
             'table':Table.objects.get(id=table_id),
             'category':Category.objects.filter(status=1,hotel_id=hotel.id).order_by('-order_by')
         }

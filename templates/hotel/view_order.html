@@ -143,7 +143,7 @@
 
 <div class="mt-4 mb-2">
   {% for c in category %}
-    <button class="btn btn-success category_btn mt-1" id="category_btn{{c.id}}" onclick="filterItems('{{ c.id }}')" >{{ c.name }}</button>
+    <button class="btn btn-success category_btn mt-1" id="category_btn{{c.id}}" onclick="filterItems('{{ c.id }}')" >{{ c.name }} {% customer_selected_item_count c.id %}</button>
   {% endfor %}
 </div>
 
@@ -198,9 +198,13 @@
     <div><input type="text" oninput="search_hotel_item()" class="form-control" placeholder="Search Item" id="words"></div>
     <div style="display: flex;justify-content: center;align-items: center;">Rs.<input type="readonly" style="width: 100px;" id="amount" value="{{amount}}" class="text-center" disabled></div>
     <div style="text-align: end;">
+      {% remaining_bills hotel.id as remaining_bills %}
+      {% if remaining_bills <= -50 %}
+      {% else %}
       <form method="POST" id="complete_order_btn" {% if cart %}{% else %} style="display: none;" {% endif %} > {% csrf_token %}
         <div class="container"><button type="submit"  name="complete_order" class="btn btn-danger btn-sm " >Complete Order</button></div>
       </form> 
+      {% endif %}
     </div>
   </div>
 
