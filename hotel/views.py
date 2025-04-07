@@ -73,6 +73,8 @@ def edit_bill(request, id):
         om = order_Master.objects.filter(id=id).first()
         ord = order_Detail.objects.filter(order_master=om)
         amount = ord.aggregate(Sum('total_price'))['total_price__sum']
+        om.total_price = amount
+        om.save()
         if 'Delete'in request.POST:
             od_id = request.POST.get('cart_id')
             od = order_Detail.objects.filter(id=od_id).first()
@@ -392,6 +394,8 @@ def view_order(request, table_id):
 def comolete_order(order_filter, table_id, hotel_id):
     hotel = Hotel.objects.filter(id=hotel_id).first()
     t =Hotel_cart.objects.filter(table_id=table_id).aggregate(Sum('total_amount'))['total_amount__sum']
+    print(t)
+    
     if t != None:
         ta = Hotel_cart.objects.filter(table_id=table_id, item__gst_status=0).aggregate(Sum('total_amount'))['total_amount__sum']
         if ta != None:

@@ -143,7 +143,7 @@
 
 <div class="mt-4 mb-2">
   {% for c in category %}
-    <button class="btn btn-success category_btn mt-1" id="category_btn{{c.id}}" onclick="filterItems('{{ c.id }}')" >{{ c.name }} {% customer_selected_item_count c.id %}</button>
+    <button class="btn btn-success category_btn mt-1" id="category_btn{{c.id}}" onclick="filterItems('{{ c.id }}')" >{{ c.name }} <h style="font-size: 10px;">{% customer_selected_item_count c.id %}</h></button>
   {% endfor %}
 </div>
 
