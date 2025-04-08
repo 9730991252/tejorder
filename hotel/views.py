@@ -74,14 +74,14 @@ def edit_bill(request, id):
         ord = order_Detail.objects.filter(order_master=om)
         amount = ord.aggregate(Sum('total_price'))['total_price__sum']
         om.total_price = amount
+        om.cash_amount = amount
+        om.phone_pe_amount = 0
+        om.pos_machine_amount = 0
         om.save()
         if 'Delete'in request.POST:
             od_id = request.POST.get('cart_id')
             od = order_Detail.objects.filter(id=od_id).first()
             om.total_price -= od.total_price
-            om.cash_amount = 0
-            om.phone_pe_amount = 0
-            om.pos_machine_amount = 0
             om.save()
             od.delete()
             return redirect(f'/hotel/edit_bill/{id}')
@@ -99,7 +99,6 @@ def edit_bill(request, id):
     
 @csrf_exempt
 def report(request):
-
     if request.session.has_key('owner_mobile'):
         mobile = request.session['owner_mobile']
         hotel = Hotel.objects.filter(mobile=mobile).first()

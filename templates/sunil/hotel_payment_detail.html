@@ -40,8 +40,51 @@
         <td {% if forloop.first %} style="background-color: rgb(255, 222, 222);"{% endif %} >{{s.mobile}}</td>
         <td {% if forloop.first %} style="background-color: rgb(255, 222, 222);"{% endif %} >{{s.bills}}</td>
         <td {% if forloop.first %} style="background-color: rgb(255, 222, 222);"{% endif %} >{{s.type}}</td>
-        <td {% if forloop.first %} style="background-color: rgb(255, 222, 222);"{% endif %} >{{s.date}}</td>
+        <td {% if forloop.first %} style="background-color: rgb(255, 222, 222);"{% endif %} >{{s.date}} <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal{{s.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
       </tr>
+      
+  <div class="modal fade" id="exampleModal{{s.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Payment</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-start">
+            <form method="POST">
+              <input type="text" value="{{s.id}}" name="p_id" hidden>
+                <div class="mb-3">
+                    <label for="">Amount</label>
+                    <input type="number" class="form-control" value="{{s.amount}}" name="amount" oninput="'bills{{s.id}}'.value = (Number(this.value) * 3)"  placeholder="Enter Amount" id="" required>
+                </div>
+                <div class="mb-3">
+                    <label for="">Bills</label>
+                    <input type="number" class="form-control" value="{{s.bills}}" name="bills" placeholder="Enter Bills" id="bills{{d.id}}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="mobile">Sender Phonepe No.</label>
+                    <input type="number" class="form-control" value="{{s.mobile}}" name="mobile" placeholder="Enter Mobile" id="mobile" required>
+                </div>
+                <div class="mb-3">
+                    <select class="form-control" name="type" id="" required>
+                        <option value="">Select Type</option>
+                        <option {% if s.type == 'cash' %} selected {% endif %} value="cash">Cash</option>
+                        <option {% if s.type == 'phonepe' %} selected {% endif %} value="phonepe">Phone Pe</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label>Date</label>    
+                    <input type="date" value="{{s.date|date:'Y-m-d'}}" class="form-control" name="date" id="" required>
+                </div>
+                <button type="submit" name="edit_hotel_payment" class="btn btn-danger form-control">Edit</button>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
       {% endfor %}
     </tbody>
   </table>

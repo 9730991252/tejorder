@@ -104,6 +104,21 @@ def hotel_payment_detail(request,id):
                 date = request.POST.get('date')
                 add_hotel_payment(h, amount, bills, type, mobile, date)
                 return redirect(f'/sunil/hotel_payment_detail/{id}')
+            if 'edit_hotel_payment'in request.POST:
+                p_id = request.POST.get('p_id')
+                amount = request.POST.get('amount')
+                bills = request.POST.get('bills')
+                type = request.POST.get('type')
+                mobile = request.POST.get('mobile')
+                date = request.POST.get('date')
+                Hotel_Payment.objects.filter(id=p_id).update(
+                    amount=amount,
+                    bills=bills,
+                    type=type,
+                    mobile=mobile,
+                    date=date
+                )
+                return redirect(f'/sunil/hotel_payment_detail/{id}')
         context={
             'hotel':h,
             'payments':p,
