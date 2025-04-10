@@ -211,6 +211,7 @@ def complate_order(request):
             order_master = []
             for b in order_Master.objects.filter(hotel_id=hotel.id).order_by('-id'):
                 cancel_btn_show_status = 0
+                print({'bill':b.order_filter, 'date':b.ordered_date})
                 if b.date == date.today():
                     cancel_btn_show_status = 1
                 order_master.append({
@@ -284,10 +285,10 @@ def complate_view_order(request,order_filter):
             without_gst_amount = order_Detail.objects.filter(order_master_id=om.id, order_filter=order_filter, item__gst_status=0).aggregate(Sum('total_price'))['total_price__sum']
             discount_amount = order_Detail.objects.filter(order_master_id=om.id, order_filter=order_filter, item__discount_status=1).aggregate(Sum('total_price'))['total_price__sum']
             
-            total_price = om.total_price
-            total_price -= om.discount_amount
-            total_price += om.s_gst
-            total_price += om.s_gst
+            total_price = om.total_price or 0
+            total_price -= om.discount_amount or 0
+            total_price += om.s_gst or 0
+            total_price += om.s_gst or 0
             if 'select_discount'in request.POST:
                 percent = request.POST.get('percent')
                 am = (int(math.floor(float(discount_amount))) / 100) * int(percent)
@@ -418,7 +419,8 @@ def comolete_order(order_filter, table_id, hotel_id):
         s_gst=s_gst,
         c_gst=c_gst,
         cash_amount=total_amount,
-        hotel_id=hotel_id
+        hotel_id=hotel_id,
+        date=date.today()
     ).save()
     o = order_Master.objects.filter(hotel_id=hotel_id,order_filter=order_filter).first()
     for i in Item.objects.filter(status=1):
