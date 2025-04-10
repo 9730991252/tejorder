@@ -84,7 +84,7 @@
             <div style="padding: 10px;">
                 <div class="mb-3">
                     <lable>Change Edit Pin</lable><br>
-                    <input type="password" placeholder="****" name="edit_pin" value="{{hotel.edit_pin}}" class="" required>
+                    <input type="password" maxlength="4" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="****" name="edit_pin" value="{{hotel.edit_pin}}" class="" required>
                 </div>
                 <div class="mb-3">
                     <lable>Last Changed </lable><br>

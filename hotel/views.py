@@ -36,6 +36,7 @@ def edit_pin(request):
             hotel.edit_pin = pin
             hotel.edit_pin_changed_date = datetime.now()
             hotel.save()
+            messages.success(request,'Edited Successfully')
             return redirect('edit_pin')
         context={
             'hotel':hotel
@@ -291,6 +292,8 @@ def profile(request):
             if logo_img is not None:
                 compressed_image = compress_image(logo_img)
                 hotel.logo.save(logo_img.name[:-5]+'.webp', compressed_image, save=True)
+            messages.success(request,'Edited Successfully')
+
             return redirect('profile')
         context={
             'hotel':hotel
