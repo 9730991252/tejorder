@@ -27,6 +27,24 @@ def hotel_home(request):
         return redirect('login')
     
 @csrf_exempt
+def edit_pin(request):
+    if request.session.has_key('owner_mobile'):
+        mobile = request.session['owner_mobile']
+        hotel = Hotel.objects.filter(mobile=mobile).first()
+        if 'change'in request.POST:
+            pin = request.POST.get('edit_pin')
+            hotel.edit_pin = pin
+            hotel.edit_pin_changed_date = datetime.now()
+            hotel.save()
+            return redirect('edit_pin')
+        context={
+            'hotel':hotel
+        }
+        return render(request, 'hotel/edit_pin.html', context)
+    else:
+        return redirect('login')
+    
+@csrf_exempt
 def software_charges(request):
     if request.session.has_key('owner_mobile'):
         mobile = request.session['owner_mobile']
@@ -70,6 +88,11 @@ def edit_bill(request, id):
     if request.session.has_key('owner_mobile'):
         mobile = request.session['owner_mobile']
         hotel = Hotel.objects.filter(mobile=mobile).first()
+        if request.session.has_key('edit_pin'):
+            pass
+        else:
+            del request.session['owner_mobile']
+            return redirect('/')
         om = order_Master.objects.filter(id=id).first()
         ord = order_Detail.objects.filter(order_master=om)
         amount = ord.aggregate(Sum('total_price'))['total_price__sum']
@@ -201,7 +224,16 @@ def complate_order(request):
         mobile = request.session['owner_mobile']
         hotel = Hotel.objects.filter(mobile=mobile).first()
         if hotel:
-            
+            if 'check_pin'in request.POST: 
+                id = request.POST.get('id')
+                pin = request.POST.get('pin')
+                if str(hotel.edit_pin) == str(pin):
+                    request.session['edit_pin'] = pin
+                    return redirect(f'/hotel/edit_bill/{id}')
+                else:
+                    del request.session['owner_mobile']
+                    messages.warning(request, "चुकीचा ' एडिट पीन  '")
+                    return redirect('/')
             if 'cancel_bill'in request.POST:
                 order_filter = request.POST.get('order_filter')
                 om = order_Master.objects.filter(order_filter=order_filter, hotel_id=hotel.id).first()

@@ -17,6 +17,9 @@ class Hotel(models.Model):
     gst_number = models.CharField(max_length=200,null=True)
     discount_status = models.IntegerField(default=0)
     date = models.DateField(auto_now_add=True, null=True)
+    
+    edit_pin = models.CharField(max_length=4, default='0000')
+    edit_pin_changed_date = models.DateTimeField(null=True)
 
 class Hotel_Payment(models.Model):
     hotel = models.ForeignKey(Hotel, on_delete=models.PROTECT, null=True)

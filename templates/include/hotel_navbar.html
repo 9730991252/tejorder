@@ -10,40 +10,43 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item text-center">
-          <a  {% if request.path == '/hotel/hotel_home/' %} class="nav-link active at_page" data-aos="fade-up" data-aos-duration="150" data-aos-delay="100" {% else %} class="nav-link active" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100" {% endif %}  aria-current="page" href="/hotel/hotel_home/">Home</a>
+          <a  {% if request.path == '/hotel/hotel_home/' %} class="nav-link active at_page" {% else %} class="nav-link active"{% endif %}  aria-current="page" href="/hotel/hotel_home/">Home</a>
         </li>
         <li class="nav-item text-center">
-          <a  {% if request.path == '/hotel/running_table/' %} class="nav-link active at_page" data-aos="fade-up" data-aos-duration="150" data-aos-delay="100" {% else %} class="nav-link active" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="150" {% endif %}  aria-current="page" href="/hotel/running_table/">Running Table</a>
+          <a  {% if request.path == '/hotel/running_table/' %} class="nav-link active at_page"  {% else %} class="nav-link active"{% endif %}  aria-current="page" href="/hotel/running_table/">Running Table</a>
         </li>
         <li class="nav-item text-center">
-          <a  {% if request.path == '/hotel/report/' %} class="nav-link active at_page" data-aos="fade-up" data-aos-duration="150" data-aos-delay="100" {% else %} class="nav-link active" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="200" {% endif %}  aria-current="page" href="/hotel/report/">Report</a>
+          <a  {% if request.path == '/hotel/report/' %} class="nav-link active at_page"  {% else %} class="nav-link active" {% endif %}  aria-current="page" href="/hotel/report/">Report</a>
         </li>
         <li class="nav-item text-center">
-          <a  {% if request.path == '/terms_and_conditions/' %} class="nav-link active at_page" data-aos="fade-up" data-aos-duration="150" data-aos-delay="100" {% else %} class="nav-link active" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="200" {% endif %}  aria-current="page" href="/terms_and_conditions/">Terms And Conditions</a>
+          <a  {% if request.path == '/terms_and_conditions/' %} class="nav-link active at_page"  {% else %} class="nav-link active" {% endif %}  aria-current="page" href="/terms_and_conditions/">Terms And Conditions</a>
         </li>
         <li class="nav-item text-center">
-          <a  {% if request.path == '/hotel/table/' %} class="nav-link active at_page" data-aos="fade-up" data-aos-duration="150" data-aos-delay="100" {% else %} class="nav-link active" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="250" {% endif %}  aria-current="page" href="/hotel/table/">Table</a>
+          <a  {% if request.path == '/hotel/table/' %} class="nav-link active at_page"  {% else %} class="nav-link active" {% endif %}  aria-current="page" href="/hotel/table/">Table</a>
         </li>
         <li class="nav-item text-center">
-          <a  {% if request.path == '/hotel/item/' %} class="nav-link active at_page" data-aos="fade-up" data-aos-duration="150" data-aos-delay="100" {% else %} class="nav-link active" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="350" {% endif %}  aria-current="page" href="/hotel/item/">Item</a>
+          <a  {% if request.path == '/hotel/item/' %} class="nav-link active at_page"  {% else %} class="nav-link active" {% endif %}  aria-current="page" href="/hotel/item/">Item</a>
         </li>
         <li class="nav-item text-center">
-          <a  {% if request.path == '/hotel/category/' %} class="nav-link active at_page" data-aos="fade-up" data-aos-duration="150" data-aos-delay="100" {% else %} class="nav-link active" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="450" {% endif %}  aria-current="page" href="/hotel/category/">Category</a>
+          <a  {% if request.path == '/hotel/category/' %} class="nav-link active at_page"  {% else %} class="nav-link active" {% endif %}  aria-current="page" href="/hotel/category/">Category</a>
         </li>
         <li class="nav-item text-center">
-          <a  {% if request.path == '/hotel/employee/' %} class="nav-link active at_page" data-aos="fade-up" data-aos-duration="150" data-aos-delay="100" {% else %} class="nav-link active" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="550" {% endif %}  aria-current="page" href="/hotel/employee/">Employee</a>
+          <a  {% if request.path == '/hotel/employee/' %} class="nav-link active at_page" {% else %} class="nav-link active" {% endif %}  aria-current="page" href="/hotel/employee/">Employee</a>
         </li>
         <li class="nav-item text-center">
-          <a  {% if request.path == '/hotel/profile/' %} class="nav-link active at_page" data-aos="fade-up" data-aos-duration="150" data-aos-delay="100" {% else %} class="nav-link active" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="650" {% endif %}  aria-current="page" href="/hotel/profile/">Profile</a>
+          <a  {% if request.path == '/hotel/edit_pin/' %} class="nav-link active at_page"  {% else %} class="nav-link active" {% endif %}  aria-current="page" href="/hotel/edit_pin/">Edit Pin</a>
         </li>
         <li class="nav-item text-center">
-          <a  {% if request.path == '/hotel/table_qr/' %} class="nav-link active at_page" data-aos="fade-up" data-aos-duration="150" data-aos-delay="100" {% else %} class="nav-link active" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="750" {% endif %}  aria-current="page" href="/hotel/table_qr/">Table Qr Code</a>
+          <a  {% if request.path == '/hotel/profile/' %} class="nav-link active at_page"  {% else %} class="nav-link active" {% endif %}  aria-current="page" href="/hotel/profile/">Profile</a>
+        </li>
+        <li class="nav-item text-center">
+          <a  {% if request.path == '/hotel/table_qr/' %} class="nav-link active at_page"  {% else %} class="nav-link active" {% endif %}  aria-current="page" href="/hotel/table_qr/">Table Qr Code</a>
         </li>
         <li class="nav-item text-center">
           <a  {% if request.path == '/hotel/software_charges/' %} class="nav-link active at_page" {% else %} class="nav-link active" {% endif %}  aria-current="page" href="/hotel/software_charges/">Software Charges</a>
         </li>
         <li class="nav-item text-center">
-          <a class="nav-link active text-danger" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="550"  aria-current="page" href="/logout/">Logout</a>
+          <a class="nav-link active text-danger"aria-current="page" href="/logout/">Logout</a>
         </li>
         <!-- <li class="nav-item text-center">
           <a class="nav-link active" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="550"  aria-current="page" href="/hotel/print_completed_bill/200">Test</a>
