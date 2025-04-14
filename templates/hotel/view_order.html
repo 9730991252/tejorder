@@ -202,8 +202,11 @@
       {% if remaining_bills <= -50 %}
       {% else %}
       <form method="POST" id="complete_order_btn" {% if cart %}{% else %} style="display: none;" {% endif %} > {% csrf_token %}
-        <div class="container"><button type="submit"  name="complete_order" class="btn btn-danger btn-sm " >Complete Order</button></div>
+        <div class="container"><button type="submit" onclick="complete_order_btn.style.display = 'none'; loader.style.display = 'flex'" name="complete_order" class="btn btn-danger btn-sm " >Complete Order</button></div>
       </form> 
+      <div class="spinner-border" style="display: none;" id="loader" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
       {% endif %}
     </div>
   </div>
