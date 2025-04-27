@@ -318,7 +318,9 @@ def complate_view_order(request,order_filter):
                     om.paid_status = 1
                     om.save()
             without_gst_amount = order_Detail.objects.filter(order_master_id=om.id, order_filter=order_filter, item__gst_status=0).aggregate(Sum('total_price'))['total_price__sum']
-            discount_amount = order_Detail.objects.filter(order_master_id=om.id, order_filter=order_filter, item__discount_status=1).aggregate(Sum('total_price'))['total_price__sum']
+            discount_amount = order_Detail.objects.filter(order_master_id=om.id, order_filter=order_filter, item__discount_status=1).aggregate(Sum('total_price'))['total_price__sum'] or 0
+            
+            
             
             total_price = om.total_price or 0
             total_price -= om.discount_amount or 0

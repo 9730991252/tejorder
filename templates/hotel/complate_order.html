@@ -29,7 +29,7 @@
                     {% if bill.cancel_btn_show_status == 1 %}
                         <div style="display: grid;grid-template-columns: 3fr 0.5fr 0.5fr; gap: 10px;">
                             <a href="/hotel/complate_view_order/{{bill.order_filter}}" class="btn btn-success ">View</a>
-                            <a data-bs-toggle="modal" data-bs-target="#exampleModal{{b.id}}" class="btn btn-primary">Edit</a>
+                            <a data-bs-toggle="modal" data-bs-target="#edit{{bill.id}}" class="btn btn-primary">Edit</a>
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal{{bill.id}}">
                                 Cancel
@@ -67,7 +67,7 @@
             </div>
 
             <!-- Modal -->
-<div class="modal fade" id="exampleModal{{b.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="edit{{bill.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
