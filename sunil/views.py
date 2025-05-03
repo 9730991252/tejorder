@@ -76,8 +76,35 @@ def sunil_home(request):
 
 def payment(request):
     if request.session.has_key('sunil_mobile'):
+        h = []
+        for i in Hotel.objects.all():
+            p = Hotel_Payment.objects.filter(hotel_id=i.id).order_by('-id')
+            total_amount = p.aggregate(Sum('amount'))['amount__sum']
+            total_bills = p.aggregate(Sum('bills'))['bills__sum']
+            if total_amount == None:
+                total_amount = 0
+                total_bills = 0
+            bill = order_Master.objects.filter(hotel_id=i.id).count()
+            remaining_bills = (int(total_bills) - int(bill))
+            h.append({
+                'id':i.id,
+                'hotel_name':i.hotel_name,
+                'owner_name':i.owner_name,
+                'address':i.address,
+                'upi_id':i.upi_id,
+                'logo':i.logo,
+                'mobile':i.mobile,
+                'pin':i.pin,
+                'status':i.status,
+                'gst_status':i.gst_status,
+                'gst_number':i.gst_number,
+                'discount_status':i.discount_status,
+                'date':i.date,
+                'total_amount':total_amount,
+                'remaining_bills':remaining_bills,
+            })
         context={
-            'hotel':Hotel.objects.all()
+            'hotel':h
         }
         return render(request, 'sunil/payment.html', context)
     else:
