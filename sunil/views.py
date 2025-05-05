@@ -67,7 +67,7 @@ def sunil_home(request):
             c.save()
             return redirect('/sunil/sunil_home/')
         context={
-            'hotel':Hotel.objects.all()
+            'hotel':Hotel.objects.all().order_by('-status')
         }
         return render(request, 'sunil/sunil_home.html', context)
     else:
@@ -103,6 +103,7 @@ def payment(request):
                 'total_amount':total_amount,
                 'remaining_bills':remaining_bills,
             })
+        h = sorted(h, key=lambda x: x['remaining_bills'])
         context={
             'hotel':h,
         }
