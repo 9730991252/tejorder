@@ -59,7 +59,7 @@ def sunil_home(request):
             c = Hotel.objects.filter(id=id).first()
             c.status = 0
             c.save()
-            return redirect('sunil')
+            return redirect('payment')
         if 'deactive'in request.POST:
             id = request.POST.get('id')
             c = Hotel.objects.filter(id=id).first()
