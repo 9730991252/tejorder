@@ -1,7 +1,24 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
+from table_qr.models import *
 from sunil.models import *
-from hotel.models import *
+from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Avg, Sum, Min, Max
+import math
+from datetime import date
+from PIL import Image
+import io
+from datetime import datetime, date, time
+from django.core.paginator import Paginator
+from django.contrib import messages 
+from django.utils.decorators import method_decorator
+import razorpay
+from django.conf import settings
+from django.http import JsonResponse
+
+
+client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+
 # Create your views here.
 def handling_404(request, exception):
     return render(request, '404.html')
@@ -25,6 +42,30 @@ def index(request):
     }
     
     return render(request, 'home/index.html',context)
+
+@csrf_exempt
+def payment_verify(request):
+    if request.method == 'POST':
+        order_id = request.POST.get('razorpay_order_id')
+        payment_id = request.POST.get('razorpay_payment_id')
+        signature = request.POST.get('razorpay_signature')
+        
+        payment = Hotel_Payment.objects.all().last()
+        if client.utility.verify_payment_signature({
+            'razorpay_order_id': order_id,
+            'razorpay_payment_id': payment_id,
+            'razorpay_signature': signature
+            }):
+            payment.razorpay_payment_id = payment_id
+            payment.razorpay_signature = signature
+            payment.is_paid = True
+            payment.bills = payment.amount * 3
+            payment.save()
+        else:
+            payment.is_paid = False
+            payment.save()
+
+        return redirect('software_charges')
 
 def contact_us(request):
     return render(request, 'home/contact_us.html')

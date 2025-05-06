@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
 from table_qr.models import *
 from sunil.models import *
@@ -11,6 +11,13 @@ import io
 from datetime import datetime, date, time
 from django.core.paginator import Paginator
 from django.contrib import messages 
+from django.utils.decorators import method_decorator
+import razorpay
+from django.conf import settings
+from django.http import JsonResponse
+
+
+
 
 # Create your views here.
 @csrf_exempt
@@ -44,21 +51,58 @@ def edit_pin(request):
         return render(request, 'hotel/edit_pin.html', context)
     else:
         return redirect('login')
+
+# payment
     
 @csrf_exempt
 def software_charges(request):
     if request.session.has_key('owner_mobile'):
         mobile = request.session['owner_mobile']
         hotel = Hotel.objects.filter(mobile=mobile).first()
-
+        hotel_payment = Hotel_Payment.objects.filter(hotel=hotel).last()
+        if hotel_payment.date == date.today():
+            if hotel_payment.is_paid == False:
+                messages.error(request, 'Your Todayes Payment Is Failed')
+            else:
+                messages.success(request, f'Congratulations You Had A successful Payment Today of ₹{hotel_payment.amount}')
         context={
             'hotel':hotel,
-            'Hotel_Payment':Hotel_Payment.objects.filter(hotel=hotel)
+            'Hotel_Payment':Hotel_Payment.objects.filter(hotel=hotel).order_by('-id')
         }
         return render(request, 'hotel/software_charges.html', context)
     else:
         return redirect('login')
     
+client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+
+def create_payment(request):
+    if request.method == 'GET':
+        hotel = request.GET['hotel']
+        amount = request.GET['amount']
+        print(amount)
+        order_data = {
+            "amount":int(int(amount) *100),
+            "currency": "INR",
+            "payment_capture": "1"
+        }
+        razorpay_order = client.order.create(order_data)
+        
+        Hotel_Payment.objects.create(
+            hotel_id=hotel,
+            amount=int(amount),
+            type='phonepe',
+            date=date.today(),
+        )
+        return JsonResponse({
+            'order_id': razorpay_order['id'],
+            'razorpay_key_id': settings.RAZORPAY_KEY_ID,
+            'amount': order_data['amount'],
+            'razorpay_callback_url': settings.RAZORPAY_CALLBANK_URL,
+        })
+    
+
+        
+# end payment
 @csrf_exempt
 def print_completed_bill(request, order_filter, qr_status):
     if request.session.has_key('owner_mobile'):

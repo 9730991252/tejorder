@@ -14,7 +14,10 @@ urlpatterns = [
     path('complate_order/', views.complate_order, name='complate_order'),
     path('table_qr/', views.table_qr, name='table_qr'),
     path('report/', views.report, name='report'),
+    
     path('software_charges/', views.software_charges, name='software_charges'),
+    path('create_payment/', views.create_payment, name='create_payment'),
+    
     path('edit_pin/', views.edit_pin, name='edit_pin'),
     path('edit_bill/<id>', views.edit_bill, name='edit_bill'),
     path('print_completed_bill/<order_filter>/<qr_status>', views.print_completed_bill, name='report'),

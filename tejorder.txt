@@ -46,6 +46,9 @@ pip install django
 pip install pillow
 pip install django-embed-video
 pip install num2words
+pip install python-decouple
+pip install razorpay
+
 
 
 ******** Install Gunicorn ******

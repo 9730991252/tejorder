@@ -24,7 +24,11 @@ class Hotel(models.Model):
 class Hotel_Payment(models.Model):
     hotel = models.ForeignKey(Hotel, on_delete=models.PROTECT, null=True)
     amount = models.FloatField()
-    bills = models.IntegerField()
+    bills = models.IntegerField(null=True)
     type = models.CharField(max_length=100)
     date = models.DateField()
     mobile = models.IntegerField(null=True)
+    razorpay_order_id = models.CharField(max_length=255, blank=True, null=True)
+    razorpay_payment_id = models.CharField(max_length=255, blank=True, null=True)
+    razorpay_signature = models.CharField(max_length=255, blank=True, null=True)
+    is_paid = models.BooleanField(default=False)
