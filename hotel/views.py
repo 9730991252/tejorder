@@ -79,7 +79,6 @@ def create_payment(request):
     if request.method == 'GET':
         hotel = request.GET['hotel']
         amount = request.GET['amount']
-        print(amount)
         order_data = {
             "amount":int(int(amount) *100),
             "currency": "INR",
@@ -92,6 +91,7 @@ def create_payment(request):
             amount=int(amount),
             type='phonepe',
             date=date.today(),
+            razorpay_order_id=razorpay_order['id']
         )
         return JsonResponse({
             'order_id': razorpay_order['id'],
