@@ -60,11 +60,12 @@ def software_charges(request):
         mobile = request.session['owner_mobile']
         hotel = Hotel.objects.filter(mobile=mobile).first()
         hotel_payment = Hotel_Payment.objects.filter(hotel=hotel).last()
-        if hotel_payment.date == date.today():
-            if hotel_payment.is_paid == False:
-                messages.error(request, 'Your Todayes Payment Is Failed')
-            else:
-                messages.success(request, f'Congratulations You Had A successful Payment Today of ₹{hotel_payment.amount}')
+        if hotel_payment:
+            if hotel_payment.date == date.today():
+                if hotel_payment.is_paid == False:
+                    messages.error(request, 'Your Todayes Payment Is Failed')
+                else:
+                    messages.success(request, f'Congratulations You Had A successful Payment Today of ₹{hotel_payment.amount}')
         context={
             'hotel':hotel,
             'Hotel_Payment':Hotel_Payment.objects.filter(hotel=hotel).order_by('-id')

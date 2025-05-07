@@ -46,7 +46,7 @@ def chef_helper_home(request):
         
         context={
             'c':c,
-            'pending_item':Hotel_cart.objects.filter(cook_status='Pendding'),
+            'pending_item':Hotel_cart.objects.filter(cook_status='Pendding', hotel_id=c.hotel_id),
             'accepted_item':Hotel_cart.objects.filter(cook_status = 'Accepted', chef_id=c.id),
             'delivered_item': Hotel_cart.objects.filter(cook_status='Delivered', chef_id=c.id)
         }
