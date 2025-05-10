@@ -24,6 +24,8 @@ def handling_404(request, exception):
     return render(request, '404.html')
 
 def index(request):
+    
+    
     visitors = Visitors.objects.all().first()
     if Visitors.objects.all().exists():
         visitors.count += 1
@@ -43,7 +45,7 @@ def index(request):
     
     return render(request, 'home/index.html',context)
 
-@csrf_exempt
+@csrf_exempt 
 def payment_verify(request):
     if request.method == 'POST':
         order_id = request.POST.get('razorpay_order_id')
@@ -64,7 +66,6 @@ def payment_verify(request):
         else:
             payment.is_paid = False
             payment.save()
-
         return redirect('software_charges')
 
 def contact_us(request):

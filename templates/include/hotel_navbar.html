@@ -62,6 +62,7 @@
 
     <div class="alert alert-danger" role="alert">
       तुमच्या खात्यातील शिल्लक बिले वजा मध्ये गेले आहेत, त्यामुळे ५० पर्यंत बिल वजा झाल्यावर बिल पूर्ण होऊ शकणार नाही.
+      {% if not request.path == '/hotel/software_charges/' %}<a href="/hotel/software_charges/"  class="btn btn-success btn-sm"><b>Pay Now</b></a>{% endif %}
     </div>
 
   {% endif %}

@@ -25,7 +25,6 @@ def hotel_home(request):
     if request.session.has_key('owner_mobile'):
         mobile = request.session['owner_mobile']
         hotel = Hotel.objects.filter(mobile=mobile).first()
-
         context={
             'hotel':hotel
         }
@@ -53,12 +52,25 @@ def edit_pin(request):
         return redirect('login')
 
 # payment
+client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
     
+def check_payment(hotel):
+    hotel_payment = Hotel_Payment.objects.filter(hotel=hotel, is_paid=False, bills=None).last()
+    if hotel_payment:
+        payments = client.order.payments(hotel_payment.razorpay_order_id)
+        if payments:
+            payment_paid = payments['items'][0]['status']
+            if payment_paid == 'captured':
+                hotel_payment.is_paid = True
+                hotel_payment.bills = hotel_payment.amount * 3
+                hotel_payment.save()
+
 @csrf_exempt
 def software_charges(request):
     if request.session.has_key('owner_mobile'):
         mobile = request.session['owner_mobile']
         hotel = Hotel.objects.filter(mobile=mobile).first()
+        check_payment(hotel)
         hotel_payment = Hotel_Payment.objects.filter(hotel=hotel).last()
         if hotel_payment:
             if hotel_payment.date == date.today():
@@ -66,6 +78,7 @@ def software_charges(request):
                     messages.error(request, 'Your Todayes Payment Is Failed')
                 else:
                     messages.success(request, f'Congratulations You Had A successful Payment Today of ₹{hotel_payment.amount}')
+                    
         context={
             'hotel':hotel,
             'Hotel_Payment':Hotel_Payment.objects.filter(hotel=hotel).order_by('-id')
@@ -74,7 +87,7 @@ def software_charges(request):
     else:
         return redirect('login')
     
-client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+    
 
 def create_payment(request):
     if request.method == 'GET':
