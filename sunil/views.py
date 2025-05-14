@@ -4,6 +4,13 @@ from . models import *
 from hotel.models import *
 from django.contrib import messages 
 from django.db.models import Avg, Sum, Min, Max
+import razorpay
+from django.conf import settings
+from django.http import JsonResponse
+from requests.auth import HTTPBasicAuth
+from datetime import datetime, timedelta
+
+client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
 
 # Create your views here.
 def sunil_login(request):
@@ -70,6 +77,71 @@ def sunil_home(request):
             'hotel':Hotel.objects.all().order_by('-status')
         }
         return render(request, 'sunil/sunil_home.html', context)
+    else:
+        return redirect('sunil_login')
+
+def razorpay_settlements(request):
+    if request.session.has_key('sunil_mobile'):
+        # Get all settlements
+        settlement = client.settlement.all()['items']
+        razorpay_settlements = []
+        for s in settlement:
+            items = []
+            settlement_id = s['id']
+            amount = s['amount'] / 100
+            status = s['status']
+            utr = s['utr']
+            created_at_unix = s['created_at']
+            created_at = datetime.fromtimestamp(created_at_unix).strftime('%Y-%m-%d %H:%M:%S')
+            try:
+                # Get settlement transactions
+                txn_response = client.request("get", f"/v1/settlements/{settlement_id}/transactions")
+                total_tax = sum(txn.get("tax", 0) for txn in txn_response["items"]) / 100
+
+                # Try to get fees by checking individual payments inside transactions
+                total_fees = 0
+                total_fees -= total_tax
+                for txn in txn_response["items"]:
+                    total_fees += (txn['fee'] / 100)
+            except Exception as e:
+                print("   ⚠️ Error fetching transaction breakdown:", e)
+            for i in txn_response['items']:
+                items.append({
+                    'amount':(i['amount'] / 100),
+                    'description':i['description'],
+                    'notes':i['notes'],
+                    'method':i['method'],
+                    'created_at':datetime.fromtimestamp(i['created_at']).strftime('%Y-%m-%d %H:%M:%S')
+                })
+            razorpay_settlements.append({
+                'settlement_id':settlement_id,
+                'amount':amount,
+                'status':status,
+                'utr':utr,
+                'created_at':created_at,
+                'total_fees':total_fees,
+                'total_tax':total_tax,
+                'items':items
+            })
+
+
+
+
+        # Use lowercase 'get' for method
+        balance_response = client.request("get", "/v1/balance")
+
+        # Extract and display balance
+        balance = (balance_response.get('balance', 0) / 100) # Convert from paise to rupees
+        currency = balance_response.get('currency', 'INR')
+
+        print(f"💰 Razorpay Balance: ₹{balance} {currency}")
+
+        context={
+            'razorpay_settlements':razorpay_settlements,
+            'balance':balance,
+            'currency':currency
+        }
+        return render(request, 'sunil/razorpay_settlements.html', context)
     else:
         return redirect('sunil_login')
     

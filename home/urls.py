@@ -10,5 +10,5 @@ urlpatterns = [
     path('privacy_policy/', views.privacy_policy, name='privacy_policy'),
     path('refund_and_cancellation_policy/', views.refund_and_cancellation_policy, name='refund_and_cancellation_policy'),
     path('payment-verify/', views.payment_verify, name='payment-verify'),
-
+    
 ]

@@ -8,14 +8,14 @@ import math
 from datetime import date
 from PIL import Image
 import io
-from datetime import datetime, date, time
+from datetime import datetime, date, time, timedelta
 from django.core.paginator import Paginator
 from django.contrib import messages 
 from django.utils.decorators import method_decorator
 import razorpay
 from django.conf import settings
 from django.http import JsonResponse
-
+from requests.auth import HTTPBasicAuth
 
 client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
 
@@ -25,7 +25,7 @@ def handling_404(request, exception):
 
 def index(request):
     
-    
+        
     visitors = Visitors.objects.all().first()
     if Visitors.objects.all().exists():
         visitors.count += 1

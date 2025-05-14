@@ -1,0 +1,208 @@
+{% extends 'home/base.html' %}
+
+{% block head %}
+{% endblock head %}
+
+{% block content %}
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --bg: #0f0c29;
+        --bg2: #302b63;
+        --bg3: #24243e;
+        --glass: rgba(255, 255, 255, 0.07);
+        --text: #ffffff;
+        --accent: #ff6ec4;
+        --highlight: #00dbde;
+        --radius: 18px;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to right, var(--bg), var(--bg2), var(--bg3));
+        font-family: 'Outfit', sans-serif;
+        color: var(--text);
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: auto;
+        padding: 40px 20px;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #ff6ec4, #7873f5);
+        padding: 12px 24px;
+        font-weight: 600;
+        border: none;
+        border-radius: var(--radius);
+        color: white;
+        cursor: pointer;
+        text-decoration: none;
+        box-shadow: 0 4px 15px rgba(255, 110, 196, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 30px rgba(255, 110, 196, 0.6);
+    }
+
+    .text-center {
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 700;
+        background: var(--glass);
+        border-radius: var(--radius);
+        padding: 20px;
+        margin-top: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+        backdrop-filter: blur(10px);
+    }
+
+    /* Settlement Card */
+    .settlement-card {
+        background: var(--glass);
+        border-radius: var(--radius);
+        padding: 30px;
+        margin-top: 30px;
+        backdrop-filter: blur(14px);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .settlement-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 24px 60px rgba(255, 110, 196, 0.3);
+    }
+
+    .settlement-header {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .settlement-header div {
+        margin: 5px 0;
+    }
+
+    .settlement-amount {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: var(--accent);
+    }
+
+    .status-pill {
+        padding: 6px 14px;
+        background: var(--highlight);
+        color: #000;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        display: inline-block;
+    }
+
+    .utr-code {
+        color: #ccc;
+        font-size: 0.95rem;
+        font-style: italic;
+    }
+
+    /* Item Box */
+    .item-list {
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+    }
+
+    .item-card {
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: var(--radius);
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .item-card:hover {
+        transform: scale(1.03);
+    }
+
+    .item-amount {
+        font-size: 1.4rem;
+        color: #ffd369;
+        font-weight: bold;
+    }
+
+    .item-description {
+        font-weight: 600;
+        margin: 5px 0;
+        color: #fcb69f;
+    }
+
+    .item-meta {
+        font-size: 0.9rem;
+        color: #ddd;
+        margin: 2px 0;
+    }
+.settlement-meta {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.settlement-meta .item-meta {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #f1f1f1;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 8px 14px;
+    border-radius: 12px;
+}
+
+</style>
+{% include 'include/alert.html' %}
+
+<div class="container">
+    <a href="/sunil/sunil_home/" class="btn btn-primary">🏠 Home</a>
+</div>
+
+<div class="text-center">💰 <strong>Current Balance:</strong> ₹{{balance}}</div>
+
+<div class="container">
+    {% for rs in razorpay_settlements %}
+    <div class="settlement-card">
+<div class="settlement-header">
+    <div class="settlement-amount">₹{{rs.amount}}</div>
+    <div class="status-pill">{{rs.status}}</div>
+    <div class="utr-code">UTR: {{rs.utr}}</div>
+    <div class="created_at">📅 {{rs.created_at}}</div>
+    <div class="settlement-meta ms-3">
+        <div class="item-meta">💸 Total Fees: ₹{{rs.total_fees|floatformat:'2'}}</div>
+        <div class="item-meta">🧾 Total Tax: ₹{{rs.total_tax}}</div>
+    </div>
+</div>
+
+        {% if rs.items %}
+        <div class="item-list">
+            {% for i in rs.items %}
+            <div class="item-card">
+                <div class="item-amount">₹{{i.amount}}</div>
+                <div class="item-description">{{i.description}}</div>
+                <div class="item-meta">📝 {{i.notes}}</div>
+                <div class="item-meta">💳 {{i.method}}</div>
+                <div class="item-meta">📅 {{i.created_at}}</div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}
