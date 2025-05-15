@@ -56,7 +56,7 @@ client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_S
     
 def check_payment(hotel):
     hotel_payment = Hotel_Payment.objects.filter(hotel=hotel, is_paid=False, bills=None).last()
-    if hotel_payment:
+    if hotel_payment.razorpay_order_id:
         payments = client.order.payments(hotel_payment.razorpay_order_id)
         if payments:
             payment_paid = payments['items'][0]['status']
