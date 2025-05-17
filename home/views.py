@@ -58,11 +58,13 @@ def payment_verify(request):
             'razorpay_payment_id': payment_id,
             'razorpay_signature': signature
             }):
-            payment.razorpay_payment_id = payment_id
-            payment.razorpay_signature = signature
-            payment.is_paid = True
-            payment.bills = payment.amount * 3
-            payment.save()
+            payments = client.order.payments(order_id)
+            if payments:
+                payment.razorpay_payment_id = payment_id
+                payment.razorpay_signature = signature
+                payment.is_paid = True
+                payment.bills = payment.amount * 3
+                payment.save()
         else:
             payment.is_paid = False
             payment.save()

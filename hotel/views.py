@@ -8,7 +8,8 @@ import math
 from datetime import date
 from PIL import Image
 import io
-from datetime import datetime, date, time
+from datetime import datetime, date
+import time
 from django.core.paginator import Paginator
 from django.contrib import messages 
 from django.utils.decorators import method_decorator
